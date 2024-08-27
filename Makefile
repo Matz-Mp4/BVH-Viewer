@@ -1,7 +1,7 @@
 linkTarget = TinyRayTracer
 
 # Define the libraries that we need
-LIBS = -lGL
+LIBS = -l
 
 # Define any flags
 CFLAGS = -std=c++20 -Ofast
