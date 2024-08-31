@@ -3,6 +3,7 @@
 **/
 class IShade {
     public:
-        virtual    ~IShade() {};
-        virtual void shade() = 0;
+        virtual          ~IShade() {};
+        virtual void       shade() = 0;
+        virtual void load_shader() = 0;
 };
