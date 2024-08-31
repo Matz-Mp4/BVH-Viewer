@@ -1,26 +1,29 @@
-linkTarget = TinyRayTracer
+# Compiler and flags
+CC = g++
+CFLAGS = -Wall -g -std=c++17
+LDFLAGS = -lGL -lGLU -lglut
 
-# Define the libraries that we need
-LIBS = -l
+# Directories
+SRCDIR = src
+BINDIR = bin
 
-# Define any flags
-CFLAGS = -std=c++20 -Ofast
+# Source files and target
+SRCS = $(wildcard $(SRCDIR)/*.cpp)
+OBJS = $(SRCS:.cpp=.o)
+TARGET = $(BINDIR)/volumetric_viewer
 
-# Define the object files that we need to use
-objects = $(patsubst %.cpp,%.o,$(wildcard ./src/**/*.cpp ./src/*.cpp))
+# Rules
+all: $(BINDIR) $(TARGET)
 
-# Define the rebuildables
-rebuildables = $(objects) $(linkTarget)
+$(BINDIR):
+	mkdir -p $(BINDIR)
 
-# Rule to actually perform the build
-$(linkTarget): $(objects)
-	g++ -g -o bin/$(linkTarget) $(objects) $(LIBS) $(CFLAGS)
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET) $(LDFLAGS)
 
-# Rule to create the .o (object) files
 %.o: %.cpp
-	g++ -o $@ -c $< $(CFLAGS)
-	
-.PHONY: clean
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(rebuildables)
+	rm -f $(OBJS) $(TARGET)
+	rmdir $(BINDIR)
