@@ -1,22 +1,15 @@
 #include "../../include/material/Material.hpp"
 
-Material::~Material(){
-    if(!luminance){
-        delete luminance;
-        luminance = nullptr;
-    }
-}
 
 
-Material::Material(Color c, double k_amb, double k_dif, double k_spec,  double exp, double k_trans , double index_ref , IShade* luminance ):
+Material::Material(Color c, double k_amb, double k_dif, double k_spec,  double exp, double k_trans , double index_ref  ):
     color(c),
     k_amb(k_amb),
     k_dif(k_dif),
     k_spec(k_spec),
     k_trans(k_trans),
     exp(exp),
-    index_ref(index_ref),
-    luminance(luminance) 
+    index_ref(index_ref) 
 {}
 
 
@@ -52,13 +45,3 @@ Material& Material::change_color(Color c) {
     return *this;
 }
 
-Material& Material::change_luminance(IShade* luminance) {
-    if(luminance != nullptr) {
-        this->luminance = luminance;
-    }
-    return *this;
-}
-
-void Material::shade() {
-    luminance->shade();
-}

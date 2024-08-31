@@ -15,15 +15,15 @@ class Material {
     public:
         Material() = default;
        ~Material();
-        Material(Color c, double k_amb, double k_dif, double k_spec,  double exp, double k_trans = 0, double index_ref = 0, IShade* luminance = nullptr);
+        Material(Color c, double k_amb, double k_dif, double k_spec,  double exp, double k_trans = 0, double index_ref = 0/*, IShade* luminance = nullptr*/);
 
         Material&      turn_into_matte(double k_amb, double k_dif);
         Material&    turn_into_plastic(double k_spec, double exp);
         Material& turn_into_reflective(double k_trans, double index_ref);
 
         Material&         change_color(Color c);
-        Material&     change_luminance(IShade* luminance);
-        void                     shade();
+        /* Material&     change_luminance(IShade* luminance); */
+        /* void                     shade(); */
         
 
 
@@ -35,6 +35,6 @@ class Material {
         double  k_trans;
         double  exp;
         double  index_ref;
-        IShade* luminance;
+        /* IShade* luminance; */
 };
 
