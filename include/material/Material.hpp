@@ -1,6 +1,6 @@
 #pragma once
 #include "Color.hpp"
-#include "../shader/IShade.hpp"
+#include "../shader/IShader.hpp"
 
 /* enum class TYPE_SHADE{GLSL}; */
 

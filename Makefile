@@ -27,4 +27,3 @@ $(TARGET): $(OBJS)
 
 clean:
 	rm -f $(OBJS) $(TARGET)
-	rmdir $(BINDIR)
