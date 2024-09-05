@@ -1,4 +1,4 @@
-#include "IShader.hpp"
+#include "../IShader.hpp"
 class ShaderGLSL: IShader {
     public:
         ShaderGLSL(const char* vertex_path, const char* frag_path);

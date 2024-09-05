@@ -1,5 +1,5 @@
-#include "../../include/shader/ShaderGLSL.hpp"
-#include "../../third-party/glad/include/glad/glad.h"
+#include "../../../include/shader/GLSL/ShaderGLSL.hpp"
+#include "../../../third-party/glad/include/glad/glad.h"
 #include <iostream>
 #include <ostream>
 #include <fstream>
