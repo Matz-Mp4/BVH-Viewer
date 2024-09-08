@@ -1,16 +1,5 @@
 #include "../../include/objects/Mesh.hpp"
 
-void Mesh::add_vertex(Vector4 vertice) {
-    vertices.push_back(vertice);
+void Mesh::add_vertex(Vector4 position, Vector4 normal) {
+    vertices.push_back(Vertex(position, normal));
 }
-
-//TODO: fan_triangle
-/*
-void Mesh::fan_triangulation(std::vector<Vector4> vertices) {
-    std::vector<Vector4> triangles;
-    Vector4 triangle;
-
-    for(int i = 1; i < vertices.size() - 1; i++) {
-        triangle(vertices
-    }
-}*/
