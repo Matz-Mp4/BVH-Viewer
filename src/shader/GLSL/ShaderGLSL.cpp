@@ -4,8 +4,11 @@
 #include <ostream>
 #include <fstream>
 #include <sstream>
+ShaderGLSL::ShaderGLSL(const char* vertex_path, const char* frag_path) {
+    create_prog(vertex_path, frag_path);
+}
 
-ShaderGLSL::ShaderGLSL(const char* vertexPath, const char* fragmentPath){
+void ShaderGLSL::create_prog(const char* vert_shader, const char* frag_shader){
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
     std::string fragmentCode;
@@ -17,8 +20,8 @@ ShaderGLSL::ShaderGLSL(const char* vertexPath, const char* fragmentPath){
 
     try{
         // open files
-        vShaderFile.open(vertexPath);
-        fShaderFile.open(fragmentPath);
+        vShaderFile.open(vert_shader);
+        fShaderFile.open(frag_shader);
         std::stringstream vShaderStream, fShaderStream;
         // read file’s buffer contents into streams
         vShaderStream << vShaderFile.rdbuf();
@@ -80,10 +83,15 @@ ShaderGLSL::ShaderGLSL(const char* vertexPath, const char* fragmentPath){
     glDeleteShader(vertex);
     glDeleteShader(fragment);
         
-    }
+}
 
-void ShaderGLSL::use() {
+void ShaderGLSL::active_shader() {
     glUseProgram(ID);
+}
+
+
+void ShaderGLSL::delete_shader() {
+    glDeleteProgram(ID);
 }
 
 void ShaderGLSL::set_bool(const std::string &name, bool value) const{
