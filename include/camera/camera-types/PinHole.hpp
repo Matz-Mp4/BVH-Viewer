@@ -1,20 +1,21 @@
 #pragma once
-#include "../DataCamera.hpp"
-/* #include "CameraRender.hpp" */
+#include "../TypeCamera.hpp"
 
-class PinHole {
+/**
+    Represents a virtual model of a PinHole camera.
+    - fov (field of view in the y-axis): the angle between the near plane and the far plane.
+    - aspect: The aspect ratio of the viewport (width/height).
+    - near and far: The distances from the camera to the near and far planes, respectively.
+**/
+class PinHole: TypeCamera{
     public:
-        PinHole(Vector3 eye, Vector3 look_at, Vector3 up, double dis, double zoom);
-        
-        PinHole&    with_eye(Vector3 eye);
-        PinHole& with_lookAt(Vector3 look_at);
-        PinHole&     with_up(Vector3 eye);
-        PinHole&   with_zoom(double zoom);
-        PinHole&    with_dis(double dis);
-            
-        
+        PinHole(double fov, double ratio, double near, double far);
+        //TODO
+        void projection_matrix() const override;
+
     private:
-        double             dis;
-        double            zoom;
-        DataCamera    cam_data;
+        double       fov;
+        double asp_ratio;
+        double      near;
+        double      far;
 };
