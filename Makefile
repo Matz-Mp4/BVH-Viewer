@@ -1,29 +1,41 @@
-# Compiler and flags
-CC = g++
-CFLAGS = -Wall -g -std=c++17
-LDFLAGS = -Lthird_party 
+# Compiler
+CXX = g++
+CXXFLAGS = -Wall -std=c++17 -O2
 
 # Directories
-SRCDIR = src
-BINDIR = bin
-THIRDPARTYDIR = third_party
+SRC_DIR = src
+OBJ_DIR = obj
+BIN_DIR = bin
 
-# Source files and target
-SRCS = $(wildcard $(SRCDIR)/*.cpp)
-OBJS = $(SRCS:.cpp=.o)
-TARGET = $(BINDIR)/VolumetricViewer
+# Output executable
+TARGET = $(BIN_DIR)/volumetric_viewer
 
-# Rules
-all: $(BINDIR) $(TARGET)
+# Libraries and includes
+LIBS = -lglfw -lGL -ldl -lGLU -lm
+INCLUDES = -Iinclude -Iexternal/glad/include -Iexternal/glm
 
-$(BINDIR):
-	mkdir -p $(BINDIR)
+# Source and object files
+SRCS = $(wildcard $(SRC_DIR)/*.cpp)
+OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
+# Create bin and obj directories if they don't exist
+$(shell mkdir -p $(BIN_DIR) $(OBJ_DIR))
+
+# Build executable
 $(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(OBJS) -o $(TARGET) $(LIBS)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -I$(THIRDPARTYDIR) -c $< -o $@
+# Build object files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
+# Clean
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -rf $(OBJ_DIR)/*.o $(TARGET)
+
+# Run
+run: $(TARGET)
+	./$(TARGET)
+
+.PHONY: clean run
+
