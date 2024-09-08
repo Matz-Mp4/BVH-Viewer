@@ -1,6 +1,6 @@
-#include "../../include/camera/DataCamera.hpp" 
+#include "../../include/camera/Camera.hpp" 
 
-DataCamera::DataCamera(Vector3 eye , Vector3 direction , Vector3 up):
+Camera::Camera(Vector4 eye , Vector4 direction , Vector4 up):
     eye(eye),
     direction(direction),
     up(up)
@@ -8,7 +8,7 @@ DataCamera::DataCamera(Vector3 eye , Vector3 direction , Vector3 up):
     this->compute_uvw();
 }
 
-void DataCamera::compute_uvw() {
+void Camera::compute_uvw() {
     w = eye - direction;
     w.normalize();
     u = up | w;
@@ -17,5 +17,6 @@ void DataCamera::compute_uvw() {
 }
 
 //TODO
-void look_at() {
+Matrix4 Camera::look_at() {
+
 }

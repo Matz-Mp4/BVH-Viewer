@@ -1,5 +1,6 @@
 #pragma once
+#include "../math/Matrix4.hpp"
 
 class TypeCamera {
-    virtual void projection_matrix() const = 0;
+    virtual Matrix4 projection_matrix() const = 0;
 };
