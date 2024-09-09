@@ -1,6 +1,7 @@
 #pragma once 
 #include "../math/Vector4.hpp"
 #include "../math/Matrix4.hpp"
+#include "TypeCamera.hpp"
 
 class Camera {
     public:
@@ -14,9 +15,14 @@ class Camera {
         Matrix4 look_at();
 
         /**
-          Calculate the forward, left, and up axes based on the object’s position, target, and up direction,
+          Calculate the forward, left, and up axes based on the object’s eye, direction, and up direction
          **/
         void compute_uvw();
+
+        /** 
+          Construct view-projection matrix
+         **/        
+        Matrix4 compute_view_projection(TypeCamera* type_cam);
 
         Vector4 eye, direction, up;
         Vector4 u, v, w;            //othonormal basis (u,v,w)

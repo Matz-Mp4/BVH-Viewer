@@ -1,4 +1,5 @@
 #pragma once 
-#include "../shader/InjectIntoShader.hpp"
+/* #include "../shader/InjectIntoShader.hpp" */
 
-class CameraGLSL
+//TODO
+class CameraGLSL {};

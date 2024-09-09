@@ -2,5 +2,6 @@
 #include "../math/Matrix4.hpp"
 
 class TypeCamera {
-    virtual Matrix4 projection_matrix() const = 0;
+    public: 
+        virtual Matrix4 projection_matrix() const = 0;
 };

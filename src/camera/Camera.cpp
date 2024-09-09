@@ -16,7 +16,27 @@ void Camera::compute_uvw() {
     v = w | u;
 }
 
-//TODO
 Matrix4 Camera::look_at() {
+    double data_orientation[16] =  {
+            u.x, u.y, u.z, 0.0,
+            v.x, v.y, v.z, 0.0,
+            w.x, -(w.y), -(w.z), 0.0,
+            0.0, 0.0, 0.0, 1.0
+    };
 
+    double data_translation[16] = {
+            1.0, 0.0, 0.0, -eye.x,
+            0.0, 1.0, 0.0, -eye.y,
+            0.0, 0.0, 1.0, -eye.z,
+            0.0, 0.0, 0.0, 1.0
+    };
+    Matrix4 orientation(data_orientation);
+    Matrix4 translation(data_translation);
+
+    return orientation * translation;
+
+}
+
+Matrix4 Camera::compute_view_projection(TypeCamera* type_cam) {
+    return type_cam->projection_matrix() * this->look_at();
 }

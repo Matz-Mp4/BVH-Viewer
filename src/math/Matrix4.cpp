@@ -8,7 +8,27 @@ Matrix4::Matrix4(const Vector4& arg1, const Vector4& arg2, const Vector4& arg3, 
     this->data[3] = arg4;
 }
 
+Matrix4::Matrix4(const double mtx[16]) {
+    this->data[0].x = mtx[0];
+    this->data[0].y = mtx[1];
+    this->data[0].z = mtx[2];
+    this->data[0].w = mtx[3];
 
+    this->data[1].x = mtx[4];
+    this->data[1].y = mtx[5];
+    this->data[1].z = mtx[6];
+    this->data[1].w = mtx[7];
+
+    this->data[2].x = mtx[8];
+    this->data[2].y = mtx[9];
+    this->data[2].z = mtx[10];
+    this->data[2].w = mtx[11];
+
+    this->data[3].x = mtx[12];
+    this->data[3].y = mtx[13];
+    this->data[3].z = mtx[14];
+    this->data[3].w = mtx[15];
+}
 Matrix4& Matrix4::operator+(const Matrix4& arg) {
    this->data[0] =this->data[0] + arg.data[0];
    this->data[1] =this->data[1] + arg.data[1];

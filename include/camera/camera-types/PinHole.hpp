@@ -10,8 +10,7 @@
 class PinHole: TypeCamera{
     public:
         PinHole(double fov, double ratio, double near, double far);
-        //TODO
-        void projection_matrix() const override;
+        Matrix4 projection_matrix() const override;
 
     private:
         double       fov;
