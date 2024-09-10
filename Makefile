@@ -5,8 +5,8 @@ CXXFLAGS = -Wall -std=c++17 -O2
 # Directories
 SRC_DIR = src
 OUT_DIR = out
-OBJ_DIR = $(OUT_DIR)obj
-BIN_DIR = $(OUT_DIR)bin
+OBJ_DIR = $(OUT_DIR)/obj
+BIN_DIR = $(OUT_DIR)/bin
 
 # Output executable
 TARGET = $(BIN_DIR)/volumetric_viewer

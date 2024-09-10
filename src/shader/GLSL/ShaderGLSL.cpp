@@ -1,9 +1,9 @@
 #include "../../../include/shader/GLSL/ShaderGLSL.hpp"
-#include "../../../third-party/glad/include/glad/glad.h"
 #include <iostream>
 #include <ostream>
 #include <fstream>
 #include <sstream>
+
 ShaderGLSL::ShaderGLSL(const char* vertex_path, const char* frag_path) {
     create_prog(vertex_path, frag_path);
 }

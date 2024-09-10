@@ -1,4 +1,4 @@
 #include "../../include/objects/Vertex.hpp"
 
-Vertex::Vertex(Vector3 position, Vector3 normal)
+Vertex::Vertex(Vector4 position, Vector4 normal)
     : position(position), normal(normal) {}
