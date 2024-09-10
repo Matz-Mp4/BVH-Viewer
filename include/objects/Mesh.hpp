@@ -13,6 +13,10 @@
 class Mesh {
     public :
         Mesh() = default;
+        ~Mesh() = default;
+
+        Mesh(std::vector<Vertex> vertices);
+
         /**
            Adds a new vertex in a mesh 
         **/
