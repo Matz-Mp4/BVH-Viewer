@@ -66,7 +66,7 @@ int main()
 
     /* init(window); */
 
-    while (!glfwWindowShouldClose(window))
+while (!glfwWindowShouldClose(window))
     {
         /* display(window, glfwGetTime()); */
 
