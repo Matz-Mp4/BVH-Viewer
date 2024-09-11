@@ -31,6 +31,5 @@ class Material {
         double  k_trans;
         double  exp;
         double  index_ref;
-        /* IShade* luminance; */
 };
 

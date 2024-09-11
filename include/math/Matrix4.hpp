@@ -5,7 +5,6 @@
 
 class Matrix4 {
 public:
-     Vector4 data[4];
 
      Matrix4() = default;
     ~Matrix4() = default;
@@ -19,5 +18,7 @@ public:
     bool     operator==(const Matrix4& rhs) const;
     
     friend std::ostream& operator<<(std::ostream& stream, const Matrix4& mtx); //print Matrix4 
+    
+    Vector4 data[4];
 
 };
