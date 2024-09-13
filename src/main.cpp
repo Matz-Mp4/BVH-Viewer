@@ -39,12 +39,12 @@ int main()
 
 
     GLfloat vertices [] = {
-        -0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,
-        0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,
-        0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,
-        -0.5f / 2, 0.5f * float(sqrt(3))  / 6, 0.0f,
-        0.5f / 2, 0.5f * float(sqrt(3))  / 6, 0.0f,
-        0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f,
+        -0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,      0.8f, 0.3f, 0.02f,
+        0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,       0.8f, 0.3f, 0.02f,
+        0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,    0.8f, 0.3f, 0.22f,
+        -0.5f / 2, 0.5f * float(sqrt(3))  / 6, 0.0f,  0.8f, 0.5f, 0.22f,
+        0.5f / 2, 0.5f * float(sqrt(3))  / 6, 0.0f,   0.5f, 0.2f, 0.02f,
+        0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f,       0.1f, 0.3f, 0.82f,
     };
 
     GLuint indices[] = {
@@ -63,7 +63,10 @@ int main()
     
 
     //Links VBO to VAO
-    vao.LinkVBO(vbo, 0);
+    //Vertex Position data to layout = 0
+    vao.LinkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0 );
+    //Vertex Color to layout = 1
+    vao.LinkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)) );
     //Unbind all to prevent accidentally modifying them
     vao.Unbind();
     vbo.Unbind();
