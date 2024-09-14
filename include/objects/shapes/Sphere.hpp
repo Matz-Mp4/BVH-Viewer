@@ -6,7 +6,7 @@
 class Sphere : public IShape {
     public:
         Vector4 center;
-        double radius;
+        float radius;
 
         unsigned int u; // latitude
         unsigned int v; // longitude
@@ -14,12 +14,12 @@ class Sphere : public IShape {
         Sphere() = default;
         ~Sphere() = default;
 
-        Sphere(const Vector4 &center, const double radius);
+        Sphere(const Vector4 &center, const float radius);
 
         Mesh generate_mesh() const override;
 
     private:
         // Compute the sphere position by spherical coordinates.
         // Theta and phi in degrees.
-        static Vector4 position(double radius, double theta, double phi);
+        static Vector4 position(float radius, float theta, float phi);
 };

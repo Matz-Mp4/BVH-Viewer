@@ -17,14 +17,14 @@ void Camera::compute_uvw() {
 }
 
 Matrix4 Camera::look_at() {
-    double data_orientation[16] =  {
+    float data_orientation[16] =  {
             u.x, u.y, u.z, 0.0,
             v.x, v.y, v.z, 0.0,
             w.x, -(w.y), -(w.z), 0.0,
             0.0, 0.0, 0.0, 1.0
     };
 
-    double data_translation[16] = {
+    float data_translation[16] = {
             1.0, 0.0, 0.0, -eye.x,
             0.0, 1.0, 0.0, -eye.y,
             0.0, 0.0, 1.0, -eye.z,

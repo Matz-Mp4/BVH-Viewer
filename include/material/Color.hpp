@@ -2,21 +2,21 @@
 
 class Color {
 public:
-    double r,g,b;
+    float r,g,b;
     
     Color() = default;
-    Color(const double c);
-    Color(const double red, const double green, const double blue);
+    Color(const float c);
+    Color(const float red, const float green, const float blue);
 
     Color  operator+ (const Color& rhs);
     Color& operator+=(const Color& rhs);
     Color  operator- (const Color& rhs);
     Color  operator* (const Color& rhs) const;
-    Color  operator* (const double rhs) const;
-    Color  operator/ (const double rhs) const;
+    Color  operator* (const float rhs) const;
+    Color  operator/ (const float rhs) const;
     bool   operator==(const Color& rhs);
 
-    Color powc(double p) const;
+    Color powc(float p) const;
 };
 
 Color operator*(const float a, const Color& c);

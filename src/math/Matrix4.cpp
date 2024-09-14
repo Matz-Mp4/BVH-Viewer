@@ -8,7 +8,7 @@ Matrix4::Matrix4(const Vector4& arg1, const Vector4& arg2, const Vector4& arg3, 
     this->data[3] = arg4;
 }
 
-Matrix4::Matrix4(const double mtx[16]) {
+Matrix4::Matrix4(const float mtx[16]) {
     this->data[0].x = mtx[0];
     this->data[0].y = mtx[1];
     this->data[0].z = mtx[2];
@@ -64,7 +64,7 @@ Matrix4& Matrix4::operator*(const Matrix4& arg) {
     return *this;
 }
 
-Matrix4& Matrix4::operator*(const double rhs) {
+Matrix4& Matrix4::operator*(const float rhs) {
    this->data[0] =  this->data[0] * rhs;
    this->data[1] =  this->data[1] * rhs;
    this->data[2] =  this->data[2] * rhs;

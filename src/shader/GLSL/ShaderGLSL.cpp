@@ -105,4 +105,8 @@ void ShaderGLSL::set_int(const std::string &name, int value) const{
 void ShaderGLSL::set_float(const std::string &name, float value) const{
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
+
+void ShaderGLSL::set_matrix4(const std::string &name, const Matrix4& m) const {
+    glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, m.mtx_data);
+}
  

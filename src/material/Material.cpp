@@ -2,7 +2,7 @@
 
 
 
-Material::Material(Color c, double k_amb, double k_dif, double k_spec,  double exp, double k_trans , double index_ref  ):
+Material::Material(Color c, float k_amb, float k_dif, float k_spec,  float exp, float k_trans , float index_ref  ):
     color(c),
     k_amb(k_amb),
     k_dif(k_dif),
@@ -13,7 +13,7 @@ Material::Material(Color c, double k_amb, double k_dif, double k_spec,  double e
 {}
 
 
-Material& Material::turn_into_matte(double k_amb, double k_dif) {
+Material& Material::turn_into_matte(float k_amb, float k_dif) {
     this->k_amb = k_amb;
     this->k_dif = k_dif;
     this->k_spec = 0.0;
@@ -24,7 +24,7 @@ Material& Material::turn_into_matte(double k_amb, double k_dif) {
 }
 
 
-Material& Material::turn_into_plastic(double k_spec, double exp) {
+Material& Material::turn_into_plastic(float k_spec, float exp) {
     this->k_spec = k_spec;
     this->exp = exp;
     this->k_trans = 0.0;
@@ -33,7 +33,7 @@ Material& Material::turn_into_plastic(double k_spec, double exp) {
 }
 
 
-Material& Material::turn_into_reflective(double k_trans, double index_ref) {
+Material& Material::turn_into_reflective(float k_trans, float index_ref) {
     this->k_trans = k_trans;
     this->index_ref = index_ref;
     this->exp = 0.0;
