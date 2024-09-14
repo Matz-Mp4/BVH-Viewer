@@ -17,6 +17,8 @@ public:
     Matrix4& operator* (const Matrix4& rhs);
     Matrix4& operator* (const float   rhs);
     bool     operator==(const Matrix4& rhs) const;
+
+    Matrix4  transpose() const;
     
     friend std::ostream& operator<<(std::ostream& stream, const Matrix4& mtx); //print Matrix4 
     

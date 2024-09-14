@@ -7,7 +7,7 @@
 #include "../include/shader/GLSL/VAO.hpp"
 #include "../include/shader/GLSL/VBO.hpp"
 #include "../include/camera/Camera.hpp"
-/* #include "../include/math/Transform.hpp" */
+#include "../include/math/Transforamation.hpp"
 #include "../include/camera/camera-types/PinHole.hpp"
 int main()
 {
@@ -80,11 +80,18 @@ int main()
 	// Enables the Depth Buffer
 	/* glEnable(GL_DEPTH_TEST);  */
     /* Camera camera(Vector4(0.0f, 0.0f, 2.0f)); */
-    Matrix4 model;
+    float unit_mtx[] = {
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        1.0, 1.0, 0.0, 1.0
+    };
+    Matrix4 transform(unit_mtx); 
     
     // Variables that help the rotation of the pyramid
-	float rotation = 0.0f;
+	float step_trans = 0.01f;
 	double prevTime = glfwGetTime();
+    float translate = 0.0;
 
 
     while (!glfwWindowShouldClose(window)){
@@ -93,9 +100,12 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         shader.active_shader();
         double crntTime = glfwGetTime();
-		/* if (crntTime - prevTime >= 1.0 / 60){ */
-            /* shader.set_matrix4("camProjection", std::transform); */
-		/* } */
+		if (crntTime - prevTime >= 1.0 ){
+            translate += step_trans;
+            transform = Transformation::translation(translate, translate, translate).transpose();
+		}
+
+        shader.set_matrix4("transformation", transform);
 
 
 

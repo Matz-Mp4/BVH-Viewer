@@ -9,6 +9,8 @@ Matrix4::Matrix4(const Vector4& arg1, const Vector4& arg2, const Vector4& arg3, 
 }
 
 
+
+
 Matrix4::Matrix4(const float value) {
     data[0].x = value; 
     data[0].y = value; 
@@ -103,6 +105,17 @@ bool Matrix4::operator==(const Matrix4& arg) const {
            this->data[3] == arg.data[3];
 }
 
+Matrix4 Matrix4::transpose() const {
+    float trans_data[] = {
+        data[0].x, data[1].x, data[2].x, data[3].x,
+        data[0].y, data[1].y, data[2].y, data[3].y,
+        data[0].z, data[1].z, data[2].z, data[3].z,
+        data[0].w, data[1].w, data[2].w, data[3].w,
+    };
+
+    return Matrix4(trans_data);
+}
+
 
 std::ostream& operator<<(std::ostream& stream, const Matrix4& mtx){
      stream << '[';
@@ -112,3 +125,5 @@ std::ostream& operator<<(std::ostream& stream, const Matrix4& mtx){
      stream << mtx.data[3]<< "]";
      return stream;
 }
+
+
