@@ -6,7 +6,9 @@
 #include "../include/shader/GLSL/EBO.hpp"
 #include "../include/shader/GLSL/VAO.hpp"
 #include "../include/shader/GLSL/VBO.hpp"
-
+#include "../include/camera/Camera.hpp"
+/* #include "../include/math/Transform.hpp" */
+#include "../include/camera/camera-types/PinHole.hpp"
 int main()
 {
     if (!glfwInit())
@@ -39,18 +41,21 @@ int main()
 
 
     GLfloat vertices [] = {
-        -0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,      0.8f, 0.3f, 0.02f,
-        0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f,       0.8f, 0.3f, 0.02f,
-        0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f,    0.8f, 0.3f, 0.22f,
-        -0.5f / 2, 0.5f * float(sqrt(3))  / 6, 0.0f,  0.8f, 0.5f, 0.22f,
-        0.5f / 2, 0.5f * float(sqrt(3))  / 6, 0.0f,   0.5f, 0.2f, 0.02f,
-        0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f,       0.1f, 0.3f, 0.82f,
+        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	
+	    -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	
+	     0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	
+	     0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	
+	     0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	
     };
 
     GLuint indices[] = {
-        0, 3, 5, //Lower left  triangle
-        3, 2, 4, //Lower right triangle
-        5, 4, 1, //Upper       triangle
+        0, 1, 2,
+	    0, 2, 3,
+	    0, 1, 4,
+	    1, 2, 4,
+	    2, 3, 4,
+	    3, 0, 4
+    
     };
     
 
@@ -71,22 +76,39 @@ int main()
     vao.Unbind();
     vbo.Unbind();
     ebo.Unbind();
+
+	// Enables the Depth Buffer
+	/* glEnable(GL_DEPTH_TEST);  */
+    /* Camera camera(Vector4(0.0f, 0.0f, 2.0f)); */
+    Matrix4 model;
     
+    // Variables that help the rotation of the pyramid
+	float rotation = 0.0f;
+	double prevTime = glfwGetTime();
+
 
     while (!glfwWindowShouldClose(window)){
 
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         shader.active_shader();
+        double crntTime = glfwGetTime();
+		/* if (crntTime - prevTime >= 1.0 / 60){ */
+            /* shader.set_matrix4("camProjection", std::transform); */
+		/* } */
+
+
+
         // Bind the VAO so OpenGL knows to use it
+        /* Matrix4 view_proj = camera.compute_view_projection(new PinHole(45.0f,1.0, 0.01f, 100.0f)); */
         vao.Bind();
-        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
     vao.Delete();
     vbo.Delete();
-    /* ebo.Delete(); */
+    ebo.Delete();
     shader.delete_shader();
 
     glfwDestroyWindow(window);

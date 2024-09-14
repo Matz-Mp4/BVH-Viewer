@@ -5,7 +5,7 @@
 
 class Camera {
     public:
-        Camera(Vector4 eye = Vector4(0, 0, 1), Vector4 direction = Vector4(0 , 0, -1), Vector4 up = Vector4(0, 1, 0));
+        Camera(Vector4 eye = Vector4(0, 0, -1), Vector4 direction = Vector4(0 , 0, -1), Vector4 up = Vector4(0, 1, 0));
 
         /**
           The lookAt matrix transforms points from the world space to the camera’s local space , aligning the 

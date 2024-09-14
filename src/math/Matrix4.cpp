@@ -8,6 +8,30 @@ Matrix4::Matrix4(const Vector4& arg1, const Vector4& arg2, const Vector4& arg3, 
     this->data[3] = arg4;
 }
 
+
+Matrix4::Matrix4(const float value) {
+    data[0].x = value; 
+    data[0].y = value; 
+    data[0].z = value; 
+    data[0].w = value; 
+
+    data[1].x = value; 
+    data[1].y = value; 
+    data[1].z = value; 
+    data[1].w = value; 
+
+    data[2].x = value; 
+    data[2].y = value; 
+    data[2].z = value;
+    data[2].w = value;
+
+    data[3].x = value;
+    data[3].y = value;
+    data[3].z = value;
+    data[3].w = value;
+
+}
+
 Matrix4::Matrix4(const float mtx[16]) {
     this->data[0].x = mtx[0];
     this->data[0].y = mtx[1];

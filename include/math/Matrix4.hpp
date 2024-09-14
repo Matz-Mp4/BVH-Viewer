@@ -11,6 +11,7 @@ public:
 
     Matrix4(const Vector4& arg1, const Vector4& arg2, const Vector4& arg3, const Vector4& arg4);
     Matrix4(const float mtx[16]);
+    Matrix4(float value);
 
     Matrix4& operator+ (const Matrix4& rhs);
     Matrix4& operator* (const Matrix4& rhs);

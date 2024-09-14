@@ -7,7 +7,7 @@
     - aspect: The aspect ratio of the viewport (width/height).
     - near and far: The distances from the camera to the near and far planes, respectively.
 **/
-class PinHole: TypeCamera{
+class PinHole: public TypeCamera{
     public:
         PinHole(float fov, float ratio, float near, float far);
         Matrix4 projection_matrix() const override;

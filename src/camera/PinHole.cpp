@@ -10,9 +10,10 @@ PinHole::PinHole(float fov, float ratio, float near, float far):
 {}
 
 Matrix4 PinHole::projection_matrix() const{
+    float tan_fov_half = (float)(tan(fov / 2));
     float m[16] = {
-                    1 / (asp_ratio * tan(fov / 2)), 0, 0, 0,
-                    0, 1 / tan(fov / 2), 0, 0,
+                    1.0f / (asp_ratio * tan_fov_half), 0, 0, 0,
+                    0, 1 / tan_fov_half, 0, 0,
                     0, 0, (far + near) / (far - near), (2 * far * near) / (far - near),
                     0, 0, -1, 0
                    };
