@@ -23,7 +23,7 @@ int main()
 
     GLFWwindow* window = glfwCreateWindow(600, 600, "Example 69", nullptr, nullptr);
     if (window == NULL){
-		std::cout << "You Window did the L" << std::endl;
+		std::cout << "Your Window did the L" << std::endl;
 		glfwTerminate();
 		return -1;
 	}
@@ -34,16 +34,16 @@ int main()
 
     glViewport(0, 0, 600, 600);
 
-    std::string vertex_path = "/home/matz/Code/C++/Volumetric-Viewer/src/glsl-files/vertex.glsl";
-    std::string frag_path = "/home/matz/Code/C++/Volumetric-Viewer/src/glsl-files/fragment.glsl";
+    std::string vertex_path = "../src/glsl-files/vertex.glsl";
+    std::string frag_path = "../src/glsl-files/fragment.glsl";
 
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
 
 
     GLfloat vertices [] = {
-        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	
-	    -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	
-	     0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	
+        -0.5f, 0.0f,  0.5f,     0.5, 0.70f, 0.3,	
+	    -0.5f, 0.0f, -0.5f,     0.3, 0.80f, 0.2,	
+	     0.5f, 0.0f, -0.5f,     0.9, 0.50f, 0.5,	
 	     0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	
 	     0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	
     };
@@ -100,9 +100,9 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
         shader.active_shader();
         double crntTime = glfwGetTime();
-		if (crntTime - prevTime >= 1.0 ){
+		if (crntTime - prevTime >= 1.0/60 ){
             translate += step_trans;
-            transform = Transformation::translation(translate, translate, translate).transpose();
+            transform = Transformation::rotation_y(translate);
 		}
 
         shader.set_matrix4("transformation", transform);

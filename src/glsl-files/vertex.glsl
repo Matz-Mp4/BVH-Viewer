@@ -6,7 +6,7 @@ uniform mat4 transformation;
 out vec3 color; 
 
 void main () {
-    gl_Position =  transformation * vec4(aPos, 1.0);
+    gl_Position =  transpose(transformation) * vec4(aPos, 1.0);
     color = aColor;
 }
 

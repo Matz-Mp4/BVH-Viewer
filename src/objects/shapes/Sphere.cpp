@@ -12,7 +12,6 @@ Mesh Sphere::generate_mesh() const {
         for (unsigned int j = 0; j < (v-1); j++) {
             float theta = i * 180.0 / (u - 1.0);
             float phi =   j * 360.0 / (v - 1.0);
-
             float theta1 = (i + 1.0) * 180.0 / (u - 1.0);
             float phi1 =   (j + 1.0) * 360.0 / (v - 1.0);
 
@@ -28,16 +27,20 @@ Mesh Sphere::generate_mesh() const {
             Vector4 p3 = position(radius, theta, phi1);
             Vector4 n3(p3.x/radius, p3.y/radius, p3.z/radius);
 
-            //First Triangle
-            mesh.add_vertex(p0, n0);
-            mesh.add_vertex(p1, n1);
-            mesh.add_vertex(p3, n3);
+            unsigned int i0 = i * v + j;
+            unsigned int i1 = (i + 1) * v + j;
+            unsigned int i2 = (i + 1) * v + (j + 1);
+            unsigned int i3 = i * v + (j + 1);
 
-            //TODO: maybe do need to add duplicates. Need to Check
-            //Second Triangle
-            mesh.add_vertex(p1, n1);
-            mesh.add_vertex(p2, n2);
-            mesh.add_vertex(p3, n3);
+            // First Triangle (p0, p1, p3)
+            mesh.add_indice(i0);
+            mesh.add_indice(i1);
+            mesh.add_indice(i3);
+
+            // Second Triangle (p1, p2, p3)
+            mesh.add_indice(i1);
+            mesh.add_indice(i2);
+            mesh.add_indice(i3);
        }
     }
 

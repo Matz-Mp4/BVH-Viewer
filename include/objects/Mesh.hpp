@@ -17,12 +17,12 @@ class Mesh {
 
         Mesh(std::vector<Vertex> vertices);
 
-        /**
-           Adds a new vertex in a mesh 
-        **/
-        void add_vertex(Vector4 position, Vector4 normal);
+       void add_vertex(Vector4 position, Vector4 normal);
+       void add_indice(unsigned int indice);
+       void update_num_triangles();
 
     private:
-        std::vector<Vertex> vertices;
-        size_t             triangles;
+        std::vector<Vertex>      vertices;
+        std::vector<unsigned int> indices;
+        size_t                  triangles;
 };
