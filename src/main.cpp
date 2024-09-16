@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include <cmath>
+const unsigned int width = 800;
+const unsigned int height = 800;
 
 int main() {
     if (!glfwInit()) {
@@ -42,7 +44,7 @@ int main() {
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
 
     GLfloat vertices [] = {
-        /*    positions    */      /*     colors     */
+           /* positions    */      /*     colors     */
         -0.50f, 0.00f,  0.50f,     0.50f, 0.70f, 0.30f,
 	    -0.50f, 0.00f, -0.50f,     0.30f, 0.80f, 0.20f,
 	     0.50f, 0.00f, -0.50f,     0.90f, 0.50f, 0.50f,
@@ -77,8 +79,6 @@ int main() {
     ebo.Unbind();
 
 	// Enables the Depth Buffer
-	/* glEnable(GL_DEPTH_TEST);  */
-    /* Camera camera(Vector4(0.0f, 0.0f, 2.0f)); */
     float unit_mtx[] = {
         1.0, 0.0, 0.0, 0.0,
         0.0, 1.0, 0.0, 0.0,
@@ -106,10 +106,14 @@ int main() {
                         Transformation::rotation_z(translate);
 		}
 
-        shader.set_matrix4("transformation", transform);
+
+
+        Camera camera(Vector4(0.0f, 0.0f,  2.0f));
 
         // Bind the VAO so OpenGL knows to use it
-        // Matrix4 view_proj = camera.compute_view_projection(new PinHole(45.0f,1.0, 0.01f, 100.0f));
+        Matrix4 view_proj = camera.compute_view_projection(new PinHole(90,1.0, 0.001f, 50.0f), CoordSystem::RIGH_HAND);
+        shader.set_matrix4("transformation", transform);
+        shader.set_matrix4("cameraProj", view_proj);
         vao.Bind();
 
         glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);

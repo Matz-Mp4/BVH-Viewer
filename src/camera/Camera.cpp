@@ -5,38 +5,47 @@ Camera::Camera(Vector4 eye , Vector4 direction , Vector4 up):
     direction(direction),
     up(up)
 {
-    this->compute_uvw();
+    /* this->compute_othor_bases(); */
 }
 
-void Camera::compute_uvw() {
-    w = eye - direction;
-    w.normalize();
-    u = up | w;
-    u.normalize();
-    v = w | u;
+void Camera::compute_othor_bases(CoordSystem coord_system) {
+
+    if ( coord_system == CoordSystem::LEFT_HAND)
+        forward = direction - eye;
+    else if (coord_system == CoordSystem::RIGH_HAND)
+        forward = eye - direction;
+
+    forward.normalize();
+    right = up | forward;
+    right.normalize();
+    new_up = forward | right;
 }
 
-Matrix4 Camera::look_at() {
-    float data_orientation[16] =  {
-            u.x, u.y, u.z, 0.0,
-            v.x, v.y, v.z, 0.0,
-            w.x, -(w.y), -(w.z), 0.0,
-            0.0, 0.0, 0.0, 1.0
+Matrix4 Camera::look_at(CoordSystem coord_system) {
+    compute_othor_bases(coord_system);
+
+    float a = right * eye ;
+    float b = new_up * eye ;
+    float c = forward * eye ;
+
+    if(coord_system == CoordSystem::RIGH_HAND) {
+        a*= -1.0;
+        b*= -1.0;
+        c*= -1.0;
+    }
+     
+
+    float  view []= {
+      right.x, new_up.x, forward.x, 0,
+      right.y, new_up.y, forward.y, 0,
+      right.z, new_up.z, forward.z, 0,
+            a,        b,         c, 1.0
     };
 
-    float data_translation[16] = {
-            1.0, 0.0, 0.0, -eye.x,
-            0.0, 1.0, 0.0, -eye.y,
-            0.0, 0.0, 1.0, -eye.z,
-            0.0, 0.0, 0.0, 1.0
-    };
-    Matrix4 orientation(data_orientation);
-    Matrix4 translation(data_translation);
 
-    return orientation * translation;
-
+    return Matrix4(view);
 }
 
-Matrix4 Camera::compute_view_projection(TypeCamera* type_cam) {
-    return type_cam->projection_matrix() * this->look_at();
+Matrix4 Camera::compute_view_projection(TypeCamera* type_cam, CoordSystem coord_system) {
+    return type_cam->projection_matrix(coord_system) * this->look_at(coord_system);
 }
