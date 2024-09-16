@@ -102,7 +102,9 @@ int main()
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
             translate += step_trans;
-            transform = Transformation::rotation_y(translate);
+            transform = Transformation::rotation_y(translate) * 
+                        Transformation::rotation_x(translate) * 
+                        Transformation::rotation_z(translate);
 		}
 
         shader.set_matrix4("transformation", transform);

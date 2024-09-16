@@ -63,7 +63,7 @@ Matrix4 Transformation::rotation_z(float angle) {
   
   float data [] = {
         angle_cos, -angle_sin, 0.0, 0.0,
-        angle_sin,  angle_sin, 0.0, 0.0,
+        angle_sin,  angle_cos, 0.0, 0.0,
               0.0,        0.0, 1.0, 0.0,
               0.0,        0.0, 0.0, 1.0,
     };
