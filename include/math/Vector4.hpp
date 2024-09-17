@@ -21,12 +21,12 @@ class Vector4 {
         Vector4    operator-(const Vector4& rhs) const;
         Vector4    operator-() const;
         Vector4    operator*(float t) const;
-        float     operator*(const Vector4& rhs) const; //dot product
+        float      operator*(const Vector4& rhs) const; //dot product
         Vector4    operator/(float t) const;
         Vector4    operator|(const Vector4&   v) const;
         bool      operator==(const Vector4&   v) const;
-        float        length() const;
-        void       normalize();
+        float         length() const;
+        Vector4    normalize()const;
        
         friend std::ostream& operator<<(std::ostream& stream, const Vector4& mtx); //print Matrix4 
 

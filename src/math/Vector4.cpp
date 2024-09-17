@@ -58,12 +58,15 @@ Vector4 Vector4::operator/(float t) const {
                  this->data[3] / t);
 }
 
-void Vector4::normalize() {
+Vector4 Vector4::normalize() const{
+    Vector4 res;
     float t = this->length();
-    this->data[0] = this->data[0] / t;
-    this->data[1] = this->data[1] / t;
-    this->data[2] = this->data[2] / t;
-    this->data[3] = this->data[3] / t;
+    res.data[0] = this->data[0] / t;
+    res.data[1] = this->data[1] / t;
+    res.data[2] = this->data[2] / t;
+    res.data[3] = this->data[3] / t;
+    
+    return res;
 }
 
 float Vector4::length() const {
