@@ -14,6 +14,7 @@ public:
     Matrix4(float value);
 
     Matrix4  operator+ (const Matrix4& rhs);
+    Vector4  operator* (const Vector4& rhs);
     Matrix4  operator* (const Matrix4& rhs);
     Matrix4  operator* (const float   rhs);
     bool     operator==(const Matrix4& rhs) const;

@@ -16,6 +16,9 @@
 #include <cmath>
 const unsigned int width = 800;
 const unsigned int height = 800;
+static float speed = 0.1f;
+static float sensitivity = 6.0f;
+static bool firstClick = true;
 
 void printMat4(const glm::mat4& matrix) {
     for (int i = 0; i < 4; ++i) {           // Loop over the rows
@@ -26,9 +29,99 @@ void printMat4(const glm::mat4& matrix) {
     }
 }
 
+void handle_inputs(GLFWwindow* window, Camera& camera) {
+    // Handles key inputs for world-space movement (Up, Back, Left, Right, Front)
+
+    // Move up (along the global Y axis)
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        /* camera.eye  = speed * camera.direction + camera.eye; // Up */
+
+        camera.eye  = Transformation::translation(0.0, 0.0, -0.1) *  camera.eye; // Up */
+    }
+    // Move back (along the global -Z axis)
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        /* camera.eye  =   camera.eye - camera.direction * speed  ; // Back */
+        camera.eye  = Transformation::translation(0.0, 0.0,  0.1) *  camera.eye; // Up */
+    }
+    // Move left (along the global -X axis)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        /* camera.eye  =  camera.eye - speed * (camera.direction | camera.up).normalize(); // Left */
+        camera.eye  = Transformation::translation( -0.1,  0.0,  0.0) *  camera.eye; // Up */
+    }
+    // Move right (along the global X axis)
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        /* camera.eye  = speed * camera.right + camera.eye; // Right */
+        camera.eye  = Transformation::translation( 0.1,  0.0,  0.0) *  camera.eye; // Up */
+    }
+    // Move front (along the global Z axis)
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+        /* camera.eye  =  speed * camera.up + camera.eye; // Front */
+        camera.eye  = Transformation::translation( 0.0 ,  -0.1,  0.0) *  camera.eye; // Up */
+    }
+    // Move down (along the global -Y axis)
+    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+        camera.eye  = Transformation::translation( 0.0,   0.1,  0.0) *  camera.eye; 
+        /* camera.eye  =   camera.eye - speed * camera.up  ; // Front */
+    }
+
+    
+    // Speed boost with shift
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+        speed = 0.4f; // Increase speed
+    } else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE) {
+        speed = 0.1f; // Reset speed
+    }
+
+    // Handles mouse inputs for rotation (camera orientation)
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        // Hide mouse cursor
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+        // Prevent camera jump on first click
+        if (firstClick) {
+            glfwSetCursorPos(window, width / 2.0, height / 2.0);
+            firstClick = false;
+        }
+
+        // Get cursor position
+        double mouseX, mouseY;
+        glfwGetCursorPos(window, &mouseX, &mouseY);
+
+        // Calculate rotation based on cursor movement
+        float rotX = sensitivity * (float)(mouseY - (height / 2.0)) / height;
+        float rotY = sensitivity * (float)(mouseX - (width / 2.0)) / width;
+
+        // Vertical rotation (rotate around global X axis)
+        Vector4 newDirection = Transformation::rotation_x(glm::radians(-rotX)) * camera.direction;
+        if (fabs(acos(newDirection.y) - glm::radians(90.0f)) <= glm::radians(85.0f)) {
+            camera.direction = newDirection;
+        }
+
+        // Horizontal rotation (rotate around global Y axis)
+        camera.direction = Transformation::rotation_y(glm::radians(-rotY)) * camera.direction;
+        camera.direction = camera.direction.normalize();
+
+        // Reset the cursor to the center of the screen
+        glfwSetCursorPos(window, width / 2.0, height / 2.0);
+    } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
+        // Show cursor when the camera is not rotating
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        firstClick = true;
+        
+    }
+}
+
 int main() {
 
     /*
+    Vector4 m(1.0, 1.0, 1.0, 1.0);
+    std::cout << "Translation " << std::endl;
+    std::cout << "Vec4 m = " << m <<std::endl;
+    m = Transformation::translation(5.0, 5.0, 5.0) * m;
+    std::cout << "Vec4 m  after tranlation = " << m   <<std::endl;
+    
+
+    
      float FOVdeg = 45.0;
      float nearPlane  = 1.0;
      float farPlane = 100.0;
@@ -86,8 +179,10 @@ int main() {
     
 
 
-
     */
+
+    
+
 
 
     if (!glfwInit()) {
@@ -188,6 +283,9 @@ int main() {
 
 
 
+
+        handle_inputs(window, camera);
+        Matrix4 view_proj = camera.compute_view_projection(new PinHole(45,1.0, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
         // Bind the VAO so OpenGL knows to use it
         shader.set_matrix4("transformation", transform);

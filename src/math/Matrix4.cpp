@@ -99,6 +99,19 @@ Matrix4  Matrix4::operator*(const float rhs) {
    return res;
 }
 
+
+Vector4  Matrix4::operator*(const Vector4& rhs) {
+    Vector4 res;
+     res.x = this->data[0].x * rhs.x + this->data[0].y * rhs.y + this->data[0].z * rhs.z + this->data[0].w * rhs.w;
+    res.y = this->data[1].x * rhs.x + this->data[1].y * rhs.y + this->data[1].z * rhs.z + this->data[1].w * rhs.w;
+    res.z = this->data[2].x * rhs.x + this->data[2].y * rhs.y + this->data[2].z * rhs.z + this->data[2].w * rhs.w;
+    res.w = this->data[3].x * rhs.x + this->data[3].y * rhs.y + this->data[3].z * rhs.z + this->data[3].w * rhs.w;
+
+
+    return res;
+    
+}
+
 bool Matrix4::operator==(const Matrix4& arg) const {
     return this->data[0] == arg.data[0] && 
            this->data[1] == arg.data[1] && 

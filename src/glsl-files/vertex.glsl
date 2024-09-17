@@ -7,7 +7,7 @@ uniform mat4 transformation;
 uniform mat4 cameraProj;
 
 void main () {
-    gl_Position =    cameraProj    * transformation* vec4(aPos, 1.0);
+    gl_Position =     cameraProj  * transformation  * vec4(aPos, 1.0);
     color = aColor;
 }
 

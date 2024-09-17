@@ -10,10 +10,11 @@ Camera::Camera(Vector4 eye , Vector4 direction , Vector4 up):
 
 void Camera::compute_othor_bases(CoordSystem coord_system) {
 
+    Vector4 temp_dir = direction + eye;
     if ( coord_system == CoordSystem::LEFT_HAND)
-        forward = (direction - eye).normalize();
+        forward = (temp_dir - eye).normalize();
     else if (coord_system == CoordSystem::RIGH_HAND)
-        forward = (eye - direction).normalize();
+        forward = (eye - temp_dir).normalize();
 
     right = (up | forward).normalize();
     new_up = forward | right;

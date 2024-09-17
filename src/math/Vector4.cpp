@@ -5,7 +5,7 @@ Vector4::Vector4(float x, float y, float z) {
   this->data[0] = x;
   this->data[1] = y;
   this->data[2] = z;
-  this->data[3] = 0.0;
+  this->data[3] = 1.0;
 }
 
 Vector4::Vector4(float x, float y, float z, float w) {
@@ -19,6 +19,7 @@ Vector4 Vector4::operator+(const Vector4 &rhs) const {
   return Vector4(this->data[0] + rhs.data[0], this->data[1] + rhs.data[1],
                  this->data[2] + rhs.data[2], this->data[3] + rhs.data[3]);
 }
+
 
 Vector4 Vector4::operator-(const Vector4 &rhs) const {
   return Vector4(this->data[0] - rhs.data[0], this->data[1] - rhs.data[1],
