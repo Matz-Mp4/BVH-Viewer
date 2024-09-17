@@ -55,15 +55,16 @@ Matrix4::Matrix4(const float mtx[16]) {
     this->data[3].z = mtx[14];
     this->data[3].w = mtx[15];
 }
-Matrix4& Matrix4::operator+(const Matrix4& arg) {
-   this->data[0] =this->data[0] + arg.data[0];
-   this->data[1] =this->data[1] + arg.data[1];
-   this->data[2] =this->data[2] + arg.data[2];
-   this->data[3] =this->data[3] + arg.data[3];
-   return *this;
+Matrix4  Matrix4::operator+(const Matrix4& arg) {
+    Matrix4 res;
+   res.data[0] =this->data[0] + arg.data[0];
+   res.data[1] =this->data[1] + arg.data[1];
+   res.data[2] =this->data[2] + arg.data[2];
+   res.data[3] =this->data[3] + arg.data[3];
+   return res;
 }
 
-Matrix4& Matrix4::operator*(const Matrix4& arg) {
+Matrix4  Matrix4::operator*(const Matrix4& arg) {
     Matrix4 res;
     for (int i = 0; i < 4; i++) {
          res.data[i].x = this->data[i].x * arg.data[0].x +  
@@ -86,16 +87,16 @@ Matrix4& Matrix4::operator*(const Matrix4& arg) {
                          this->data[i].z * arg.data[2].w +
                          this->data[i].w * arg.data[3].w;
     }
-    *this = res;    
-    return *this;
+    return res;
 }
 
-Matrix4& Matrix4::operator*(const float rhs) {
-   this->data[0] =  this->data[0] * rhs;
-   this->data[1] =  this->data[1] * rhs;
-   this->data[2] =  this->data[2] * rhs;
-   this->data[3] =  this->data[3] * rhs;
-   return *this;
+Matrix4  Matrix4::operator*(const float rhs) {
+    Matrix4 res;
+   res.data[0] =  this->data[0] * rhs;
+   res.data[1] =  this->data[1] * rhs;
+   res.data[2] =  this->data[2] * rhs;
+   res.data[3] =  this->data[3] * rhs;
+   return res;
 }
 
 bool Matrix4::operator==(const Matrix4& arg) const {

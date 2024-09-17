@@ -13,9 +13,9 @@ public:
     Matrix4(const float mtx[16]);
     Matrix4(float value);
 
-    Matrix4& operator+ (const Matrix4& rhs);
-    Matrix4& operator* (const Matrix4& rhs);
-    Matrix4& operator* (const float   rhs);
+    Matrix4  operator+ (const Matrix4& rhs);
+    Matrix4  operator* (const Matrix4& rhs);
+    Matrix4  operator* (const float   rhs);
     bool     operator==(const Matrix4& rhs) const;
 
     Matrix4  transpose() const;

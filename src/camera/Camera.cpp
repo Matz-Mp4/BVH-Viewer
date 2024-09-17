@@ -47,5 +47,5 @@ Matrix4 Camera::look_at(CoordSystem coord_system) {
 }
 
 Matrix4 Camera::compute_view_projection(TypeCamera* type_cam, CoordSystem coord_system) {
-    return type_cam->projection_matrix(coord_system) * this->look_at(coord_system);
+    return  look_at(coord_system) * type_cam->projection_matrix(coord_system) ;
 }
