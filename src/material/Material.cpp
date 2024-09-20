@@ -1,7 +1,6 @@
 #include "../../include/material/Material.hpp"
 
 
-
 Material::Material(Color c, float k_amb, float k_dif, float k_spec,  float exp, float k_trans , float index_ref  ):
     color(c),
     k_amb(k_amb),

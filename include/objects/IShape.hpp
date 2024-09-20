@@ -3,6 +3,6 @@
 #include "Mesh.hpp"
 
 class IShape {
-    protected:
+    public:
         virtual Mesh generate_mesh() const = 0;
 };

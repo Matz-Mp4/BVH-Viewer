@@ -1,13 +1,20 @@
 #pragma once
 #include "Mesh.hpp"
 #include "../material/Material.hpp"
-
-enum class TYPE_DRAW {NORMAL, WIRE_FRAME};
+#include "IShape.hpp"
 
 class GeometricObject {
     public :
-        /* virtual void                  draw(TYPE_DRAW type) = 0; */
-        virtual void     gen_mesh() = 0;
-        virtual void     set_mesh(Mesh mesh) = 0;
-        virtual void set_material(Material material) = 0;
+        GeometricObject() = default;
+       ~GeometricObject() = default;
+        GeometricObject(const IShape* shape, const Material& _material);
+        GeometricObject(const Mesh& _mesh, const Material& _material);
+        
+        GeometricObject     with_shape(const IShape* shape);
+        GeometricObject  with_material(const Material& _material);
+                
+    private: 
+        Material material;
+        Mesh        mesh;
+
 };

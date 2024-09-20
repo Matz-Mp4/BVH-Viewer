@@ -56,11 +56,11 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
     // Move front (along the global Z axis)
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
         /* camera.eye  =  speed * camera.up + camera.eye; // Front */
-        camera.eye  = Transformation::translation( 0.0 ,  -0.1,  0.0) *  camera.eye; // Up */
+        camera.eye  = Transformation::translation( 0.0 ,  0.1,  0.0) *  camera.eye; // Up */
     }
     // Move down (along the global -Y axis)
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-        camera.eye  = Transformation::translation( 0.0,   0.1,  0.0) *  camera.eye; 
+        camera.eye  = Transformation::translation( 0.0,   -0.1,  0.0) *  camera.eye; 
         /* camera.eye  =   camera.eye - speed * camera.up  ; // Front */
     }
 
@@ -268,7 +268,7 @@ int main() {
     Matrix4 view_proj = camera.compute_view_projection(new PinHole(90,1.0, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
     while (!glfwWindowShouldClose(window)){
-        glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+        glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
         		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.active_shader();
@@ -276,9 +276,9 @@ int main() {
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
             translate += step_trans;
-            transform = Transformation::rotation_x(translate)*
+            transform = Transformation::rotation_x(translate) *
                         Transformation::rotation_y(translate) * 
-                        Transformation::rotation_z(translate);
+                        Transformation::rotation_z(translate)  ;
 		}
 
 
