@@ -14,7 +14,7 @@ class Sphere : public IShape {
         Sphere() = default;
         ~Sphere() = default;
 
-        Sphere(const Vector4 &center, const float radius);
+        Sphere(const Vector4 &center, const float radius, unsigned int u = 20, unsigned int v  = 20); // latitude
 
         Mesh generate_mesh() const override;
 

@@ -1,8 +1,8 @@
 #include "../../../include/objects/shapes/Sphere.hpp"
 #include <cmath>
 
-Sphere::Sphere(const Vector4 &center, const float radius)
-    : center(center), radius(radius) {}
+Sphere::Sphere(const Vector4 &center, const float radius, unsigned int u , unsigned int v )
+    : center(center), radius(radius), u(u), v(v) {}
 
 
 Mesh Sphere::generate_mesh() const {

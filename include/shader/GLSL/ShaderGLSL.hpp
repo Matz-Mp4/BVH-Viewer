@@ -1,3 +1,5 @@
+#pragma once
+
 #include <string>
 #include <GL/glew.h>
 #include "../../math/Matrix4.hpp"

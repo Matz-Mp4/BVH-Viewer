@@ -9,13 +9,15 @@
 #include "../include/camera/Camera.hpp"
 #include "../include/math/Transforamation.hpp"
 #include "../include/camera/camera-types/PinHole.hpp"
+#include "../include/objects/Mesh.hpp"
+#include "../include/objects/shapes/Sphere.hpp"
 
 #include <iostream>
 #include <cmath>
 const unsigned int width = 800;
 const unsigned int height = 800;
 static float speed = 0.1f;
-static float sensitivity = 6.0f;
+static float sensitivity = 5.0f;
 static bool firstClick = true;
 
 
@@ -25,24 +27,25 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
 
     // Move up (along the global Y axis)
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        camera.eye  = speed * camera.direction + camera.eye; // Up
+        camera.eye  = camera.eye - speed * camera.forward ; // Up
 
         /* camera.eye  = Transformation::translation(0.0, 0.0, -0.1) *  camera.eye; // Up  */
     }
     // Move back (along the global -Z axis)
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        camera.eye  =   camera.eye - camera.direction * speed  ; // Back
+        camera.eye  =   camera.eye + camera.forward * speed  ; // Back
         /* camera.eye  = Transformation::translation(0.0, 0.0,  0.1) *  camera.eye; // */
     }
     // Move left (along the global -X axis)
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        /* camera.eye  =  camera.eye - speed * (camera.direction | camera.up).normalize(); // Left */
-        camera.eye  = -speed * camera.right + camera.eye; // Right
+        camera.eye  =  camera.eye - speed * (camera.direction | camera.up).normalize(); // Left
+        /* camera.eye  = -speed * camera.right + camera.eye; // Right */
         /* camera.eye  = Transformation::translation( -0.1,  0.0,  0.0) *  camera.eye; //  */
     }
     // Move right (along the global X axis)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        camera.eye  = speed * camera.right + camera.eye; // Right
+        camera.eye  =  camera.eye + speed * (camera.direction | camera.up).normalize(); // Left
+        /* camera.eye  = speed * camera.right + camera.eye; // Right */
         /* camera.eye  = Transformation::translation( 0.1,  0.0,  0.0) *  camera.eye; //  */
     }
     // Move front (along the global Z axis)
@@ -105,6 +108,7 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
 
 int main() {
 
+    
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
         exit(EXIT_FAILURE);
@@ -179,6 +183,9 @@ float verticalLength = 1.0f; // Length of the vertical part
         11, 8, 13, 14, 8, 13
     };
 
+    std::cout <<"sexo1";
+    Mesh m = Sphere(Vector4(0.0 , 0.0, 0.0), 1.0).generate_mesh();
+    std::cout <<"sexo";
 
     VAO vao;
     vao.Bind();
@@ -214,7 +221,7 @@ float verticalLength = 1.0f; // Length of the vertical part
 	glEnable(GL_DEPTH_TEST);
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f));
-    Matrix4 view_proj = camera.compute_view_projection(new PinHole(90,1.0, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
+    Matrix4 view_proj = camera.compute_view_projection(new PinHole(45,1.0, 1.0f, 100.0f), CoordSystem::RIGH_HAND);
 
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
@@ -234,7 +241,7 @@ float verticalLength = 1.0f; // Length of the vertical part
 
 
         handle_inputs(window, camera);
-        Matrix4 view_proj = camera.compute_view_projection(new PinHole(45,1.0, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
+        view_proj = camera.compute_view_projection(new PinHole(45,1.0, 1.0f, 100.0f), CoordSystem::RIGH_HAND);
 
         // Bind the VAO so OpenGL knows to use it
         shader.set_matrix4("transformation", transform);
