@@ -1,10 +1,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <glm/ext/vector_float3.hpp>
 #include <glm/glm.hpp>
 
 #include "../include/shader/GLSL/ShaderGLSL.hpp"
-#include<glm/gtc/matrix_transform.hpp>
 #include "../include/shader/GLSL/EBO.hpp"
 #include "../include/shader/GLSL/VAO.hpp"
 #include "../include/shader/GLSL/VBO.hpp"
@@ -17,51 +15,45 @@
 const unsigned int width = 800;
 const unsigned int height = 800;
 static float speed = 0.1f;
-static float sensitivity = 10.0f;
+static float sensitivity = 6.0f;
 static bool firstClick = true;
 
-void printMat4(const glm::mat4& matrix) {
-    for (int i = 0; i < 4; ++i) {           // Loop over the rows
-        for (int j = 0; j < 4; ++j) {       // Loop over the columns
-            std::cout << matrix[i][j] << " ";
-        }
-        std::cout << std::endl;              // New line after each row
-    }
-}
+
 
 void handle_inputs(GLFWwindow* window, Camera& camera) {
     // Handles key inputs for world-space movement (Up, Back, Left, Right, Front)
 
     // Move up (along the global Y axis)
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        /* camera.eye  = speed * camera.direction + camera.eye; // Up */
+        camera.eye  = speed * camera.direction + camera.eye; // Up
 
-        camera.eye  = Transformation::translation(0.0, 0.0, -0.1) *  camera.eye; // Up */
+        /* camera.eye  = Transformation::translation(0.0, 0.0, -0.1) *  camera.eye; // Up  */
     }
     // Move back (along the global -Z axis)
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        /* camera.eye  =   camera.eye - camera.direction * speed  ; // Back */
-        camera.eye  = Transformation::translation(0.0, 0.0,  0.1) *  camera.eye; // Up */
+        camera.eye  =   camera.eye - camera.direction * speed  ; // Back
+        /* camera.eye  = Transformation::translation(0.0, 0.0,  0.1) *  camera.eye; // */
     }
     // Move left (along the global -X axis)
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
         /* camera.eye  =  camera.eye - speed * (camera.direction | camera.up).normalize(); // Left */
-        camera.eye  = Transformation::translation( -0.1,  0.0,  0.0) *  camera.eye; // Up */
+        camera.eye  = -speed * camera.right + camera.eye; // Right
+        /* camera.eye  = Transformation::translation( -0.1,  0.0,  0.0) *  camera.eye; //  */
     }
     // Move right (along the global X axis)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        /* camera.eye  = speed * camera.right + camera.eye; // Right */
-        camera.eye  = Transformation::translation( 0.1,  0.0,  0.0) *  camera.eye; // Up */
+        camera.eye  = speed * camera.right + camera.eye; // Right
+        /* camera.eye  = Transformation::translation( 0.1,  0.0,  0.0) *  camera.eye; //  */
     }
     // Move front (along the global Z axis)
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        /* camera.eye  =  speed * camera.up + camera.eye; // Front */
-        camera.eye  = Transformation::translation( 0.0 ,  0.1,  0.0) *  camera.eye; // Up */
+        camera.eye  =  speed * camera.up + camera.eye; // Front
+        /* camera.eye  = Transformation::translation( 0.0 ,  0.1,  0.0) *  camera.eye; // */
     }
     // Move down (along the global -Y axis)
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-        camera.eye  = Transformation::translation( 0.0,   -0.1,  0.0) *  camera.eye; 
-        /* camera.eye  =   camera.eye - speed * camera.up  ; // Front */
+        /* camera.eye  = Transformation::translation( 0.0,   -0.1,  0.0) *  camera.eye;  */
+        camera.eye  =   camera.eye - speed * camera.up  ; // Front
     }
 
     
@@ -112,78 +104,6 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
 }
 
 int main() {
-
-    /*
-    Vector4 m(1.0, 1.0, 1.0, 1.0);
-    std::cout << "Translation " << std::endl;
-    std::cout << "Vec4 m = " << m <<std::endl;
-    m = Transformation::translation(5.0, 5.0, 5.0) * m;
-    std::cout << "Vec4 m  after tranlation = " << m   <<std::endl;
-    
-
-    
-     float FOVdeg = 45.0;
-     float nearPlane  = 1.0;
-     float farPlane = 100.0;
-
-     ///////////OPENGL\\\\\\\\\\\\\\
-
-     glm::vec3 Position = glm::vec3(0.0, 0.0, 0.2);
-     glm::vec3 Orientation = glm::vec3(0.0, 0.0, -0.1);
-     glm::vec3 Up = glm::vec3(0.0, 1.0, 0.0);
-
-	glm::mat4 lookAt= glm::mat4(1.0f);
-	glm::mat4 projection = glm::mat4(1.0f);
-
-	// Makes camera look in the right direction from the right position
-	lookAt= glm::lookAt(Position, Position + Orientation, Up);
-	// Adds perspective to the scene
-	projection = glm::perspective(glm::radians(FOVdeg), (float)width / height, nearPlane, farPlane);
-
-    glm::mat4 view_proj = projection * lookAt;
-
-
-     ///////////Mine\\\\\\\\\\\\\\
-    
-    Vector4 position = Vector4(0.0, 0.0, 0.2);
-    Vector4 orientation = Vector4(0.0, 0.0, -0.1);
-    Vector4 up = Vector4(0.0, 1.0, 0.0);
-
-    Camera camera = Camera(position, orientation, up);
-    Matrix4 m_lookAt = camera.look_at(CoordSystem::RIGH_HAND);
-    Matrix4 m_projection =  Matrix4(PinHole(FOVdeg, (float)width / height,  nearPlane, farPlane).projection_matrix(CoordSystem::RIGH_HAND));
-    Matrix4 m_view_proj =   m_lookAt * m_projection;
-
-    std::cout << "LookAt Matrix OpenGL: " << std::endl;
-    printMat4(lookAt);
-
-
-    std::cout << "LookAt Matrix Mine: " << std::endl;
-    std::cout << m_lookAt << std::endl; 
-
-
-    std::cout << "Projection Matrix OpenGL: " << std::endl;
-    printMat4(projection);
-
-    std::cout << "Projection Matrix Mine: " << std::endl;
-    std::cout << m_projection<< std::endl; 
-
-
-    
-
-    std::cout << "View Projection Matrix OpenGL: " << std::endl;
-    printMat4(view_proj);
-
-    std::cout << "View Projection Matrix Mine: " << std::endl;
-    std::cout << m_view_proj << std::endl; 
-    
-
-
-    */
-
-    
-
-
 
     if (!glfwInit()) {
         std::cerr << "Failed to initialize GLFW" << std::endl;
@@ -305,7 +225,7 @@ float verticalLength = 1.0f; // Length of the vertical part
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
             translate += step_trans;
-            transform = Transformation::rotation_y(translate) ;
+            /* transform = Transformation::rotation_y(translate) ; */
                         /* Transformation::rotation_y(translate) ; */
                         /* Transformation::rotation_z(translate)  ; */
 		}
