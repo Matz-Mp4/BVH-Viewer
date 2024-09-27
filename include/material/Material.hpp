@@ -13,8 +13,8 @@
 class Material {
     public:
         Material() = default;
-       ~Material();
-        Material(Color c, float k_amb, float k_dif, float k_spec,  float exp, float k_trans = 0, float index_ref = 0/*, IShade* luminance = nullptr*/);
+       ~Material() = default;
+        Material(Color c, float k_amb, float k_dif, float k_spec,  float exp, float k_trans = 0, float index_ref = 0);
 
         Material&      turn_into_matte(float k_amb, float k_dif);
         Material&    turn_into_plastic(float k_spec, float exp);

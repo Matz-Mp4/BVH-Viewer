@@ -17,7 +17,7 @@
 const unsigned int width = 800;
 const unsigned int height = 800;
 static float speed = 0.1f;
-static float sensitivity = 6.0f;
+static float sensitivity = 10.0f;
 static bool firstClick = true;
 
 void printMat4(const glm::mat4& matrix) {
@@ -212,24 +212,53 @@ int main() {
     std::string frag_path = "../src/glsl-files/fragment.glsl";
 
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
+    float height = 2.0f;
+float length = 1.0f;
+float thickness = 0.1f;
+float verticalLength = 1.0f; // Length of the vertical part
+                             
+    GLfloat vertices[] = {
+        // Vertical box
+        -0.2f, 0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom left front
+        -0.2f, 2.0f,  0.2f,   0.7,0.0,0.0,  // Top left front
+         0.1f, 2.0f,  0.2f,   0.7,0.0,0.0,  // Top right front
+         0.1f, 0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom right front
+         -0.2f, 0.0f,-0.2f,   0.7,0.0,0.0,   // Bottom left back
+         -0.2f, 2.0f,-0.2f,   0.7,0.0,0.0,   // Top left back
+         0.1f, 2.0f, -0.2f,   0.7,0.0,0.0,  // Top right back
+         0.1f, 0.0f, -0.2f,   0.7,0.0,0.0,  // Bottom right back
 
-    GLfloat vertices [] = {
-           /* positions    */      /*     colors     */
-        -0.50f, 0.00f,  0.50f,     0.50f, 0.80f, 0.80f,
-	    -0.50f, 0.00f, -0.50f,     0.30f, 0.30f, 0.30f,
-	     0.50f, 0.00f, -0.50f,     0.50f, 0.50f, 0.50f,
-	     0.50f, 0.00f,  0.50f,     0.83f, 0.70f, 0.44f,
-	     0.00f, 0.80f,  0.00f,     0.92f, 0.86f, 0.76f
+        // Horizontal box
+         0.1f,  0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom right front (previously defined)
+         0.1f,  0.0f, -0.2f,   0.7,0.0,0.0,  // Bottom right back (previously defined)
+        -0.85f, 0.0f, -0.2f,   0.7,0.0,0.0,  // Bottom left back
+        -0.85f, 0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom left front
+        -0.85f,-0.5f, -0.2f,   0.7,0.0,0.0,  // Bottom left back bottom
+        -0.85f,-0.5f,  0.2f,   0.7,0.0,0.0,  // Bottom left front bottom
+         0.1f, -0.5f,  0.2f,   0.7,0.0,0.0,  // Bottom right front bottom
+         0.1f, -0.5f, -0.2f,   0.7,0.0,0.0,  // Bottom right back bottom
     };
 
     GLuint indices[] = {
-        0, 1, 2,
-	    0, 2, 3,
-	    0, 1, 4,
-	    1, 2, 4,
-	    2, 3, 4,
-	    3, 0, 4
+        // Vertical box
+        0, 1, 2, 0, 2, 3,
+        4, 5, 6, 4, 6, 7,
+        0, 1, 5, 0, 5, 4,
+        1, 2, 6, 1, 6, 5,
+        2, 3, 7, 2, 7, 6,
+        3, 0, 4, 3, 4, 7,
+
+        // Horizontal box
+        8, 9, 10, 8, 10, 11,
+        12, 13, 14, 12, 14, 15,
+        8, 9, 14, 14, 9, 15,
+        9, 10, 15, 12, 10, 15,
+
+        9, 10, 14, 9, 14, 13,
+        10, 11, 13, 13, 10, 12,
+        11, 8, 13, 14, 8, 13
     };
+
 
     VAO vao;
     vao.Bind();
@@ -258,7 +287,7 @@ int main() {
     Matrix4 transform(unit_mtx); 
     
     // Variables that help the rotation of the pyramid
-	float step_trans = 0.01f;
+	float step_trans = 0.05f;
 	double prevTime = glfwGetTime();
     float translate = 0.0;
     // Enables the Depth Buffer
@@ -276,9 +305,9 @@ int main() {
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
             translate += step_trans;
-            transform = Transformation::rotation_x(translate) *
-                        Transformation::rotation_y(translate) * 
-                        Transformation::rotation_z(translate)  ;
+            transform = Transformation::rotation_y(translate) ;
+                        /* Transformation::rotation_y(translate) ; */
+                        /* Transformation::rotation_z(translate)  ; */
 		}
 
 

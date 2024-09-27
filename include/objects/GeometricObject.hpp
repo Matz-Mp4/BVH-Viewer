@@ -1,7 +1,8 @@
 #pragma once
-#include "Mesh.hpp"
+
 #include "../material/Material.hpp"
 #include "IShape.hpp"
+#include "Mesh.hpp"
 
 class GeometricObject {
     public :
