@@ -1,4 +1,6 @@
 #include <GL/glew.h>
+#include <vector>
+#include "../../objects/Vertex.hpp"
 #pragma once
 
 class VBO {
@@ -6,6 +8,7 @@ class VBO {
         
         // Constructor that generates a Vertex Buffer Object and links it to vertices
         VBO(GLfloat *vertices, GLsizeiptr size);
+        VBO(std::vector<Vertex> vertices);
         VBO() = default;
 
         void   Bind();

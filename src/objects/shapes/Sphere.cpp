@@ -18,6 +18,7 @@ Mesh Sphere::generate_mesh() const {
             float theta1 = (i + 1.0) * 180.0 / (u - 1.0);
             float phi1 =   (j + 1.0) * 360.0 / (v - 1.0);
 
+
             Vector4 p0 = position(radius, theta, phi);
             Vector4 n0 = p0.normalize();
 
@@ -55,8 +56,9 @@ Vector4 Sphere::position(float radius, float theta, float phi) {
     theta = glm::radians(theta);
     phi = glm::radians(phi);
     return Vector4(
-        radius * sin(theta) * cos(phi),
-        radius * cos(theta),
-        radius * sin(theta) * sin(phi)
+         radius * sin(theta) * cos(phi),
+         radius * cos(theta),
+         radius * sin(theta) * sin(phi),
+         1.0
        );
 }

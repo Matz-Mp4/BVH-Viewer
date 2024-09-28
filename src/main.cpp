@@ -14,8 +14,8 @@
 
 #include <iostream>
 #include <cmath>
-const unsigned int width = 800;
-const unsigned int height = 800;
+const unsigned int width = 600;
+const unsigned int height = 600;
 static float speed = 0.1f;
 static float sensitivity = 5.0f;
 static bool firstClick = true;
@@ -106,31 +106,6 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
     }
 }
 
-
-void setupSphereBuffers(const Mesh& mesh, GLuint& VAO, GLuint& VBO, GLuint& EBO) {
-    // Generate and bind VAO
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
-
-    // Generate and bind VBO (Vertex Buffer Object)
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), &mesh.vertices[0], GL_STATIC_DRAW);
-
-    // Generate and bind EBO (Element Buffer Object)
-    glGenBuffers(1, &EBO);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
-
-    // Vertex Position Attribute
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    // Vertex Normal Attribute
-    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector4));
-    glEnableVertexAttribArray(1);
-}
-
 int main() {
 
     
@@ -166,68 +141,23 @@ int main() {
     float thickness = 0.1f;
     float verticalLength = 1.0f; // Length of the vertical part
                              
-    GLfloat vertices[] = {
-        // Vertical box
-        -0.2f, 0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom left front
-        -0.2f, 2.0f,  0.2f,   0.7,0.0,0.0,  // Top left front
-         0.1f, 2.0f,  0.2f,   0.7,0.0,0.0,  // Top right front
-         0.1f, 0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom right front
-         -0.2f, 0.0f,-0.2f,   0.7,0.0,0.0,   // Bottom left back
-         -0.2f, 2.0f,-0.2f,   0.7,0.0,0.0,   // Top left back
-         0.1f, 2.0f, -0.2f,   0.7,0.0,0.0,  // Top right back
-         0.1f, 0.0f, -0.2f,   0.7,0.0,0.0,  // Bottom right back
-
-        // Horizontal box
-         0.1f,  0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom right front (previously defined)
-         0.1f,  0.0f, -0.2f,   0.7,0.0,0.0,  // Bottom right back (previously defined)
-        -0.85f, 0.0f, -0.2f,   0.7,0.0,0.0,  // Bottom left back
-        -0.85f, 0.0f,  0.2f,   0.7,0.0,0.0,  // Bottom left front
-        -0.85f,-0.5f, -0.2f,   0.7,0.0,0.0,  // Bottom left back bottom
-        -0.85f,-0.5f,  0.2f,   0.7,0.0,0.0,  // Bottom left front bottom
-         0.1f, -0.5f,  0.2f,   0.7,0.0,0.0,  // Bottom right front bottom
-         0.1f, -0.5f, -0.2f,   0.7,0.0,0.0,  // Bottom right back bottom
-    };
-
-    GLuint indices[] = {
-        // Vertical box
-        0, 1, 2, 0, 2, 3,
-        4, 5, 6, 4, 6, 7,
-        0, 1, 5, 0, 5, 4,
-        1, 2, 6, 1, 6, 5,
-        2, 3, 7, 2, 7, 6,
-        3, 0, 4, 3, 4, 7,
-
-        // Horizontal box
-        8, 9, 10, 8, 10, 11,
-        12, 13, 14, 12, 14, 15,
-        8, 9, 14, 14, 9, 15,
-        9, 10, 15, 12, 10, 15,
-
-        9, 10, 14, 9, 14, 13,
-        10, 11, 13, 13, 10, 12,
-        11, 8, 13, 14, 8, 13
-    };
-
     Mesh m = Sphere(Vector4(0.0 , 0.0, 0.0), 1.0 ).generate_mesh();
 
     VAO vao;
-    VBO vbo;
-    EBO ebo;
-
-    /* vao.Bind(); */
+       vao.Bind();
 	// Generates Vertex Buffer Object and links it to vertices
-    /* VBO vbo(vertices, sizeof(vertices)); */
+    VBO vbo(m.vertices);
 	// Generates Element Buffer Object and links it to indices
-    /* EBO ebo(indices, sizeof(indices));     */
+    EBO ebo(m.indices );    
 
 
-    setupSphereBuffers(m, vao.ID, vbo.ID, ebo.ID);
+    /* setupSphereBuffers(m, vao.ID, vbo.ID, ebo.ID); */
 
     //Links VBO to VAO
     //Vertex Position data to layout = 0
-    /* vao.LinkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0 ); */
+    vao.LinkAttrib(vbo, 0, 4, GL_FLOAT, sizeof(Vertex), (void*)0 );
     //Vertex Color to layout = 1
-    /* vao.LinkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)) ); */
+    vao.LinkAttrib(vbo, 1, 4, GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, normal));
     //Unbind all to prevent accidentally modifying them
     vao.Unbind();
     vbo.Unbind();
@@ -249,8 +179,8 @@ int main() {
     // Enables the Depth Buffer
 	glEnable(GL_DEPTH_TEST);
 
-    Camera camera(Vector4(0.0f, 0.0f,  5.0f));
-    Matrix4 view_proj = camera.compute_view_projection(new PinHole(45,width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
+    Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
+    Matrix4 view_proj = camera.compute_view_projection(new PinHole(120, 4.0/ 3, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
@@ -260,17 +190,17 @@ int main() {
 
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
-            /* translate += step_trans; */
-            /* transform = Transformation::rotation_y(translate) * */
-                        /* Transformation::rotation_y(translate) * */
-                        /* Transformation::rotation_z(translate)  ; */
+            translate += step_trans;
+            transform = Transformation::rotation_y(translate) *
+                        Transformation::rotation_y(translate) *
+                        Transformation::rotation_z(translate)  ;
 		}
 
 
 
 
         handle_inputs(window, camera);
-        view_proj = camera.compute_view_projection(new PinHole(45,width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
+        view_proj = camera.compute_view_projection(new PinHole(120, 4.0 /3, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
         // Bind the VAO so OpenGL knows to use it
         shader.set_matrix4("transformation", transform);

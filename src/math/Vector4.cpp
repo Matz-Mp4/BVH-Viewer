@@ -5,7 +5,7 @@ Vector4::Vector4(float x, float y, float z) {
   this->data[0] = x;
   this->data[1] = y;
   this->data[2] = z;
-  this->data[3] = 1.0;
+  this->data[3] = 0.0;
 }
 
 Vector4::Vector4(float x, float y, float z, float w) {
