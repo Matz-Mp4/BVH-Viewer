@@ -106,6 +106,31 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
     }
 }
 
+
+void setupSphereBuffers(const Mesh& mesh, GLuint& VAO, GLuint& VBO, GLuint& EBO) {
+    // Generate and bind VAO
+    glGenVertexArrays(1, &VAO);
+    glBindVertexArray(VAO);
+
+    // Generate and bind VBO (Vertex Buffer Object)
+    glGenBuffers(1, &VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), &mesh.vertices[0], GL_STATIC_DRAW);
+
+    // Generate and bind EBO (Element Buffer Object)
+    glGenBuffers(1, &EBO);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
+
+    // Vertex Position Attribute
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    // Vertex Normal Attribute
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)sizeof(Vector4));
+    glEnableVertexAttribArray(1);
+}
+
 int main() {
 
     
@@ -137,9 +162,9 @@ int main() {
 
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
     float height = 2.0f;
-float length = 1.0f;
-float thickness = 0.1f;
-float verticalLength = 1.0f; // Length of the vertical part
+    float length = 1.0f;
+    float thickness = 0.1f;
+    float verticalLength = 1.0f; // Length of the vertical part
                              
     GLfloat vertices[] = {
         // Vertical box
@@ -183,22 +208,26 @@ float verticalLength = 1.0f; // Length of the vertical part
         11, 8, 13, 14, 8, 13
     };
 
-    std::cout <<"sexo1";
-    Mesh m = Sphere(Vector4(0.0 , 0.0, 0.0), 1.0).generate_mesh();
-    std::cout <<"sexo";
+    Mesh m = Sphere(Vector4(0.0 , 0.0, 0.0), 1.0 ).generate_mesh();
 
     VAO vao;
-    vao.Bind();
+    VBO vbo;
+    EBO ebo;
+
+    /* vao.Bind(); */
 	// Generates Vertex Buffer Object and links it to vertices
-    VBO vbo(vertices, sizeof(vertices));
+    /* VBO vbo(vertices, sizeof(vertices)); */
 	// Generates Element Buffer Object and links it to indices
-    EBO ebo(indices, sizeof(indices));    
+    /* EBO ebo(indices, sizeof(indices));     */
+
+
+    setupSphereBuffers(m, vao.ID, vbo.ID, ebo.ID);
 
     //Links VBO to VAO
     //Vertex Position data to layout = 0
-    vao.LinkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0 );
+    /* vao.LinkAttrib(vbo, 0, 3, GL_FLOAT, 6 * sizeof(float), (void*)0 ); */
     //Vertex Color to layout = 1
-    vao.LinkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)) );
+    /* vao.LinkAttrib(vbo, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)) ); */
     //Unbind all to prevent accidentally modifying them
     vao.Unbind();
     vbo.Unbind();
@@ -221,7 +250,7 @@ float verticalLength = 1.0f; // Length of the vertical part
 	glEnable(GL_DEPTH_TEST);
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f));
-    Matrix4 view_proj = camera.compute_view_projection(new PinHole(45,1.0, 1.0f, 100.0f), CoordSystem::RIGH_HAND);
+    Matrix4 view_proj = camera.compute_view_projection(new PinHole(45,width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
@@ -231,9 +260,9 @@ float verticalLength = 1.0f; // Length of the vertical part
 
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
-            translate += step_trans;
-            /* transform = Transformation::rotation_y(translate) ; */
-                        /* Transformation::rotation_y(translate) ; */
+            /* translate += step_trans; */
+            /* transform = Transformation::rotation_y(translate) * */
+                        /* Transformation::rotation_y(translate) * */
                         /* Transformation::rotation_z(translate)  ; */
 		}
 
@@ -241,14 +270,14 @@ float verticalLength = 1.0f; // Length of the vertical part
 
 
         handle_inputs(window, camera);
-        view_proj = camera.compute_view_projection(new PinHole(45,1.0, 1.0f, 100.0f), CoordSystem::RIGH_HAND);
+        view_proj = camera.compute_view_projection(new PinHole(45,width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
         // Bind the VAO so OpenGL knows to use it
         shader.set_matrix4("transformation", transform);
         shader.set_matrix4("cameraProj", view_proj);
         vao.Bind();
 
-        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES,m.indices.size(), GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

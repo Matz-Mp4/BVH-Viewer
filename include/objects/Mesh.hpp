@@ -12,16 +12,18 @@
 //TODO: fan_triangle
 class Mesh {
     public :
-        Mesh() = default;
+         Mesh() = default;
         ~Mesh() = default;
+         Mesh(std::vector<Vertex> vertices);
 
-        Mesh(std::vector<Vertex> vertices);
+        // Add a vertex to the mesh and return its index 
+        unsigned int   add_vertex(Vector4 position, Vector4 normal);
+        void           add_indice(unsigned int indice);
+        void update_num_triangles();
 
-       void add_vertex(Vector4 position, Vector4 normal);
-       void add_indice(unsigned int indice);
-       void update_num_triangles();
+        friend std::ostream& operator<<(std::ostream& stream, const Mesh& mesh); 
 
-    private:
+
         std::vector<Vertex>      vertices;
         std::vector<unsigned int> indices;
         size_t                  triangles;
