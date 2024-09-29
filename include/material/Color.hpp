@@ -33,5 +33,6 @@ static const Color GREEN   = Color(0.0, 1.0, 0.0);
 static const Color CYAN    = Color(0.0, 1.0, 1.0);
 static const Color MAGENTA = Color(1.0, 0.0, 1.0);
 static const Color YELLOW  = Color(1.0, 1.0, 0.0);
+static const Color ORANGE  = Color(1.0, 0.5, 0.0);
 
 

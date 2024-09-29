@@ -6,10 +6,7 @@
 
 /**
   Represents a surface of a object by a list of points
-  that belongs to this surfaces
 **/
-
-//TODO: fan_triangle
 class Mesh {
     public :
          Mesh() = default;

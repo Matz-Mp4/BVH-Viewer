@@ -19,3 +19,17 @@ GeometricObject  GeometricObject::with_material(const Material& _material) {
 GeometricObject  GeometricObject::with_shape(const IShape* shape) {
     return GeometricObject(shape, material);
 }
+
+Material GeometricObject::get_material() const {
+    return material;
+}
+
+
+std::vector<Vertex> GeometricObject::get_vertices() const {
+    return mesh.vertices;
+}
+
+
+std::vector<unsigned int> GeometricObject::get_indices() const {
+    return mesh.indices;
+}

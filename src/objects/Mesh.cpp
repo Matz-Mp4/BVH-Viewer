@@ -18,16 +18,16 @@ void Mesh::update_num_triangles() {
 }
 
 std::ostream& operator<<(std::ostream& stream, const Mesh& mesh) {
-    std::cout<< "Vertices  = {" << std::endl;
+    stream << "Vertices  = (Postion, Vertices) = {" << std::endl;
     for(int i = 0; i < mesh.vertices.size(); i++ ) {
-        std::cout<< "(Position  = " << mesh.vertices[i].position << std::endl;
-        std::cout<< "Normal    = " << mesh.vertices[i].normal<< ")" << std::endl;
+        stream << "   [" << mesh.vertices[i].position << ", " << mesh.vertices[i].normal << "]," << std::endl;
     }
-    std::cout << " } " << std::endl;
+    stream << " } " << std::endl;
 
     std::cout<< "Indices = {" << std::endl;
     for(int i = 0; i < mesh.indices.size(); i++ ) {
-        std::cout<< "Indice  = " << mesh.indices[i]<< std::endl;
+        stream << "   [" << mesh.indices[i]<<"]," <<std::endl;
     }
-    std::cout << " } " << std::endl;
+    stream << " } " << std::endl;
+    return stream;
 }

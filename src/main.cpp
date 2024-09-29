@@ -10,6 +10,8 @@
 #include "../include/math/Transforamation.hpp"
 #include "../include/camera/camera-types/PinHole.hpp"
 #include "../include/objects/Mesh.hpp"
+#include "../include/objects/GeometricObject.hpp"
+#include "../include/material/Material.hpp"
 #include "../include/objects/shapes/Sphere.hpp"
 
 #include <iostream>
@@ -129,31 +131,23 @@ int main() {
 
     //Load Glew to it confuires OpenGL
     glewInit();
-
     glViewport(0, 0, width, height);
 
     std::string vertex_path = "../src/glsl-files/vertex.glsl";
     std::string frag_path = "../src/glsl-files/fragment.glsl";
-
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
-    float height = 2.0f;
-    float length = 1.0f;
-    float thickness = 0.1f;
-    float verticalLength = 1.0f; // Length of the vertical part
-                             
-    Mesh m = Sphere(Vector4(0.0 , 0.0, 0.0), 1.0 ).generate_mesh();
+
+    Mesh m = Sphere(Vector4(0.0 , 0.0, 0.0), 1.0 , 10, 10).generate_mesh();
+    GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.0, 30, 20), Material::RED_PLASTIC);
+    /* std::cout << m; */
 
     VAO vao;
-       vao.Bind();
+    vao.Bind();
 	// Generates Vertex Buffer Object and links it to vertices
-    VBO vbo(m.vertices);
+    VBO vbo(object.get_vertices());
 	// Generates Element Buffer Object and links it to indices
-    EBO ebo(m.indices );    
+    EBO ebo(object.get_indices());    
 
-
-    /* setupSphereBuffers(m, vao.ID, vbo.ID, ebo.ID); */
-
-    //Links VBO to VAO
     //Vertex Position data to layout = 0
     vao.LinkAttrib(vbo, 0, 4, GL_FLOAT, sizeof(Vertex), (void*)0 );
     //Vertex Color to layout = 1
@@ -182,6 +176,8 @@ int main() {
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
     Matrix4 view_proj = camera.compute_view_projection(new PinHole(120, 4.0/ 3, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
+    unsigned int indices_size = object.get_indices().size();
+    
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
         		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -190,10 +186,10 @@ int main() {
 
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
-            translate += step_trans;
-            transform = Transformation::rotation_y(translate) *
-                        Transformation::rotation_y(translate) *
-                        Transformation::rotation_z(translate)  ;
+            /* translate += step_trans; */
+            /* transform = Transformation::rotation_y(translate) * */
+                        /* Transformation::rotation_y(translate) * */
+                        /* Transformation::rotation_z(translate)  ; */
 		}
 
 
@@ -207,11 +203,12 @@ int main() {
         shader.set_matrix4("cameraProj", view_proj);
         vao.Bind();
 
-        glDrawElements(GL_TRIANGLES,m.indices.size(), GL_UNSIGNED_INT, 0);
+        /* glDrawElements(GL_TRIANGLES,m.indices.size(), GL_UNSIGNED_INT, 0); */
+        glDrawElements(GL_LINES, indices_size, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
-    }
+    } 
 
     vao.Delete();
     vbo.Delete();
