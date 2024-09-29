@@ -10,5 +10,3 @@ void main () {
     gl_Position =     cameraProj  * transformation  * position;
     color = vec3(normal.x, normal.y, normal.z );
 }
-
-

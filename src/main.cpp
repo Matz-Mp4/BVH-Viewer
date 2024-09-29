@@ -17,13 +17,13 @@
 
 #include <iostream>
 #include <cmath>
-const unsigned int width = 600;
-const unsigned int height = 600;
+const unsigned int width = 800;
+const unsigned int height = 800;
 static float speed = 0.1f;
-static float sensitivity = 4.5f;
+static float sensitivity = 5.0f;
 static bool firstClick = true;
-
-
+static float prev_mouse_x = 0.0;
+static float prev_mouse_y = 0.0; 
 
 void handle_inputs(GLFWwindow* window, Camera& camera) {
     // Handles key inputs for world-space movement (Up, Back, Left, Right, Front)
@@ -53,13 +53,13 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
     }
     // Move front (along the global Z axis)
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        camera.eye  =  speed * camera.up + camera.eye; // Front
+        camera.eye  =  speed * camera.new_up + camera.eye; // Front
         /* camera.eye  = Transformation::translation( 0.0 ,  0.1,  0.0) *  camera.eye; // */
     }
     // Move down (along the global -Y axis)
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
         /* camera.eye  = Transformation::translation( 0.0,   -0.1,  0.0) *  camera.eye;  */
-        camera.eye  =   camera.eye - speed * camera.up  ; // Front
+        camera.eye  =   camera.eye - speed * camera.new_up  ; // Front
     }
 
     
@@ -72,8 +72,10 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
 
     // Handles mouse inputs for rotation (camera orientation)
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
         // Hide mouse cursor
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        /* glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); */
+        glfwSetCursorPos(window, width / 2.0, height / 2.0);
 
         // Prevent camera jump on first click
         if (firstClick) {
@@ -89,22 +91,22 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
         float rotX = sensitivity * (float)(mouseY - (height / 2.0)) / height;
         float rotY = sensitivity * (float)(mouseX - (width / 2.0)) / width;
 
-        // Vertical rotation (rotate around global X axis)
-        Vector4 newDirection = Transformation::rotation_x(glm::radians(-rotX)) * camera.direction;
+        // Vertical rotation (rotate around global X axis)j
+        Vector4 newDirection = Transformation::rotation(glm::radians( -rotX) , (camera.direction | camera.up).normalize() ) * camera.direction;
         if (fabs(acos(newDirection.y) - glm::radians(90.0f)) <= glm::radians(85.0f)) {
             camera.direction = newDirection;
         }
+        camera.direction = Transformation::rotation(glm::radians( -rotY) , camera.up) * camera.direction;
 
         // Horizontal rotation (rotate around global Y axis)
-        camera.direction = Transformation::rotation_y(glm::radians(-rotY)) * camera.direction;
-        camera.direction = camera.direction.normalize();
 
         // Reset the cursor to the center of the screen
         glfwSetCursorPos(window, width / 2.0, height / 2.0);
     } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
         // Show cursor when the camera is not rotating
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         firstClick = true;
+
+        glfwSetCursorPos(window, width / 2.0, height / 2.0);
         
     }
 }
@@ -138,10 +140,9 @@ int main() {
     std::string frag_path = "../src/glsl-files/fragment.glsl";
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
 
-    /* GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.5), Material::RED_PLASTIC); */
+    GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.5, 50, 50), Material::RED_PLASTIC);
     /* GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.5 ), Material::RED_PLASTIC); */
-    GeometricObject object = GeometricObject(new Cylinder(Vector4(0.0 , 0.0, 0.0), 0.5, 0.5), Material::RED_PLASTIC);
-    /* std::cout << m; */
+    /* GeometricObject object = GeometricObject(new Cylinder(Vector4(0.0 , 0.0, 0.0), 0.5, 0.5), Material::RED_PLASTIC); */
 
     VAO vao;
     vao.Bind();
@@ -176,7 +177,7 @@ int main() {
 	glEnable(GL_DEPTH_TEST);
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
-    Matrix4 view_proj = camera.compute_view_projection(new PinHole(120, 4.0/ 3, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
+    Matrix4 view_proj = camera.compute_view_projection(new PinHole(45, (float)width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
     unsigned int indices_size = object.get_indices().size();
     
@@ -188,9 +189,9 @@ int main() {
 
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
-            translate += step_trans;
-            transform = Transformation::rotation_z(translate) *
-                        Transformation::rotation_x(translate) ;
+            /* translate += step_trans; */
+            /* transform = Transformation::rotation_z(translate) * */
+                        /* Transformation::rotation_x(translate) ; */
                         /* Transformation::rotation_y(translate)  ; */
 		}
 
@@ -198,15 +199,17 @@ int main() {
 
 
         handle_inputs(window, camera);
-        view_proj = camera.compute_view_projection(new PinHole(120, 4.0 /3, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
+        view_proj = camera.compute_view_projection(new PinHole(45, (float)width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
         // Bind the VAO so OpenGL knows to use it
         shader.set_matrix4("transformation", transform);
         shader.set_matrix4("cameraProj", view_proj);
         vao.Bind();
-
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
+        glDrawElements(GL_TRIANGLES, indices_size, GL_UNSIGNED_INT, 0);
         /* glDrawElements(GL_TRIANGLES,indices_size, GL_UNSIGNED_INT, 0); */
-        glDrawElements(GL_LINES, indices_size, GL_UNSIGNED_INT, 0);
+        /* glDrawElements(GL_POINT, indices_size, GL_UNSIGNED_INT, 0); */
+            // Draw the crosshair
 
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -8,4 +8,5 @@ class Transformation {
         static Matrix4  rotation_x(float angle);
         static Matrix4  rotation_y(float angle);
         static Matrix4  rotation_z(float angle);
+        static Matrix4    rotation(float angle, Vector4 axis);
 };
