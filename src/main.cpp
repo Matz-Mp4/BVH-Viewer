@@ -9,18 +9,18 @@
 #include "../include/camera/Camera.hpp"
 #include "../include/math/Transforamation.hpp"
 #include "../include/camera/camera-types/PinHole.hpp"
-#include "../include/objects/Mesh.hpp"
 #include "../include/objects/GeometricObject.hpp"
 #include "../include/material/Material.hpp"
 #include "../include/objects/shapes/Sphere.hpp"
 #include "../include/objects/shapes/Torus.hpp"
+#include "../include/objects/shapes/Cylinder.hpp"
 
 #include <iostream>
 #include <cmath>
 const unsigned int width = 600;
 const unsigned int height = 600;
 static float speed = 0.1f;
-static float sensitivity = 5.0f;
+static float sensitivity = 4.5f;
 static bool firstClick = true;
 
 
@@ -138,7 +138,9 @@ int main() {
     std::string frag_path = "../src/glsl-files/fragment.glsl";
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
 
-    GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.5), Material::RED_PLASTIC);
+    /* GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.5), Material::RED_PLASTIC); */
+    /* GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.5 ), Material::RED_PLASTIC); */
+    GeometricObject object = GeometricObject(new Cylinder(Vector4(0.0 , 0.0, 0.0), 0.5, 0.5), Material::RED_PLASTIC);
     /* std::cout << m; */
 
     VAO vao;
@@ -167,7 +169,7 @@ int main() {
     Matrix4 transform(unit_mtx); 
     
     // Variables that help the rotation of the pyramid
-	float step_trans = 0.05f;
+	float step_trans = 0.01f;
 	double prevTime = glfwGetTime();
     float translate = 0.0;
     // Enables the Depth Buffer
@@ -179,7 +181,7 @@ int main() {
     unsigned int indices_size = object.get_indices().size();
     
     while (!glfwWindowShouldClose(window)){
-        glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+        glClearColor(0.7f, 0.7f, 0.7f, 0.0f);
         		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         shader.active_shader();
@@ -203,8 +205,8 @@ int main() {
         shader.set_matrix4("cameraProj", view_proj);
         vao.Bind();
 
-        glDrawElements(GL_TRIANGLES,indices_size, GL_UNSIGNED_INT, 0);
-        /* glDrawElements(GL_LINES, indices_size, GL_UNSIGNED_INT, 0); */
+        /* glDrawElements(GL_TRIANGLES,indices_size, GL_UNSIGNED_INT, 0); */
+        glDrawElements(GL_LINES, indices_size, GL_UNSIGNED_INT, 0);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
