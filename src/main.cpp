@@ -13,6 +13,7 @@
 #include "../include/objects/GeometricObject.hpp"
 #include "../include/material/Material.hpp"
 #include "../include/objects/shapes/Sphere.hpp"
+#include "../include/objects/shapes/Torus.hpp"
 
 #include <iostream>
 #include <cmath>
@@ -137,8 +138,7 @@ int main() {
     std::string frag_path = "../src/glsl-files/fragment.glsl";
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
 
-    Mesh m = Sphere(Vector4(0.0 , 0.0, 0.0), 1.0 , 10, 10).generate_mesh();
-    GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.0, 30, 20), Material::RED_PLASTIC);
+    GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.5), Material::RED_PLASTIC);
     /* std::cout << m; */
 
     VAO vao;
@@ -186,10 +186,10 @@ int main() {
 
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
-            /* translate += step_trans; */
-            /* transform = Transformation::rotation_y(translate) * */
-                        /* Transformation::rotation_y(translate) * */
-                        /* Transformation::rotation_z(translate)  ; */
+            translate += step_trans;
+            transform = Transformation::rotation_z(translate) *
+                        Transformation::rotation_x(translate) ;
+                        /* Transformation::rotation_y(translate)  ; */
 		}
 
 
@@ -203,8 +203,8 @@ int main() {
         shader.set_matrix4("cameraProj", view_proj);
         vao.Bind();
 
-        /* glDrawElements(GL_TRIANGLES,m.indices.size(), GL_UNSIGNED_INT, 0); */
-        glDrawElements(GL_LINES, indices_size, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES,indices_size, GL_UNSIGNED_INT, 0);
+        /* glDrawElements(GL_LINES, indices_size, GL_UNSIGNED_INT, 0); */
 
         glfwSwapBuffers(window);
         glfwPollEvents();
