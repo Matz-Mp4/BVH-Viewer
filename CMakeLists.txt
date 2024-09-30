@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 project(VolumetricViewer)
-
+SET(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -9,13 +9,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 file(GLOB_RECURSE SOURCES
     src/*.cpp
     src/*.h
-    third-party/rply-1.1.4/rply.h
-    third-party/rply-1.1.4/rply.c
-    third-party/rply-1.1.4/rplyfile.h
+    third-party/happly/happly.h
 )
 
 # Add include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)
+include_directories(VolumetricViewer/third-party)
 
 # Find OpenGL
 find_package(OpenGL REQUIRED)
