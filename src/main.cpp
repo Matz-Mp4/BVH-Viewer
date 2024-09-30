@@ -74,8 +74,8 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
         /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
         // Hide mouse cursor
-        /* glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); */
-        glfwSetCursorPos(window, width / 2.0, height / 2.0);
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
 
         // Prevent camera jump on first click
         if (firstClick) {
@@ -101,12 +101,13 @@ void handle_inputs(GLFWwindow* window, Camera& camera) {
         // Horizontal rotation (rotate around global Y axis)
 
         // Reset the cursor to the center of the screen
-        glfwSetCursorPos(window, width / 2.0, height / 2.0);
+        /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
     } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
         // Show cursor when the camera is not rotating
+        /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         firstClick = true;
 
-        glfwSetCursorPos(window, width / 2.0, height / 2.0);
         
     }
 }
@@ -141,7 +142,7 @@ int main() {
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
 
     GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.5, 50, 50), Material::RED_PLASTIC);
-    /* GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.5 ), Material::RED_PLASTIC); */
+    /* GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.5 , 50 , 50), Material::RED_PLASTIC); */
     /* GeometricObject object = GeometricObject(new Cylinder(Vector4(0.0 , 0.0, 0.0), 0.5, 0.5), Material::RED_PLASTIC); */
 
     VAO vao;
@@ -199,13 +200,13 @@ int main() {
 
 
         handle_inputs(window, camera);
-        view_proj = camera.compute_view_projection(new PinHole(45, (float)width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
+        view_proj = camera.compute_view_projection(new PinHole(90, (float)width / height, 0.1f, 100.0f), CoordSystem::RIGH_HAND);
 
         // Bind the VAO so OpenGL knows to use it
         shader.set_matrix4("transformation", transform);
         shader.set_matrix4("cameraProj", view_proj);
         vao.Bind();
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
+        /* glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);  */
         glDrawElements(GL_TRIANGLES, indices_size, GL_UNSIGNED_INT, 0);
         /* glDrawElements(GL_TRIANGLES,indices_size, GL_UNSIGNED_INT, 0); */
         /* glDrawElements(GL_POINT, indices_size, GL_UNSIGNED_INT, 0); */
