@@ -9,6 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 file(GLOB_RECURSE SOURCES
     src/*.cpp
     src/*.h
+    third-party/rply-1.1.4/rply.h
+    third-party/rply-1.1.4/rply.c
+    third-party/rply-1.1.4/rplyfile.h
 )
 
 # Add include directories
