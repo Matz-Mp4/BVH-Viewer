@@ -14,6 +14,7 @@ class Mesh {
          Mesh(std::vector<Vertex> vertices);
 
         // Add a vertex to the mesh and return its index 
+        unsigned int   add_vertex(Vector4 position);
         unsigned int   add_vertex(Vector4 position, Vector4 normal);
         void           add_indice(unsigned int indice);
         void update_num_triangles();

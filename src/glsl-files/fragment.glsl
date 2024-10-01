@@ -1,4 +1,4 @@
-#version 460 
+#version 420 
 
 struct Material {
 	vec3 color;
@@ -16,5 +16,5 @@ out vec4 FragColor;
 in vec3 color;
 
 void main () {
-    FragColor = vec4(color, 1.0f);
+    FragColor = vec4(0.3, 0.5, 1.0, 1.0f);
 }
