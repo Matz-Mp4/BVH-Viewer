@@ -23,7 +23,7 @@ Material& Material::turn_into_matte(float k_amb, float k_dif) {
 }
 
 
-Material& Material::turn_into_plastic(float k_spec, float exp) {
+Material& Material::turn_into_glossy(float k_spec, float exp) {
     this->k_spec = k_spec;
     this->exp = exp;
     this->k_trans = 0.0;
@@ -92,41 +92,4 @@ Material Material::create_gold(Color c) {
     return Material(c, 0.3f, 0.4f, 1.0f, 100.0f, 0.0f, 0.47f);
 }
 
-const Material Material::ORANGE_RUBBER = Material(ORANGE, MaterialType::RUBBER);
-const Material Material::RED_RUBBER = Material(RED, MaterialType::RUBBER);
-const Material Material::BLUE_RUBBER = Material(BLUE, MaterialType::RUBBER);
-const Material Material::GREEN_RUBBER = Material(GREEN, MaterialType::RUBBER);
-const Material Material::BLACK_RUBBER = Material(BLACK, MaterialType::RUBBER);
-const Material Material::WHITE_RUBBER = Material(WHITE, MaterialType::RUBBER);
 
-// Plastic Materials
-const Material Material::ORANGE_PLASTIC = Material(ORANGE, MaterialType::PLASTIC);
-const Material Material::RED_PLASTIC = Material(RED, MaterialType::PLASTIC);
-const Material Material::BLUE_PLASTIC = Material(BLUE, MaterialType::PLASTIC);
-const Material Material::GREEN_PLASTIC = Material(GREEN, MaterialType::PLASTIC);
-const Material Material::BLACK_PLASTIC = Material(BLACK, MaterialType::PLASTIC);
-const Material Material::WHITE_PLASTIC = Material(WHITE, MaterialType::PLASTIC);
-
-// Metallic Materials
-const Material Material::ORANGE_METALLIC = Material(ORANGE, MaterialType::METALLIC);
-const Material Material::RED_METALLIC = Material(RED, MaterialType::METALLIC);
-const Material Material::BLUE_METALLIC = Material(BLUE, MaterialType::METALLIC);
-const Material Material::GREEN_METALLIC = Material(GREEN, MaterialType::METALLIC);
-const Material Material::BLACK_METALLIC = Material(BLACK, MaterialType::METALLIC);
-const Material Material::WHITE_METALLIC = Material(WHITE, MaterialType::METALLIC);
-
-// Glass Materials
-const Material Material::ORANGE_GLASS = Material(ORANGE, MaterialType::GLASS);
-const Material Material::RED_GLASS = Material(RED, MaterialType::GLASS);
-const Material Material::BLUE_GLASS = Material(BLUE, MaterialType::GLASS);
-const Material Material::GREEN_GLASS = Material(GREEN, MaterialType::GLASS);
-const Material Material::BLACK_GLASS = Material(BLACK, MaterialType::GLASS);
-const Material Material::WHITE_GLASS = Material(WHITE, MaterialType::GLASS);
-
-// Diamond Materials
-const Material Material::ORANGE_DIAMOND = Material(ORANGE, MaterialType::DIAMOND);
-const Material Material::RED_DIAMOND = Material(RED, MaterialType::DIAMOND);
-const Material Material::BLUE_DIAMOND = Material(BLUE, MaterialType::DIAMOND);
-const Material Material::GREEN_DIAMOND = Material(GREEN, MaterialType::DIAMOND);
-const Material Material::BLACK_DIAMOND = Material(BLACK, MaterialType::DIAMOND);
-const Material Material::WHITE_DIAMOND = Material(WHITE, MaterialType::DIAMOND);

@@ -25,10 +25,9 @@ class Material {
         Material(Color c, MaterialType type);
 
         Material&      turn_into_matte(float k_amb, float k_dif);
-        Material&    turn_into_plastic(float k_spec, float exp);
+        Material&    turn_into_glossy(float k_spec, float exp);
         Material& turn_into_reflective(float k_trans, float index_ref);
         Material&         change_color(Color c);
-        
 
         // methods for material types
         static Material create_rubber(Color c);
@@ -38,46 +37,8 @@ class Material {
         static Material create_diamond(Color c);
         static Material create_gold(Color c);
 
-        //RUBBER
-        static const Material ORANGE_RUBBER;
-        static const Material RED_RUBBER;
-        static const Material BLUE_RUBBER;
-        static const Material GREEN_RUBBER;
-        static const Material BLACK_RUBBER;
-        static const Material WHITE_RUBBER;
 
-        //PLASTIC
-        static const Material ORANGE_PLASTIC;
-        static const Material RED_PLASTIC;
-        static const Material BLUE_PLASTIC;
-        static const Material GREEN_PLASTIC;
-        static const Material BLACK_PLASTIC;
-        static const Material WHITE_PLASTIC;
-
-        //METALLIC
-        static const Material ORANGE_METALLIC;
-        static const Material RED_METALLIC;
-        static const Material BLUE_METALLIC;
-        static const Material GREEN_METALLIC;
-        static const Material BLACK_METALLIC;
-        static const Material WHITE_METALLIC;
-
-        //GLASS
-        static const Material ORANGE_GLASS;
-        static const Material RED_GLASS;
-        static const Material BLUE_GLASS;
-        static const Material GREEN_GLASS;
-        static const Material BLACK_GLASS;
-        static const Material WHITE_GLASS;
-
-        //DIAMOND
-        static const Material ORANGE_DIAMOND;
-        static const Material RED_DIAMOND;
-        static const Material BLUE_DIAMOND;
-        static const Material GREEN_DIAMOND;
-        static const Material BLACK_DIAMOND;
-        static const Material WHITE_DIAMOND;
-
+        
     private:
         Color   color;
         float  k_amb;
@@ -87,4 +48,46 @@ class Material {
         float  exp;
         float  index_ref;
 };
+
+
+//RUBBER
+static const Material ORANGE_RUBBER =  Material(ORANGE, MaterialType::RUBBER);
+static const Material RED_RUBBER    =  Material(RED, MaterialType::RUBBER);    
+static const Material BLUE_RUBBER   =  Material(BLUE, MaterialType::RUBBER);   
+static const Material GREEN_RUBBER  =  Material(GREEN, MaterialType::RUBBER);  
+static const Material BLACK_RUBBER  =  Material(BLACK, MaterialType::RUBBER);  
+static const Material WHITE_RUBBER  =  Material(WHITE, MaterialType::RUBBER);  
+
+//PLASTIC
+static const Material ORANGE_PLASTIC =Material(ORANGE, MaterialType::PLASTIC);
+static const Material RED_PLASTIC =   Material(RED, MaterialType::PLASTIC);   
+static const Material BLUE_PLASTIC =  Material(BLUE, MaterialType::PLASTIC);  
+static const Material GREEN_PLASTIC=  Material(GREEN, MaterialType::PLASTIC); 
+static const Material BLACK_PLASTIC = Material(BLACK, MaterialType::PLASTIC); 
+static const Material WHITE_PLASTIC=  Material(WHITE, MaterialType::PLASTIC); 
+
+//METALLIC
+static const Material ORANGE_METALLIC =  Material(ORANGE, MaterialType::METALLIC); 
+static const Material RED_METALLIC    =  Material(RED, MaterialType::METALLIC);    
+static const Material BLUE_METALLIC   =  Material(BLUE, MaterialType::METALLIC);    
+static const Material GREEN_METALLIC  =  Material(GREEN, MaterialType::METALLIC);   
+static const Material BLACK_METALLIC  =  Material(BLACK, MaterialType::METALLIC);   
+static const Material WHITE_METALLIC  =  Material(WHITE, MaterialType::METALLIC);   
+
+//GLASS
+static const Material ORANGE_GLASS   = Material(ORANGE, MaterialType::GLASS); 
+static const Material RED_GLASS      = Material(RED, MaterialType::GLASS);    
+static const Material BLUE_GLASS     = Material(BLUE, MaterialType::GLASS);   
+static const Material GREEN_GLASS    = Material(GREEN, MaterialType::GLASS);  
+static const Material BLACK_GLASS    = Material(BLACK, MaterialType::GLASS);  
+static const Material WHITE_GLASS    = Material(WHITE, MaterialType::GLASS);  
+
+//DIAMOND
+static const Material ORANGE_DIAMOND   =Material(ORANGE, MaterialType::DIAMOND); 
+static const Material RED_DIAMOND      =Material(RED, MaterialType::DIAMOND);     
+static const Material BLUE_DIAMOND     =Material(BLUE, MaterialType::DIAMOND);   
+static const Material GREEN_DIAMOND    =Material(GREEN, MaterialType::DIAMOND);   
+static const Material BLACK_DIAMOND    =Material(BLACK, MaterialType::DIAMOND);  
+static const Material WHITE_DIAMOND    =Material(WHITE, MaterialType::DIAMOND);  
+
 
