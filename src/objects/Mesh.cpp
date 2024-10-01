@@ -4,6 +4,11 @@
 Mesh::Mesh(std::vector<Vertex> vertices)
     : vertices(vertices) {}
 
+unsigned int Mesh::add_vertex(Vector4 position) {
+    vertices.push_back(Vertex(position, Vector4(0.0)));
+    return vertices.size() - 1;
+}
+
 unsigned int Mesh::add_vertex(Vector4 position, Vector4 normal) {
     vertices.push_back(Vertex(position, normal));
     return vertices.size() - 1;

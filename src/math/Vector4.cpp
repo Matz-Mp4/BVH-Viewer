@@ -1,6 +1,13 @@
 #include "../../include/math/Vector4.hpp"
 #include <cmath>
 
+Vector4::Vector4(float t) {
+  this->data[0] = t;
+  this->data[1] = t;
+  this->data[2] = t;
+  this->data[3] = 0.0;
+}
+
 Vector4::Vector4(float x, float y, float z) {
   this->data[0] = x;
   this->data[1] = y;
