@@ -2,11 +2,11 @@
 
 #include <string>
 
-#include "IShape.hpp"
+#include "../IShape.hpp"
 
-class ObjectLoader : public IShape {
+class ModelLoader : public IShape {
 public:
-    ObjectLoader(const std::string& filpath);
+    ModelLoader(const std::string& filpath);
 
     virtual Mesh generate_mesh() const override;
 

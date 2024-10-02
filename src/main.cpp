@@ -16,7 +16,7 @@
 #include "../include/objects/shapes/Sphere.hpp"
 #include "../include/objects/shapes/Torus.hpp"
 #include "../include/objects/shapes/Cylinder.hpp"
-#include "../include/objects/ObjectLoader.hpp"
+#include "../include/objects/shapes/ModelLoader.hpp"
 
 #include <iostream>
 #include <cmath>
@@ -127,7 +127,7 @@ int main() {
     ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
 
     /* GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.5, 50, 50), RED_PLASTIC); */
-    GeometricObject object = GeometricObject(new ObjectLoader("../models/happy_buddha.ply") , RED_PLASTIC);
+    GeometricObject object = GeometricObject(new ModelLoader("../models/happy_buddha.ply") , RED_PLASTIC);
     /* GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.5 , 50 , 50),RED_PLASTIC); */
     /* GeometricObject object = GeometricObject(new Cylinder(Vector4(0.0 , 0.0, 0.0), 0.5, 0.5), Material::RED_PLASTIC); */
     VAO vao;
@@ -169,6 +169,7 @@ int main() {
         shader.active_shader();
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
+            transform = Transformation::scaling(40.0, 40.0, 40.0) ;
             /* translate += step_trans; */
             /* transform = Transformation::rotation_z(translate) ; */
                         /* Transformation::rotation_x(translate) ; */

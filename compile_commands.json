@@ -79,6 +79,12 @@
 },
 {
   "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/ModelLoader.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/ModelLoader.cpp",
+  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/ModelLoader.cpp",
+  "output": "CMakeFiles/VolumetricViewer.dir/src/objects/shapes/ModelLoader.cpp.o"
+},
+{
+  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
   "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Sphere.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Sphere.cpp",
   "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Sphere.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Sphere.cpp.o"
