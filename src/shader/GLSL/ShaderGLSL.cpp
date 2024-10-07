@@ -94,19 +94,19 @@ void ShaderGLSL::delete_shader() {
     glDeleteProgram(ID);
 }
 
-void ShaderGLSL::set_bool(const std::string &name, bool value) const{
+void ShaderGLSL::set_bool(size_t ID, const std::string &name, bool value) {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
 }
 
-void ShaderGLSL::set_int(const std::string &name, int value) const{
+void ShaderGLSL::set_int(size_t ID, const std::string &name, int value) {
     glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void ShaderGLSL::set_float(const std::string &name, float value) const{
+void ShaderGLSL::set_float(size_t ID, const std::string &name, float value) {
     glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void ShaderGLSL::set_matrix4(const std::string &name, const Matrix4& m) const {
+void ShaderGLSL::set_matrix4(size_t ID, const std::string &name, const Matrix4& m) {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, m.mtx_data);
 }
  
