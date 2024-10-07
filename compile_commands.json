@@ -1,122 +1,122 @@
 [
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/camera/Camera.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/camera/Camera.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/camera/Camera.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/camera/Camera.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/camera/Camera.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/camera/Camera.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/camera/Camera.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/camera/CameraGLSL.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/camera/CameraGLSL.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/camera/CameraGLSL.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/camera/CameraGLSL.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/camera/CameraGLSL.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/camera/CameraGLSL.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/camera/CameraGLSL.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/camera/PinHole.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/camera/PinHole.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/camera/PinHole.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/camera/PinHole.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/camera/PinHole.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/camera/PinHole.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/camera/PinHole.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/main.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/main.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/main.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/main.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/main.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/main.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/main.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/material/Material.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/material/Material.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/material/Material.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/material/Material.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/material/Material.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/material/Material.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/material/Material.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/material/color.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/material/color.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/material/color.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/material/color.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/material/color.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/material/color.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/material/color.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/math/Matrix4.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/math/Matrix4.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/math/Matrix4.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/math/Matrix4.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/math/Matrix4.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/math/Matrix4.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/math/Matrix4.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/math/Transformation.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/math/Transformation.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/math/Transformation.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/math/Transformation.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/math/Transformation.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/math/Transformation.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/math/Transformation.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/math/Vector4.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/math/Vector4.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/math/Vector4.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/math/Vector4.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/math/Vector4.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/math/Vector4.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/math/Vector4.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/GeometricObject.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/GeometricObject.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/GeometricObject.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/GeometricObject.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/GeometricObject.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/GeometricObject.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/GeometricObject.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/Mesh.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/Mesh.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/Mesh.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/Mesh.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/Mesh.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/Mesh.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/Mesh.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/Vertex.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/Vertex.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/Vertex.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/Vertex.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/Vertex.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/Vertex.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/Vertex.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Cylinder.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Cylinder.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Cylinder.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Cylinder.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/Cylinder.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/Cylinder.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Cylinder.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/ModelLoader.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/ModelLoader.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/ModelLoader.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/ModelLoader.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/ModelLoader.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/ModelLoader.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/shapes/ModelLoader.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Sphere.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Sphere.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Sphere.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Sphere.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/Sphere.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/Sphere.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Sphere.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Torus.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Torus.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/objects/shapes/Torus.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Torus.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/Torus.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/objects/shapes/Torus.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/objects/shapes/Torus.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/EBO.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/EBO.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/EBO.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/EBO.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/EBO.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/EBO.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/EBO.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/ShaderGLSL.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/ShaderGLSL.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/ShaderGLSL.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/ShaderGLSL.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/ShaderGLSL.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/ShaderGLSL.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/ShaderGLSL.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/VAO.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/VAO.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/VAO.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/VAO.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/VAO.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/VAO.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/VAO.cpp.o"
 },
 {
-  "directory": "/home/matz/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/sbin/c++  -I/home/matz/Code/C++/Volumetric-Viewer/include -I/home/matz/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/VBO.cpp.o -c /home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/VBO.cpp",
-  "file": "/home/matz/Code/C++/Volumetric-Viewer/src/shader/GLSL/VBO.cpp",
+  "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/VBO.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/VBO.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/VBO.cpp",
   "output": "CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/VBO.cpp.o"
 }
 ]
