@@ -55,13 +55,13 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
     }
     // Move front (along the global Z axis)
     if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-        /* cam.eye  =  speed * cam.new_up + cam.eye; // Front */
-        cam.eye  = Transformation::translation( 0.0 ,  0.1,  0.0) *  cam.eye; //
+        cam.eye  =  speed * cam.new_up + cam.eye; // Front
+        /* cam.eye  = Transformation::translation( 0.0 ,  0.1,  0.0) *  cam.eye; // */
     }
     // Move down (along the global -Y axis)
     if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
-        cam.eye  = Transformation::translation( 0.0,   -0.1,  0.0) *  cam.eye; 
-        /* cam.eye  =   cam.eye - speed * cam.new_up  ; // Front */
+        /* cam.eye  = Transformation::translation( 0.0,   -0.1,  0.0) *  cam.eye;  */
+        cam.eye  =   cam.eye - speed * cam.new_up  ; // Front
     }
     
     // Speed boost with shift
