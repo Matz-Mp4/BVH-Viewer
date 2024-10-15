@@ -5,14 +5,13 @@
 #include <glm/glm.hpp>
 
 #include "../include/shader/GLSL/ShaderGLSL.hpp"
-#include "../include/shader/GLSL/EBO.hpp"
-#include "../include/shader/GLSL/VAO.hpp"
-#include "../include/shader/GLSL/VBO.hpp"
+
 #include "../include/camera/Camera.hpp"
 #include "../include/math/Transforamation.hpp"
 #include "../include/camera/camera-types/PinHole.hpp"
 #include "../include/camera/CameraGLSL.hpp"
 #include "../include/objects/GeometricObject.hpp"
+#include "../include/objects/GeometricObjectGLSL.hpp"
 #include "../include/material/Material.hpp"
 #include "../include/objects/shapes/Sphere.hpp"
 #include "../include/objects/shapes/Torus.hpp"
@@ -29,7 +28,7 @@ GLFWwindow* create_window( unsigned int width, unsigned int height) {
         exit(EXIT_FAILURE);
     }
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     GLFWwindow* window = glfwCreateWindow(width, height, "Volumetric-Viewer", nullptr, nullptr);
     if (window == nullptr) {
@@ -84,26 +83,16 @@ int main(int argc, char* argv[]) {
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
     PinHole *pinhole_ptr = new PinHole(90, (float)width / height, 0.1f, 100.0f);
     CameraGLSL cameraGLSL = CameraGLSL(shader.ID, camera, pinhole_ptr, "cameraProj");
+    GeometricObjectGLSL objectGLSL(shader.ID, object, "");
+    objectGLSL.export_mesh();
+
 
     /* GeometricObject object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 3.5, 0.5, 100, 1000), RED_PLASTIC); */
     /* GeometricObject object = GeometricObject(new ModelLoader("../models/bunny.ply") , RED_PLASTIC); */
     /* GeometricObject object = GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.5 , 50 , 50),RED_PLASTIC); */
     /* GeometricObject object = GeometricObject(new Cylinder(Vector4(0.0 , 0.0, 0.0), 0.5, 0.5), Material::RED_PLASTIC); */
 
-    VAO vao;
-    vao.Bind();
-	// Generates Vertex Buffer Object and links it to vertices
-    VBO vbo(object.get_vertices());
-	// Generates Element Buffer Object and links it to indices
-    EBO ebo(object.get_indices());    
-    //Vertex Position data to layout = 0
-    vao.LinkAttrib(vbo, 0, 4, GL_FLOAT, sizeof(Vertex), (void*)0 );
-    //Vertex Normal to layout = 1
-    vao.LinkAttrib(vbo, 1, 4, GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, normal));
-    //Unbind all to prevent accidentally modifying them
-    vao.Unbind();
-    vbo.Unbind();
-    ebo.Unbind();
+
  
     // Variables that help the rotation of the pyramid
 	float step_trans = 0.01f;
@@ -120,7 +109,7 @@ int main(int argc, char* argv[]) {
         double crntTime = glfwGetTime();
 		if (crntTime - prevTime >= 1.0/60 ){
             /* translate += step_trans; */
-            /* transform = Transformation::rotation_z(translate) * */
+            /* transformation = Transformation::rotation_z(translate) * */
                         /* Transformation::rotation_y(translate) ; */
 
             /* transform = Transformation::scaling(40.0, 40.0, 40.0); */
@@ -130,22 +119,17 @@ int main(int argc, char* argv[]) {
         cameraGLSL.handle_inputs(window, width, height);
         ShaderGLSL::set_matrix4(shader.ID, "transformation", transformation);
         cameraGLSL.export_projection();
-        // Bind the VAO so OpenGL knows to use it
-        vao.Bind();
 
         if(wireframe) {
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
         }
-
-        glDrawElements(GL_TRIANGLES, indices_size, GL_UNSIGNED_INT, 0);
+        objectGLSL.draw();
         glfwSwapBuffers(window);
         glfwPollEvents();
     } 
 
     delete pinhole_ptr;
-    vao.Delete();
-    vbo.Delete();
-    ebo.Delete();
+    objectGLSL.delete_mesh();
     shader.delete_shader();
     glfwDestroyWindow(window);
     glfwTerminate();

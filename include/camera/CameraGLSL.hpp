@@ -11,16 +11,16 @@ class CameraGLSL : public CameraShader{
 
         void export_projection() override; 
         void delete_projection() override;
+        void handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height);
        
-       void handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height);
 
     private:
 
-       size_t shader_id;
-       float sensitivity;
-       bool first_click;
-       float speed;
-       Camera cam;
+       size_t         shader_id;
+       float        sensitivity;
+       bool         first_click;
+       float              speed;
+       Camera               cam;
        TypeCamera* type_cam_ptr;
        std::string uniform_proj;
 
