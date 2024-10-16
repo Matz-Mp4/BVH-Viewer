@@ -35,8 +35,8 @@ uniform mat4         norm_matrix;
 void main () {
     gl_Position = p_matrix * v_matrix * m_matrix * position;
 
-    vec4 diffuse = (0.0);
-    vec4 specular = (0.0);
+    /* vec4 diffuse = (0.0); */
+    /* vec4 specular = (0.0); */
 
     color = vec3(normal.x, normal.y, normal.z);
 }

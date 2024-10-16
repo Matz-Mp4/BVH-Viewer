@@ -1,7 +1,7 @@
 #include <glm/trigonometric.hpp>
 #include "../../include/math/Transforamation.hpp"
 #include "../../include/camera/CameraGLSL.hpp"
-#include "../../include/GLSL/export-data/export-camera/MVPExport.hpp"
+#include "../../include/GLSL/export-data/export-camera/ExportProjection.hpp"
 
 CameraGLSL::CameraGLSL(size_t id, const Camera& cam, TypeCamera* type_cam, const char* uniform_proj):
     cam(cam),
@@ -11,7 +11,7 @@ CameraGLSL::CameraGLSL(size_t id, const Camera& cam, TypeCamera* type_cam, const
     sensitivity(5.0),
     speed(0.01)
 {
-    data_manager = new ExportMVP(id, "m_matrix", "v_matrix", "p_matrix");
+    data_manager = new ExportProjection(id );
 
 }
 
