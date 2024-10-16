@@ -4,7 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
-#include "../include/shader/GLSL/ShaderGLSL.hpp"
+#include "../include/GLSL/ShaderGLSL.hpp"
 
 #include "../include/camera/Camera.hpp"
 #include "../include/math/Transforamation.hpp"

@@ -1,4 +1,4 @@
-#include "../../../include/shader/GLSL/ShaderGLSL.hpp"
+#include "../../include/GLSL/ShaderGLSL.hpp"
 #include <iostream>
 #include <ostream>
 #include <fstream>

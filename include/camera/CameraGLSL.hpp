@@ -1,4 +1,4 @@
-#include "../shader/data-manager/CameraShader.hpp"
+#include "../GLSL/export-data/CameraShader.hpp"
 #include "Camera.hpp"
 #include <GLFW/glfw3.h>
 #pragma once 

@@ -1,6 +1,6 @@
 #include <glm/trigonometric.hpp>
 #include "../../include/math/Transforamation.hpp"
-#include "../../include/shader/GLSL/ShaderGLSL.hpp"
+#include "../../include/GLSL/ShaderGLSL.hpp"
 #include "../../include/camera/CameraGLSL.hpp"
 
 CameraGLSL::CameraGLSL(size_t id, const Camera& cam, TypeCamera* type_cam, const char* uniform_proj):

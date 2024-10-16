@@ -2,7 +2,7 @@
 
 #include <string>
 #include <GL/glew.h>
-#include "../../math/Matrix4.hpp"
+#include "../math/Matrix4.hpp"
 class ShaderGLSL {
     public:
         ShaderGLSL(const char* vertex_path, const char* frag_path);

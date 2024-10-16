@@ -1,9 +1,9 @@
 #pragma once
 
-#include "../shader/data-manager/ObjectShader.hpp"
-#include "../shader/GLSL/EBO.hpp"
-#include "../shader/GLSL/VBO.hpp"
-#include "../shader/GLSL/VAO.hpp"
+#include "../GLSL/export-data/ObjectShader.hpp"
+#include "../GLSL/EBO.hpp"
+#include "../GLSL/VBO.hpp"
+#include "../GLSL/VAO.hpp"
 #include "GeometricObject.hpp"
 #include "IShape.hpp"
 
