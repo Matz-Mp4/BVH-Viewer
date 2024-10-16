@@ -1,13 +1,13 @@
 #pragma once
 
-#include "../GLSL/export-data/ObjectShader.hpp"
+#include "../GLSL/export-data/ExportObject.hpp"
 #include "../GLSL/EBO.hpp"
 #include "../GLSL/VBO.hpp"
 #include "../GLSL/VAO.hpp"
 #include "GeometricObject.hpp"
 #include "IShape.hpp"
 
-class GeometricObjectGLSL: public ObjectShader {
+class GeometricObjectGLSL: public ExportObject {
     public:
          GeometricObjectGLSL(size_t id, const GeometricObject& object, const std::string& uniform_material);
          GeometricObjectGLSL(size_t id, IShape* shape, const std::string& uniform_material);

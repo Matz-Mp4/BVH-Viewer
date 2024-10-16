@@ -1,10 +1,22 @@
 #include <glm/trigonometric.hpp>
 #include "../../include/math/Transforamation.hpp"
-#include "../../include/GLSL/ShaderGLSL.hpp"
 #include "../../include/camera/CameraGLSL.hpp"
+#include "../../include/GLSL/export-data/export-camera/MVPExport.hpp"
 
 CameraGLSL::CameraGLSL(size_t id, const Camera& cam, TypeCamera* type_cam, const char* uniform_proj):
-    shader_id(id),
+    cam(cam),
+    type_cam_ptr(type_cam),
+    uniform_proj(uniform_proj),
+    first_click(false),
+    sensitivity(5.0),
+    speed(0.01)
+{
+    data_manager = new ExportMVP(id, "m_matrix", "v_matrix", "p_matrix");
+
+}
+
+CameraGLSL::CameraGLSL(ExportCamera* export_camera, const Camera& cam, TypeCamera* type_cam, const char* uniform_proj):
+    data_manager(export_camera),
     cam(cam),
     type_cam_ptr(type_cam),
     uniform_proj(uniform_proj),
@@ -18,16 +30,19 @@ CameraGLSL::~CameraGLSL() {
     if( type_cam_ptr != nullptr) {
         delete type_cam_ptr;
     }
+
+    if( data_manager != nullptr) {
+        delete data_manager;
+    }
     
 }
 
 void CameraGLSL::export_projection(){
-
-    Matrix4 view_proj = cam.compute_view_projection(type_cam_ptr, CoordSystem::RIGH_HAND);
-    ShaderGLSL::set_matrix4(shader_id, uniform_proj, view_proj);
-
+    data_manager->export_projection(cam, type_cam_ptr);
 }
-void CameraGLSL::delete_projection(){}
+void CameraGLSL::delete_projection(){
+    data_manager->delete_projection(cam, type_cam_ptr);
+}
 
 void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height){
     // Handles key inputs for world-space movement (Up, Back, Left, Right, Front)

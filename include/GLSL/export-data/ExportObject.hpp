@@ -1,6 +1,6 @@
 #pragma once 
 
-class ObjectShader{
+class ExportObject{
     public: 
         virtual void     export_mesh() = 0;
         virtual void     delete_mesh() = 0;
