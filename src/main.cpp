@@ -75,10 +75,9 @@ int main(int argc, char* argv[]) {
 
         
     GLFWwindow* window = create_window(width, height);
-    std::string vertex_path = "../src/glsl-files/vertex.glsl";
-    std::string frag_path = "../src/glsl-files/fragment.glsl";
 
-    ShaderGLSL shader(vertex_path.c_str(), frag_path.c_str());
+    ShaderGLSL shader("../src/glsl-files/debug/vertex.glsl", "../src/glsl-files/debug/fragment.glsl");
+    ShaderGLSL shader2("../src/glsl-files/gouraud/vertex.glsl", "../src/glsl-files/gouraud/fragment.glsl");
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
     PinHole *pinhole_ptr = new PinHole(90, (float)width / height, 0.1f, 100.0f);

@@ -15,7 +15,6 @@ class CameraGLSL : public CameraShader{
        
 
     private:
-
        size_t         shader_id;
        float        sensitivity;
        bool         first_click;
