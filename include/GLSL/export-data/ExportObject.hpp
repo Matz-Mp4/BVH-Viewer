@@ -11,7 +11,7 @@ class ExportObject{
     public: 
          virtual void           export_mesh(const Mesh &mesh, VAO& vao,VBO& vbo, EBO& ebo) = 0; 
          virtual void           delete_mesh(VAO& vao,VBO& vbo, EBO& ebo) = 0; 
-         virtual void       export_material(const Material &material) = 0;
-         virtual void export_transformation(const Matrix4 &transformation) = 0;
+         virtual void       export_material(size_t shader_id, const Material &material) = 0;
+         virtual void export_transformation(size_t shader_id, const Matrix4 &transformation) = 0;
 
 };

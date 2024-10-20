@@ -1,20 +1,22 @@
 #include <glm/trigonometric.hpp>
 #include "../../include/math/Transforamation.hpp"
 #include "../../include/camera/CameraGLSL.hpp"
-#include "../../include/GLSL/export-data/export-camera/ExportProjection.hpp"
+#include "../../include/GLSL/export-data/export-camera/ExportVP.hpp"
 
-CameraGLSL::CameraGLSL(size_t id, const Camera& cam, TypeCamera* type_cam):
+CameraGLSL::CameraGLSL(size_t shader_id, const Camera& cam, TypeCamera* type_cam):
+    shader_id (shader_id),
     cam(cam),
     type_cam_ptr(type_cam),
     first_click(false),
     sensitivity(5.0),
     speed(0.01)
 {
-    export_camera = new ExportProjection(id );
+    export_camera = new ExportVP();
 
 }
 
-CameraGLSL::CameraGLSL(ExportCamera* export_camera, const Camera& cam, TypeCamera* type_cam):
+CameraGLSL::CameraGLSL(size_t shader_id, ExportCamera* export_camera, const Camera& cam, TypeCamera* type_cam):
+    shader_id(shader_id),
     export_camera(export_camera),
     cam(cam),
     type_cam_ptr(type_cam),
@@ -36,15 +38,16 @@ CameraGLSL::~CameraGLSL() {
 }
 
 void CameraGLSL::export_projection(){
-    export_camera->export_projection(cam, type_cam_ptr);
-}
-void CameraGLSL::delete_projection(){
-    export_camera->delete_projection(cam, type_cam_ptr);
+    export_camera->export_projection(shader_id, cam, type_cam_ptr);
 }
 
 
 void CameraGLSL::change_export(ExportCamera* _export_camera) {
     this->export_camera = _export_camera;
+}
+
+void CameraGLSL::change_shader(const size_t& _shader_id) {
+    shader_id = _shader_id;
 }
 
 void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height){
@@ -123,3 +126,4 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
     }
 
 }
+

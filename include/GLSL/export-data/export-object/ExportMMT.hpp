@@ -5,15 +5,14 @@
 
 class ExportMMT: public ExportObject{
     public:
-         ExportMMT(size_t shader_id, const std::string transformation, const std::string& material);
-         ExportMMT(size_t shader_id);
-         ExportMMT() = default;
+         ExportMMT(const std::string transformation, const std::string& material);
+         ExportMMT();
         ~ExportMMT() = default;
 
          void           export_mesh(const Mesh &mesh, VAO& vao,VBO& vbo, EBO& ebo) override; 
          void           delete_mesh(VAO& vao,VBO& vbo, EBO& ebo) override; 
-         void       export_material(const Material &material) override;
-         void export_transformation(const Matrix4 &transformation) override;
+         void       export_material(size_t shader_id, const Material &material) override;
+         void export_transformation(size_t shader_id, const Matrix4 &transformation) override;
         
 
     private:
@@ -25,11 +24,7 @@ class ExportMMT: public ExportObject{
          *  - spec_expoent [4]
         **/
         std::string     material[5];
-        size_t            shader_id;
         std::string  transformation;
-
-
-
 };
 
 

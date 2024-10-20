@@ -5,6 +5,5 @@
 class ExportCamera{
     public: 
         virtual ~ExportCamera(){}
-        virtual void export_projection(Camera& camera, TypeCamera* type_camera) = 0;
-        virtual void delete_projection(Camera& camera, TypeCamera* type_camera) = 0;
+        virtual void export_projection(size_t shader_id, Camera& camera, TypeCamera* type_camera) = 0;
 };

@@ -4,14 +4,11 @@
 
 class ExportProjection: public ExportCamera {
     public:
-         ExportProjection(size_t shader_id, std::string projection_matrix);
-         ExportProjection(size_t shader_id);
+         ExportProjection(std::string projection_matrix);
+         ExportProjection();
         ~ExportProjection() = default;
 
-         void export_projection(Camera& camera, TypeCamera* type_camera) override;
-         void delete_projection(Camera& camera, TypeCamera* type_camera) override;
-
-         void change_shader(size_t shader_id);
+         void export_projection(size_t shader_id, Camera& camera, TypeCamera* type_camera) override;
 
     private:
         std::string  projection_matrix;

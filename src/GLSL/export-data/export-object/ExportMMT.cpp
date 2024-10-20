@@ -1,14 +1,12 @@
 #include "../../../../include/GLSL/export-data/export-object/ExportMMT.hpp"
 #include "../../../../include/GLSL/utils/ShaderGLSL.hpp"
 
-ExportMMT::ExportMMT(size_t shader_id, const std::string transformation, const std::string& material):
-    shader_id(shader_id),
+ExportMMT::ExportMMT(const std::string transformation, const std::string& material):
     transformation(transformation)
     /* material(material) */
 {}
 
-ExportMMT::ExportMMT(size_t shader_id):
-    shader_id(shader_id),
+ExportMMT::ExportMMT():
     transformation("m_matrix")
 {
     material[0] =  "mateiral.color"; 
@@ -19,7 +17,7 @@ ExportMMT::ExportMMT(size_t shader_id):
 };
 
 
-void ExportMMT::export_mesh(const Mesh &mesh, VAO& vao,VBO& vbo, EBO& ebo){
+void ExportMMT::export_mesh( const Mesh &mesh, VAO& vao,VBO& vbo, EBO& ebo){
     vao.Bind();
 	// Generates Vertex Buffer Object and links it to vertices
     vbo = VBO(mesh.vertices);
@@ -43,7 +41,7 @@ void ExportMMT::delete_mesh(VAO& vao, VBO& vbo, EBO& ebo){
 }    
 
 //TODO: Create this get functions
-void ExportMMT::export_material(const Material &material){
+void ExportMMT::export_material(size_t shader_id, const Material &material){
     /* ShaderGLSL::set_float(shader_id, this->material[0], material.get_color()); */
     ShaderGLSL::set_float(shader_id, this->material[0], material.get_ambient());
     ShaderGLSL::set_float(shader_id, this->material[0], material.get_diffuse());
@@ -51,6 +49,6 @@ void ExportMMT::export_material(const Material &material){
     ShaderGLSL::set_float(shader_id, this->material[0], material.get_expoent());
 } 
 
-void ExportMMT::export_transformation(const Matrix4& transformation){
+void ExportMMT::export_transformation(size_t shader_id, const Matrix4& transformation){
     ShaderGLSL::set_matrix4(shader_id, this->transformation, transformation);
 } 

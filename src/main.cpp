@@ -77,19 +77,19 @@ int main(int argc, char* argv[]) {
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
     PinHole *pinhole_ptr = new PinHole(90, (float)width / height, 0.1f, 200.0f);
-    ExportCamera* export_camera = new ExportVP(shader.ID);
-    ExportCamera* export_camera2 = new ExportVP(shader2.ID);
-    ExportCamera* export_camera3 = new ExportVP(shader3.ID);
+    ExportCamera* export_camera = new ExportVP();
+    /* ExportCamera* export_camera2 = new ExportVP(shader2.ID); */
+    /* ExportCamera* export_camera3 = new ExportVP(shader3.ID); */
 
-    /* CameraGLSL cameraGLSL = CameraGLSL(shader2.ID, camera, pinhole_ptr ); */
-    CameraGLSL cameraGLSL = CameraGLSL(export_camera2, camera, pinhole_ptr );
+    CameraGLSL cameraGLSL = CameraGLSL(shader.ID, export_camera, camera, pinhole_ptr );
+    /* CameraGLSL cameraGLSL = CameraGLSL(export_camera2, camera, pinhole_ptr ); */
 
-    ExportObject* export_object = new ExportMMT(shader.ID);
-    ExportObject* export_object2 = new ExportMMT(shader2.ID);
-    ExportObject* export_object3 = new ExportMMT(shader2.ID);
+    /* ExportObject* export_object = new ExportMMT(shader.ID); */
+    /* ExportObject* export_object2 = new ExportMMT(shader2.ID); */
+    /* ExportObject* export_object3 = new ExportMMT(shader2.ID); */
 
-    /* GeometricObjectGLSL objectGLSL(shader2.ID, object.with_transformation(transformation)); */
-    GeometricObjectGLSL objectGLSL(export_object2, object.with_transformation(transformation));
+    GeometricObjectGLSL objectGLSL(shader.ID, object.with_transformation(transformation));
+    /* GeometricObjectGLSL objectGLSL(export_object2, object.with_transformation(transformation)); */
     /* GeometricObjectGLSL objectGLSL(export_object2, object); */
     objectGLSL.export_mesh();
 
@@ -121,10 +121,10 @@ int main(int argc, char* argv[]) {
 
         if(defaultframe) {
             shader.active_shader();
-            objectGLSL.change_export(export_object);
-            objectGLSL.export_transformation();
+            cameraGLSL.change_shader(shader.ID);
             cameraGLSL.handle_inputs(window, width, height);
-            cameraGLSL.change_export(export_camera);
+            objectGLSL.change_shader(shader.ID);
+            objectGLSL.export_transformation();
             cameraGLSL.export_projection();
             objectGLSL.draw();
         }
@@ -133,23 +133,23 @@ int main(int argc, char* argv[]) {
 
         if(normalframe) {
             shader2.active_shader();
-            objectGLSL.change_export(export_object2);
+            cameraGLSL.change_shader(shader2.ID);
+            cameraGLSL.handle_inputs(window, width, height);
+            objectGLSL.change_shader(shader2.ID);
             objectGLSL.export_transformation();
-            cameraGLSL.change_export(export_camera2);
-            /* cameraGLSL.handle_inputs(window, width, height); */
             cameraGLSL.export_projection();
             objectGLSL.draw();
-
         }
 
         if(wireframe) {
             shader3.active_shader();
-            objectGLSL.change_export(export_object3);
+            cameraGLSL.change_shader(shader3.ID);
+            cameraGLSL.handle_inputs(window, width, height);
+            objectGLSL.change_shader(shader3.ID);
             objectGLSL.export_transformation();
-            cameraGLSL.change_export(export_camera3);
-            /* cameraGLSL.handle_inputs(window, width, height); */
             cameraGLSL.export_projection();
             objectGLSL.draw();
+
         }
 
         
@@ -165,6 +165,7 @@ int main(int argc, char* argv[]) {
     objectGLSL.delete_mesh();
     shader.delete_shader();
     shader2.delete_shader();
+    shader3.delete_shader();
     glfwDestroyWindow(window);
     glfwTerminate();
 
