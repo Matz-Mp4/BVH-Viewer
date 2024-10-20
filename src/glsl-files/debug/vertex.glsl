@@ -10,5 +10,5 @@ uniform mat4 p_matrix;
 
 void main () {
     gl_Position = p_matrix * v_matrix * m_matrix * position;
-    color = normalize(vec3(normal.x, normal.y, normal.z));
+    color = abs(vec3(normal));
 }
