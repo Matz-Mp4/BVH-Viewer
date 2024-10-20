@@ -1,4 +1,4 @@
-#include "../../include/GLSL/EBO.hpp"
+#include "../../../include/GLSL/utils/EBO.hpp"
 // Constructor that generates a Vertex Buffer Object and links it to vertices
 EBO::EBO(GLuint *indices, GLsizeiptr size){
     glGenBuffers(1, &ID);

@@ -3,23 +3,21 @@
 #include "../../include/camera/CameraGLSL.hpp"
 #include "../../include/GLSL/export-data/export-camera/ExportProjection.hpp"
 
-CameraGLSL::CameraGLSL(size_t id, const Camera& cam, TypeCamera* type_cam, const char* uniform_proj):
+CameraGLSL::CameraGLSL(size_t id, const Camera& cam, TypeCamera* type_cam):
     cam(cam),
     type_cam_ptr(type_cam),
-    uniform_proj(uniform_proj),
     first_click(false),
     sensitivity(5.0),
     speed(0.01)
 {
-    data_manager = new ExportProjection(id );
+    export_camera = new ExportProjection(id );
 
 }
 
-CameraGLSL::CameraGLSL(ExportCamera* export_camera, const Camera& cam, TypeCamera* type_cam, const char* uniform_proj):
-    data_manager(export_camera),
+CameraGLSL::CameraGLSL(ExportCamera* export_camera, const Camera& cam, TypeCamera* type_cam):
+    export_camera(export_camera),
     cam(cam),
     type_cam_ptr(type_cam),
-    uniform_proj(uniform_proj),
     first_click(false),
     sensitivity(5.0),
     speed(0.01)
@@ -31,17 +29,22 @@ CameraGLSL::~CameraGLSL() {
         delete type_cam_ptr;
     }
 
-    if( data_manager != nullptr) {
-        delete data_manager;
+    if( export_camera != nullptr) {
+        delete export_camera;
     }
     
 }
 
 void CameraGLSL::export_projection(){
-    data_manager->export_projection(cam, type_cam_ptr);
+    export_camera->export_projection(cam, type_cam_ptr);
 }
 void CameraGLSL::delete_projection(){
-    data_manager->delete_projection(cam, type_cam_ptr);
+    export_camera->delete_projection(cam, type_cam_ptr);
+}
+
+
+void CameraGLSL::change_export(ExportCamera* _export_camera) {
+    this->export_camera = _export_camera;
 }
 
 void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height){

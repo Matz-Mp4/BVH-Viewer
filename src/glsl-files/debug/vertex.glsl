@@ -1,13 +1,14 @@
-#version 420
+#version 330
 
 layout (location = 0) in vec4 position;
 layout (location = 1) in vec4 normal;
 
 out vec3 color; 
-uniform mat4 transformation;
-uniform mat4 cam_proj;
+uniform mat4 m_matrix;
+uniform mat4 v_matrix;
+uniform mat4 p_matrix;
 
 void main () {
-    gl_Position = cam_proj  * transformation  * position;
-    color = vec3(normal.x, normal.y, normal.z);
+    gl_Position = p_matrix * v_matrix * m_matrix * position;
+    color = normalize(vec3(normal.x, normal.y, normal.z));
 }

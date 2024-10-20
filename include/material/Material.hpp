@@ -5,9 +5,7 @@ enum class MaterialType {
     RUBBER,
     PLASTIC,
     METALLIC,
-    GLASS,
     DIAMOND,
-    GOLD,
 };
 
 /** 
@@ -29,13 +27,17 @@ class Material {
         Material& turn_into_reflective(float k_trans, float index_ref);
         Material&         change_color(Color c);
 
+         Color    get_color() const;
+        float   get_ambient() const;
+        float   get_diffuse() const;
+        float  get_specular() const;
+        float   get_expoent() const;
+
         // methods for material types
         static Material create_rubber(Color c);
         static Material create_plastic(Color c);
         static Material create_metallic(Color c);
-        static Material create_glass(Color c);
         static Material create_diamond(Color c);
-        static Material create_gold(Color c);
 
 
         
@@ -73,14 +75,6 @@ static const Material BLUE_METALLIC   =  Material(BLUE, MaterialType::METALLIC);
 static const Material GREEN_METALLIC  =  Material(GREEN, MaterialType::METALLIC);   
 static const Material BLACK_METALLIC  =  Material(BLACK, MaterialType::METALLIC);   
 static const Material WHITE_METALLIC  =  Material(WHITE, MaterialType::METALLIC);   
-
-//GLASS
-static const Material ORANGE_GLASS   = Material(ORANGE, MaterialType::GLASS); 
-static const Material RED_GLASS      = Material(RED, MaterialType::GLASS);    
-static const Material BLUE_GLASS     = Material(BLUE, MaterialType::GLASS);   
-static const Material GREEN_GLASS    = Material(GREEN, MaterialType::GLASS);  
-static const Material BLACK_GLASS    = Material(BLACK, MaterialType::GLASS);  
-static const Material WHITE_GLASS    = Material(WHITE, MaterialType::GLASS);  
 
 //DIAMOND
 static const Material ORANGE_DIAMOND   =Material(ORANGE, MaterialType::DIAMOND); 

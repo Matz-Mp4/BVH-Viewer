@@ -1,5 +1,5 @@
 
-#include "../../include/GLSL/VAO.hpp"
+#include "../../../include/GLSL/utils/VAO.hpp"
 
 VAO ::VAO(){
     glGenVertexArrays(1, &ID);

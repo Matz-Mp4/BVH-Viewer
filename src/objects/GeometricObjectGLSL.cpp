@@ -1,47 +1,44 @@
 #include "../../include/objects/GeometricObjectGLSL.hpp"
+#include "../../include/GLSL/export-data/export-object/ExportMMT.hpp"
 
-GeometricObjectGLSL::GeometricObjectGLSL(size_t id, const GeometricObject& object, const std::string& uniform_material) :
-    shader_id(id),
-    object(object),
-    uniform_material(uniform_material)
+GeometricObjectGLSL::GeometricObjectGLSL(size_t id, const GeometricObject& object) :
+    object(object)
+{
+    export_object = new ExportMMT(id);
+}
+
+GeometricObjectGLSL::GeometricObjectGLSL(ExportObject* export_object, const GeometricObject& object):
+    export_object(export_object),
+    object(object)
 {}
 
-GeometricObjectGLSL::GeometricObjectGLSL(size_t id, IShape* shape, const std::string& uniform_material) :
-    shader_id(id),
-    uniform_material(uniform_material)
+GeometricObjectGLSL::GeometricObjectGLSL(ExportObject* export_object, IShape* shape) :
+    export_object(export_object)
 {
     object = object.with_shape(shape);
 }
 
 void GeometricObjectGLSL::export_mesh() {
-    vao.Bind();
-	// Generates Vertex Buffer Object and links it to vertices
-    vbo = VBO(object.get_vertices());
-	// Generates Element Buffer Object and links it to indices
-    ebo = EBO(object.get_indices());    
-    //Vertex Position data to layout = 0
-    vao.LinkAttrib(vbo, 0, 4, GL_FLOAT, sizeof(Vertex), (void*)0 );
-    //Vertex Normal to layout = 1
-    vao.LinkAttrib(vbo, 1, 4, GL_FLOAT, sizeof(Vertex), (void*)offsetof(Vertex, normal));
-    //Unbind all to prevent accidentally modifying them
-    vao.Unbind();
-    vbo.Unbind();
-    ebo.Unbind();
-
+    export_object->export_mesh(object.get_mesh(), vao, vbo, ebo);
 }
 
 void GeometricObjectGLSL::delete_mesh() {
-    vao.Delete();
-    vbo.Delete();
-    ebo.Delete();
+    export_object->delete_mesh(vao, vbo, ebo);
+    
 }
 
-
-//TODO: implementation of export_material
 void GeometricObjectGLSL::export_material() {
+    export_object->export_material(object.get_material());
 }
 
-void GeometricObjectGLSL::delete_material() {
+void GeometricObjectGLSL::export_transformation() {
+    export_object->export_transformation(object.get_transformation());
+}
+
+
+
+void GeometricObjectGLSL::change_export(ExportObject* _export_object) {
+    this->export_object = _export_object;
 }
 
 void GeometricObjectGLSL::draw() {

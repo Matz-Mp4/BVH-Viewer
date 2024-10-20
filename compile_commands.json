@@ -103,9 +103,9 @@
 },
 {
   "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",
-  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/ShaderGLSL.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/ShaderGLSL.cpp",
-  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/ShaderGLSL.cpp",
-  "output": "CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/ShaderGLSL.cpp.o"
+  "command": "/usr/bin/c++  -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/include -I/home/matz/Desktop/Code/C++/Volumetric-Viewer/VolumetricViewer/third-party -std=gnu++17 -o CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/utils/ShaderGLSL.cpp.o -c /home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/utils/ShaderGLSL.cpp",
+  "file": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/src/shader/GLSL/utils/ShaderGLSL.cpp",
+  "output": "CMakeFiles/VolumetricViewer.dir/src/shader/GLSL/utils/ShaderGLSL.cpp.o"
 },
 {
   "directory": "/home/matz/Desktop/Code/C++/Volumetric-Viewer/build",

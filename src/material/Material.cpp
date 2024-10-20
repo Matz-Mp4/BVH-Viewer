@@ -55,17 +55,34 @@ Material::Material(Color c, MaterialType type) {
         case MaterialType::METALLIC:
             *this = create_metallic(c);
             break;
-        case MaterialType::GLASS:
-            *this = create_glass(c);
-            break;
         case MaterialType::DIAMOND:
             *this = create_diamond(c);
             break;
-        case MaterialType::GOLD:
-            *this = create_gold(c);
-            break;
+    
     }
 }
+
+
+
+Color Material:: get_color() const {
+    return color;
+}
+float Material:: get_ambient() const {
+    return k_amb;
+} 
+float Material:: get_diffuse() const {
+    return k_dif;
+} 
+float Material::   get_specular() const {
+    return k_spec;
+} 
+float Material::get_expoent() const {
+    return exp;
+} 
+
+
+
+
 
 // Static methods for material types
 Material Material::create_rubber(Color c) {
@@ -80,16 +97,10 @@ Material Material::create_metallic(Color c) {
     return Material(c, 0.1f, 0.3f, 1.0f, 100.0f, 0.0f, 2.5f);
 }
 
-Material Material::create_glass(Color c) {
-    return Material(c, 0.1f, 0.5f, 0.9f, 200.0f, 0.9f, 1.52f);
-}
-
 Material Material::create_diamond(Color c) {
     return Material(c, 0.1f, 0.5f, 0.8f, 300.0f, 0.0f, 2.42f);
 }
 
-Material Material::create_gold(Color c) {
-    return Material(c, 0.3f, 0.4f, 1.0f, 100.0f, 0.0f, 0.47f);
-}
+
 
 

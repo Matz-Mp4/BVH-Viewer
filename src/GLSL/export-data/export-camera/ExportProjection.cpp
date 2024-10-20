@@ -1,5 +1,5 @@
 #include "../../../../include/GLSL/export-data/export-camera/ExportProjection.hpp"
-#include "../../../../include/GLSL/ShaderGLSL.hpp"
+#include "../../../../include/GLSL/utils/ShaderGLSL.hpp"
 
 ExportProjection::ExportProjection(size_t shader_id, std::string projection_matrix):
     projection_matrix(projection_matrix),

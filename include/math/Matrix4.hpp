@@ -31,3 +31,11 @@ public:
     };
 
 };
+
+const static float unit_mtx[] = {
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        1.0, 1.0, 0.0, 1.0
+ };
+const static Matrix4 UNIT_MATRIX4 = Matrix4(unit_mtx);
