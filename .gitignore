@@ -5,3 +5,4 @@ out
 obj
 build/
 docs/
+compile_commands.json

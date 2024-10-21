@@ -20,6 +20,7 @@ public:
     bool     operator==(const Matrix4& rhs) const;
 
     Matrix4  transpose() const;
+    Matrix4    inverse() const;
     
     friend std::ostream& operator<<(std::ostream& stream, const Matrix4& mtx); //print Matrix4 
     

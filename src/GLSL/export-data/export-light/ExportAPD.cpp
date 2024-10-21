@@ -2,7 +2,7 @@
 #include "../../../../include/GLSL/utils/ShaderGLSL.hpp"
 
 ExportAPD::ExportAPD():
-    ambient("ambient.color")
+    ambient("amb_light.color")
 {
     point_light[0] = "point_light.position";
     point_light[1] = "point_light.color";
@@ -24,6 +24,6 @@ void ExportAPD::export_ambient(size_t shader_id, const GlobalAmbient &_ambient) 
 
 void ExportAPD::export_point_light(size_t shader_id, const PointLight &_point_light) {
     Color color = _point_light.get_color();
-    ShaderGLSL::set_vector4(shader_id, point_light[0], Vector4(color.r, color.g, color.b, 1.0));
-    ShaderGLSL::set_vector4(shader_id, point_light[1], _point_light.get_position());
+    ShaderGLSL::set_vector4(shader_id, point_light[1], Vector4(color.r, color.g, color.b, 1.0));
+    ShaderGLSL::set_vector4(shader_id, point_light[0], _point_light.get_position());
 }

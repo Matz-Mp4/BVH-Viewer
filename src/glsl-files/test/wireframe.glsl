@@ -5,7 +5,7 @@ layout (triangle_strip, max_vertices = 12) out;
 
 uniform mat4 p_matrix; 
 
-const float THICKNESS = 0.003;  
+const float THICKNESS = 0.002;  
 
 vec3 computeOffset(vec3 edge, vec3 normal) {
     return normalize(cross(edge, normal)) * THICKNESS;

@@ -130,6 +130,139 @@ Matrix4 Matrix4::transpose() const {
     return Matrix4(trans_data);
 }
 
+//Thanks again Stack OverFlow:
+//https://stackoverflow.com/questions/1148309/inverting-a-4x4-matrix
+Matrix4 Matrix4::inverse() const {
+
+    float inv[16], det;
+    int i;
+
+    inv[0] = mtx_data[5]  * mtx_data[10] * mtx_data[15] - 
+             mtx_data[5]  * mtx_data[11] * mtx_data[14] - 
+             mtx_data[9]  * mtx_data[6]  * mtx_data[15] + 
+             mtx_data[9]  * mtx_data[7]  * mtx_data[14] +
+             mtx_data[13] * mtx_data[6]  * mtx_data[11] - 
+             mtx_data[13] * mtx_data[7]  * mtx_data[10];
+
+    inv[4] = -mtx_data[4]  * mtx_data[10] * mtx_data[15] + 
+              mtx_data[4]  * mtx_data[11] * mtx_data[14] + 
+              mtx_data[8]  * mtx_data[6]  * mtx_data[15] - 
+              mtx_data[8]  * mtx_data[7]  * mtx_data[14] - 
+              mtx_data[12] * mtx_data[6]  * mtx_data[11] + 
+              mtx_data[12] * mtx_data[7]  * mtx_data[10];
+
+    inv[8] = mtx_data[4]  * mtx_data[9] * mtx_data[15] - 
+             mtx_data[4]  * mtx_data[11] * mtx_data[13] - 
+             mtx_data[8]  * mtx_data[5] * mtx_data[15] + 
+             mtx_data[8]  * mtx_data[7] * mtx_data[13] + 
+             mtx_data[12] * mtx_data[5] * mtx_data[11] - 
+             mtx_data[12] * mtx_data[7] * mtx_data[9];
+
+    inv[12] = -mtx_data[4]  * mtx_data[9] * mtx_data[14] + 
+               mtx_data[4]  * mtx_data[10] * mtx_data[13] +
+               mtx_data[8]  * mtx_data[5] * mtx_data[14] - 
+               mtx_data[8]  * mtx_data[6] * mtx_data[13] - 
+               mtx_data[12] * mtx_data[5] * mtx_data[10] + 
+               mtx_data[12] * mtx_data[6] * mtx_data[9];
+
+    inv[1] = -mtx_data[1]  * mtx_data[10] * mtx_data[15] + 
+              mtx_data[1]  * mtx_data[11] * mtx_data[14] + 
+              mtx_data[9]  * mtx_data[2] * mtx_data[15] - 
+              mtx_data[9]  * mtx_data[3] * mtx_data[14] - 
+              mtx_data[13] * mtx_data[2] * mtx_data[11] + 
+              mtx_data[13] * mtx_data[3] * mtx_data[10];
+
+    inv[5] = mtx_data[0]  * mtx_data[10] * mtx_data[15] - 
+             mtx_data[0]  * mtx_data[11] * mtx_data[14] - 
+             mtx_data[8]  * mtx_data[2] * mtx_data[15] + 
+             mtx_data[8]  * mtx_data[3] * mtx_data[14] + 
+             mtx_data[12] * mtx_data[2] * mtx_data[11] - 
+             mtx_data[12] * mtx_data[3] * mtx_data[10];
+
+    inv[9] = -mtx_data[0]  * mtx_data[9] * mtx_data[15] + 
+              mtx_data[0]  * mtx_data[11] * mtx_data[13] + 
+              mtx_data[8]  * mtx_data[1] * mtx_data[15] - 
+              mtx_data[8]  * mtx_data[3] * mtx_data[13] - 
+              mtx_data[12] * mtx_data[1] * mtx_data[11] + 
+              mtx_data[12] * mtx_data[3] * mtx_data[9];
+
+    inv[13] = mtx_data[0]  * mtx_data[9] * mtx_data[14] - 
+              mtx_data[0]  * mtx_data[10] * mtx_data[13] - 
+              mtx_data[8]  * mtx_data[1] * mtx_data[14] + 
+              mtx_data[8]  * mtx_data[2] * mtx_data[13] + 
+              mtx_data[12] * mtx_data[1] * mtx_data[10] - 
+              mtx_data[12] * mtx_data[2] * mtx_data[9];
+
+    inv[2] = mtx_data[1]  * mtx_data[6] * mtx_data[15] - 
+             mtx_data[1]  * mtx_data[7] * mtx_data[14] - 
+             mtx_data[5]  * mtx_data[2] * mtx_data[15] + 
+             mtx_data[5]  * mtx_data[3] * mtx_data[14] + 
+             mtx_data[13] * mtx_data[2] * mtx_data[7] - 
+             mtx_data[13] * mtx_data[3] * mtx_data[6];
+
+    inv[6] = -mtx_data[0]  * mtx_data[6] * mtx_data[15] + 
+              mtx_data[0]  * mtx_data[7] * mtx_data[14] + 
+              mtx_data[4]  * mtx_data[2] * mtx_data[15] - 
+              mtx_data[4]  * mtx_data[3] * mtx_data[14] - 
+              mtx_data[12] * mtx_data[2] * mtx_data[7] + 
+              mtx_data[12] * mtx_data[3] * mtx_data[6];
+
+    inv[10] = mtx_data[0]  * mtx_data[5] * mtx_data[15] - 
+              mtx_data[0]  * mtx_data[7] * mtx_data[13] - 
+              mtx_data[4]  * mtx_data[1] * mtx_data[15] + 
+              mtx_data[4]  * mtx_data[3] * mtx_data[13] + 
+              mtx_data[12] * mtx_data[1] * mtx_data[7] - 
+              mtx_data[12] * mtx_data[3] * mtx_data[5];
+
+    inv[14] = -mtx_data[0]  * mtx_data[5] * mtx_data[14] + 
+               mtx_data[0]  * mtx_data[6] * mtx_data[13] + 
+               mtx_data[4]  * mtx_data[1] * mtx_data[14] - 
+               mtx_data[4]  * mtx_data[2] * mtx_data[13] - 
+               mtx_data[12] * mtx_data[1] * mtx_data[6] + 
+               mtx_data[12] * mtx_data[2] * mtx_data[5];
+
+    inv[3] = -mtx_data[1] * mtx_data[6] * mtx_data[11] + 
+              mtx_data[1] * mtx_data[7] * mtx_data[10] + 
+              mtx_data[5] * mtx_data[2] * mtx_data[11] - 
+              mtx_data[5] * mtx_data[3] * mtx_data[10] - 
+              mtx_data[9] * mtx_data[2] * mtx_data[7] + 
+              mtx_data[9] * mtx_data[3] * mtx_data[6];
+
+    inv[7] = mtx_data[0] * mtx_data[6] * mtx_data[11] - 
+             mtx_data[0] * mtx_data[7] * mtx_data[10] - 
+             mtx_data[4] * mtx_data[2] * mtx_data[11] + 
+             mtx_data[4] * mtx_data[3] * mtx_data[10] + 
+             mtx_data[8] * mtx_data[2] * mtx_data[7] - 
+             mtx_data[8] * mtx_data[3] * mtx_data[6];
+
+    inv[11] = -mtx_data[0] * mtx_data[5] * mtx_data[11] + 
+               mtx_data[0] * mtx_data[7] * mtx_data[9] + 
+               mtx_data[4] * mtx_data[1] * mtx_data[11] - 
+               mtx_data[4] * mtx_data[3] * mtx_data[9] - 
+               mtx_data[8] * mtx_data[1] * mtx_data[7] + 
+               mtx_data[8] * mtx_data[3] * mtx_data[5];
+
+    inv[15] = mtx_data[0] * mtx_data[5] * mtx_data[10] - 
+              mtx_data[0] * mtx_data[6] * mtx_data[9] - 
+              mtx_data[4] * mtx_data[1] * mtx_data[10] + 
+              mtx_data[4] * mtx_data[2] * mtx_data[9] + 
+              mtx_data[8] * mtx_data[1] * mtx_data[6] - 
+              mtx_data[8] * mtx_data[2] * mtx_data[5];
+
+    det = mtx_data[0] * inv[0] + mtx_data[1] * inv[4] + mtx_data[2] * inv[8] + mtx_data[3] * inv[12];
+
+    if (det == 0) {
+        return *this;
+    }
+
+    det = 1.0 / det;
+
+    for (i = 0; i < 16; i++)
+        inv[i] = inv[i] * det;
+    return Matrix4(inv);
+}
+
+
 
 std::ostream& operator<<(std::ostream& stream, const Matrix4& mtx){
      stream << '[';
