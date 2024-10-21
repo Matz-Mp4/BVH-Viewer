@@ -49,25 +49,26 @@ int main(int argc, char* argv[]) {
     Matrix4 transformation = UNIT_MATRIX4; 
     bool wireframe = false;
     bool normalframe = false;
-    bool defaultframe= true;
-    bool gouraudframe = false;
+    bool defaultframe= false;
+    bool gouraudframe = true;
+    Material material = RED_PLASTIC;
 
     if (argc == 2){
         std::cout << argv[1];
-        object = GeometricObject(new ModelLoader(argv[1]) , BLUE_DIAMOND);
+        object = GeometricObject(new ModelLoader(argv[1]) , material);
     }else if (argc == 3) {
-        object = GeometricObject(new ModelLoader(argv[1]) , GREEN_DIAMOND);
+        object = GeometricObject(new ModelLoader(argv[1]) , material);
         float value =   std::stof(argv[2]);
         transformation = Transformation::scaling(value, value, value);
     }else if ( argc == 4) {
-        object = GeometricObject(new ModelLoader(argv[1]) , BLUE_DIAMOND);
+        object = GeometricObject(new ModelLoader(argv[1]) , material);
         float value =   std::stof(argv[2]);
         transformation = Transformation::scaling(value, value, value);
         std::string mode = argv[3];
         wireframe = !mode.find("--w");
      
     }else {
-        object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 3.5, 0.5, 50, 50), BLUE_DIAMOND);
+        object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 3.5, 1.5, 500, 500), material);
     }
 
         
@@ -88,19 +89,19 @@ int main(int argc, char* argv[]) {
     objectGLSL.export_mesh();
 
     GlobalAmbient ambient_light = GlobalAmbient(WHITE);
-    PointLight point_light = PointLight(WHITE, Vector4(100.0, 100.0, 100.0, 1.0));
+    PointLight point_light = PointLight(WHITE, Vector4(560.0, 100.0, 600.0, 1.0));
     ExportAPD export_light = ExportAPD();
 
 
 	glEnable(GL_DEPTH_TEST);
 
     while (!glfwWindowShouldClose(window)){
-        glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
+        glClearColor(0.7f, 0.7f, 0.75f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
 
-        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+        if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
             defaultframe = !defaultframe;
         }
 
@@ -112,7 +113,7 @@ int main(int argc, char* argv[]) {
             normalframe = !normalframe;
         }
 
-        if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
+        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
             gouraudframe = !gouraudframe;
         }
             cameraGLSL.handle_inputs(window, width, height);
@@ -173,6 +174,7 @@ int main(int argc, char* argv[]) {
     shader.delete_shader();
     shader2.delete_shader();
     shader3.delete_shader();
+    gouraud_shader.delete_shader();
     glfwDestroyWindow(window);
     glfwTerminate();
 

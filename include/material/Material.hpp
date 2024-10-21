@@ -4,8 +4,7 @@
 enum class MaterialType {
     RUBBER,
     PLASTIC,
-    METALLIC,
-    DIAMOND,
+    METALLIC
 };
 
 /** 
@@ -19,12 +18,11 @@ class Material {
     public:
         Material() = default;
        ~Material() = default;
-        Material(Color c, float k_amb, float k_dif, float k_spec,  float exp, float k_trans = 0, float index_ref = 0);
+        Material(Color c, float k_amb, float k_dif, float k_spec,  float exp);
         Material(Color c, MaterialType type);
 
         Material&      turn_into_matte(float k_amb, float k_dif);
-        Material&    turn_into_glossy(float k_spec, float exp);
-        Material& turn_into_reflective(float k_trans, float index_ref);
+        Material&     turn_into_glossy(float k_spec, float exp);
         Material&         change_color(Color c);
 
          Color    get_color() const;
@@ -37,7 +35,6 @@ class Material {
         static Material create_rubber(Color c);
         static Material create_plastic(Color c);
         static Material create_metallic(Color c);
-        static Material create_diamond(Color c);
 
 
         
@@ -46,9 +43,7 @@ class Material {
         float  k_amb;
         float  k_dif;
         float  k_spec;
-        float  k_trans;
         float  exp;
-        float  index_ref;
 };
 
 
@@ -75,13 +70,4 @@ static const Material BLUE_METALLIC   =  Material(BLUE, MaterialType::METALLIC);
 static const Material GREEN_METALLIC  =  Material(GREEN, MaterialType::METALLIC);   
 static const Material BLACK_METALLIC  =  Material(BLACK, MaterialType::METALLIC);   
 static const Material WHITE_METALLIC  =  Material(WHITE, MaterialType::METALLIC);   
-
-//DIAMOND
-static const Material ORANGE_DIAMOND   =Material(ORANGE, MaterialType::DIAMOND); 
-static const Material RED_DIAMOND      =Material(RED, MaterialType::DIAMOND);     
-static const Material BLUE_DIAMOND     =Material(BLUE, MaterialType::DIAMOND);   
-static const Material GREEN_DIAMOND    =Material(GREEN, MaterialType::DIAMOND);   
-static const Material BLACK_DIAMOND    =Material(BLACK, MaterialType::DIAMOND);  
-static const Material WHITE_DIAMOND    =Material(WHITE, MaterialType::DIAMOND);  
-
 
