@@ -220,4 +220,8 @@ void ShaderGLSL::set_float(size_t ID, const std::string &name, float value) {
 void ShaderGLSL::set_matrix4(size_t ID, const std::string &name, const Matrix4& m) {
     glUniformMatrix4fv(glGetUniformLocation(ID, name.c_str()), 1, GL_FALSE, m.mtx_data);
 }
+
+void ShaderGLSL::set_vector4(size_t ID, const std::string &name, const Vector4& vector)  {
+    glUniform4fv(glGetUniformLocation(ID, name.c_str()), 1, vector.data);
+}
  

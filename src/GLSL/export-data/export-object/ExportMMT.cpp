@@ -42,7 +42,8 @@ void ExportMMT::delete_mesh(VAO& vao, VBO& vbo, EBO& ebo){
 
 //TODO: Create this get functions
 void ExportMMT::export_material(size_t shader_id, const Material &material){
-    /* ShaderGLSL::set_float(shader_id, this->material[0], material.get_color()); */
+    Color color = material.get_color();
+    ShaderGLSL::set_vector4(shader_id, this->material[0], Vector4(color.r, color.g, color.b));
     ShaderGLSL::set_float(shader_id, this->material[0], material.get_ambient());
     ShaderGLSL::set_float(shader_id, this->material[0], material.get_diffuse());
     ShaderGLSL::set_float(shader_id, this->material[0], material.get_specular());
