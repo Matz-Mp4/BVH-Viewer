@@ -94,12 +94,28 @@ int main(int argc, char* argv[]) {
 
 
 	glEnable(GL_DEPTH_TEST);
+    double prev_time = 0.0;
+    double curr_time = 0.0;
+    double time_delta;
+    unsigned int counter = 0;
 
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.7f, 0.7f, 0.75f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+        // Calculate FPS
+        curr_time = glfwGetTime();
+        time_delta = curr_time - prev_time;
+        counter++;
+        if (time_delta >= 0.0333) { // 1.0 / 30.0
+            std::string fps = std::to_string((1.0 / time_delta) * counter);
+            std::string ms = std::to_string((time_delta / counter) * 1000);
+            std::string title = "BVH Viewer - FPS: " + fps + " - ms: " + ms;
+            std::cout << title <<"\r";
+            glfwSetWindowTitle(window, title.c_str());
+            prev_time = curr_time;
+            counter = 0;
+        }
 
         if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
             defaultframe = !defaultframe;
