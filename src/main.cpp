@@ -5,7 +5,6 @@
 
 #include "../include/GLSL/utils/ShaderGLSL.hpp"
 #include "../include/GLSL/export-data/export-camera/ExportVP.hpp"
-#include "../include/GLSL/export-data/export-object/ExportMMT.hpp"
 #include "../include/GLSL/export-data/export-light/ExportAPD.hpp"
 #include "../include/light/GlobalAmbient.hpp"
 #include "../include/light/PointLight.hpp"
@@ -19,8 +18,8 @@
 #include "../include/objects/shapes/Torus.hpp"
 #include "../include/objects/shapes/ModelLoader.hpp"
 
-const unsigned int width = 800;
-const unsigned int height = 800;
+const unsigned int width = 1600;
+const unsigned int height = 900;
 
 GLFWwindow* create_window( unsigned int width, unsigned int height) {
     if (!glfwInit()) {
@@ -74,10 +73,11 @@ int main(int argc, char* argv[]) {
         
     GLFWwindow* window = create_window(width, height);
 
-    ShaderGLSL shader("../src/glsl-files/debug/vertex.glsl", "../src/glsl-files/debug/fragment.glsl");
-    ShaderGLSL shader2("../src/glsl-files/test/vertex.glsl", "../src/glsl-files/test/fragment.glsl", "../src/glsl-files/test/wireframe.glsl");
-    ShaderGLSL shader3("../src/glsl-files/test/vertex.glsl", "../src/glsl-files/test/fragment.glsl", "../src/glsl-files/test/geometry.glsl");
-    ShaderGLSL gouraud_shader("../src/glsl-files/gouraud/vertex.glsl", "../src/glsl-files/gouraud/fragment.glsl");
+    std::cout << "Precompiling shaders programs ...\n\n";
+    ShaderGLSL shader("../src/glsl-files/debug/debug.vert", "../src/glsl-files/debug/normal.frag");
+    ShaderGLSL shader2("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/wireframe.geom");
+    ShaderGLSL shader3("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/normal.geom");
+    ShaderGLSL gouraud_shader("../src/glsl-files/gouraud/gouraud.vert", "../src/glsl-files/gouraud/gouraud.frag");
 
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
@@ -86,6 +86,8 @@ int main(int argc, char* argv[]) {
     CameraGLSL cameraGLSL = CameraGLSL(shader.ID, export_camera, camera, pinhole_ptr );
 
     GeometricObjectGLSL objectGLSL(shader.ID, object.with_transformation(transformation));
+
+    std::cout << "Allocating memory to object ...\n\n";
     objectGLSL.export_mesh();
 
     GlobalAmbient ambient_light = GlobalAmbient(WHITE);
@@ -99,6 +101,7 @@ int main(int argc, char* argv[]) {
     double time_delta;
     unsigned int counter = 0;
 
+    
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.7f, 0.7f, 0.75f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -110,7 +113,7 @@ int main(int argc, char* argv[]) {
         if (time_delta >= 0.0333) { // 1.0 / 30.0
             std::string fps = std::to_string((1.0 / time_delta) * counter);
             std::string ms = std::to_string((time_delta / counter) * 1000);
-            std::string title = "BVH Viewer - FPS: " + fps + " - ms: " + ms;
+            std::string title = "FPS: " + fps + " - ms: " + ms;
             std::cout << title <<"\r";
             glfwSetWindowTitle(window, title.c_str());
             prev_time = curr_time;
@@ -137,7 +140,6 @@ int main(int argc, char* argv[]) {
         if(defaultframe) {
             shader.active_shader();
             cameraGLSL.change_shader(shader.ID);
-            /* cameraGLSL.handle_inputs(window, width, height); */
             objectGLSL.change_shader(shader.ID);
             objectGLSL.export_transformation();
             cameraGLSL.export_projection();
@@ -149,7 +151,6 @@ int main(int argc, char* argv[]) {
         if(normalframe) {
             shader2.active_shader();
             cameraGLSL.change_shader(shader2.ID);
-            /* cameraGLSL.handle_inputs(window, width, height); */
             objectGLSL.change_shader(shader2.ID);
             objectGLSL.export_transformation();
             cameraGLSL.export_projection();
@@ -159,7 +160,6 @@ int main(int argc, char* argv[]) {
         if(wireframe) {
             shader3.active_shader();
             cameraGLSL.change_shader(shader3.ID);
-            /* cameraGLSL.handle_inputs(window, width, height); */
             objectGLSL.change_shader(shader3.ID);
             objectGLSL.export_transformation();
             cameraGLSL.export_projection();
@@ -170,7 +170,6 @@ int main(int argc, char* argv[]) {
         if(gouraudframe) {
             gouraud_shader.active_shader();
             cameraGLSL.change_shader(gouraud_shader.ID);
-            /* cameraGLSL.handle_inputs(window, width, height); */
             objectGLSL.change_shader(gouraud_shader.ID);
             objectGLSL.export_transformation();
             objectGLSL.export_material();
