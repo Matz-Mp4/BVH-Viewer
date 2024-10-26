@@ -5,6 +5,7 @@
 #include "../GLSL/utils/VAO.hpp"
 #include "GeometricObject.hpp"
 #include "IShape.hpp"
+#include <GLFW/glfw3.h>
 
 class GeometricObjectGLSL{
     public:
@@ -12,6 +13,7 @@ class GeometricObjectGLSL{
          GeometricObjectGLSL(const size_t& shader_id, ExportObject* export_object, IShape* shape);
          GeometricObjectGLSL(const size_t& shader_id, ExportObject* export_object, const GeometricObject& object);
          GeometricObjectGLSL() = default;
+
          //TODO: fix this *export_object
         ~GeometricObjectGLSL() = default; 
 
@@ -23,7 +25,8 @@ class GeometricObjectGLSL{
          void change_export(ExportObject* _export_object);
          void change_shader(const size_t& _shader_id);
 
-         void draw();
+         void     handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height);
+         void              draw();
 
     private:
         size_t             shader_id;
@@ -32,4 +35,6 @@ class GeometricObjectGLSL{
         VBO                      vbo;
         EBO                      ebo;
         ExportObject*  export_object;
+        double       last_x , last_y; // Last mouse position
+        bool             is_dragging; // Is the right mouse button being held down
 };

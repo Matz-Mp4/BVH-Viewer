@@ -8,8 +8,12 @@ CameraGLSL::CameraGLSL(size_t shader_id, const Camera& cam, TypeCamera* type_cam
     cam(cam),
     type_cam_ptr(type_cam),
     first_click(false),
-    sensitivity(5.0),
-    speed(0.01)
+    sensitivity(0.3),
+    speed(0.01),
+    x_pos(0.0),
+    y_pos(0.0),
+    x_prev(0.0),
+    y_prev(0.0)
 {
     export_camera = new ExportVP();
 
@@ -21,8 +25,12 @@ CameraGLSL::CameraGLSL(size_t shader_id, ExportCamera* export_camera, const Came
     cam(cam),
     type_cam_ptr(type_cam),
     first_click(false),
-    sensitivity(5.0),
-    speed(0.01)
+    sensitivity(0.3),
+    speed(0.01),
+    x_pos(0.0),
+    y_pos(0.0),
+    x_prev(0.0),
+    y_prev(0.0)
 {}
 
 CameraGLSL::~CameraGLSL() {
@@ -100,14 +108,22 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
         // Prevent camera jump on first click
         if (first_click) {
             glfwSetCursorPos(window, width / 2.0, height / 2.0);
+            /* x_pos = width / 2.0; */
+            /* y_pos = height / 2.0; */
             first_click = false;
         }
         // Get cursor position
         double mouseX, mouseY;
         glfwGetCursorPos(window, &mouseX, &mouseY);
+        x_pos = mouseX;
+        y_pos = mouseY;
         // Calculate rotation based on cursor movement
-        float rotX = sensitivity * (float)(mouseY - (height / 2.0)) / height;
-        float rotY = sensitivity * (float)(mouseX - (width / 2.0)) / width;
+        /* float rotX = sensitivity * (float)(mouseY - (height / 2.0)) / height; */
+        float rotY = sensitivity * (x_pos - x_prev);
+        /* float rotY = sensitivity * (float)(mouseX - (width / 2.0)) / width; */
+        float rotX = sensitivity * (y_pos - y_prev);
+        x_prev = x_pos;
+        y_prev = y_pos;
         // Vertical rotation (rotate around global X axis)j
         Vector4 newDirection = Transformation::rotation(glm::radians( -rotX) , (cam.direction | cam.up).normalize() ) * cam.direction;
         if (fabs(acos(newDirection.y) - glm::radians(90.0f)) <= glm::radians(85.0f)) {

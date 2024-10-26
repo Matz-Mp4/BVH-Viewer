@@ -24,6 +24,8 @@ class CameraGLSL {
        TypeCamera*    type_cam_ptr;
        std::string    uniform_proj;
        ExportCamera* export_camera;
+       float          x_pos, y_pos;
+       float        x_prev, y_prev;
 
 
 

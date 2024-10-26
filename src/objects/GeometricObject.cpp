@@ -1,4 +1,6 @@
 #include "../../include/objects/GeometricObject.hpp"
+#include "../../include/math/Transforamation.hpp"
+#include <glm/trigonometric.hpp>
 
 GeometricObject::GeometricObject(const IShape* shape, const Material& _material) {
     material = _material;
@@ -30,6 +32,11 @@ GeometricObject  GeometricObject::with_shape(const IShape* shape) {
 
 GeometricObject  GeometricObject::with_transformation(const Matrix4& transformation) {
     return GeometricObject(mesh, material, transformation);
+}
+
+
+void GeometricObject::transform(Matrix4& _transformation) {
+    this->transformation =  _transformation *  transformation;
 }
 
 

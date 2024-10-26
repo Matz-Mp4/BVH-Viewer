@@ -18,8 +18,8 @@
 #include "../include/objects/shapes/Torus.hpp"
 #include "../include/objects/shapes/ModelLoader.hpp"
 
-const unsigned int width = 1600;
-const unsigned int height = 900;
+const unsigned int width = 800;
+const unsigned int height = 800;
 
 GLFWwindow* create_window( unsigned int width, unsigned int height) {
     if (!glfwInit()) {
@@ -36,9 +36,7 @@ GLFWwindow* create_window( unsigned int width, unsigned int height) {
 		exit(EXIT_FAILURE);
 	}
     glfwMakeContextCurrent(window);
-    glewInit();
-    glViewport(0, 0, width, height);
-    
+   
     return window;
 }
 
@@ -70,8 +68,10 @@ int main(int argc, char* argv[]) {
         object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 3.5, 1.5, 500, 500), material);
     }
 
-        
     GLFWwindow* window = create_window(width, height);
+    glewInit();
+    glViewport(0, 0, width, height);
+         
 
     std::cout << "Precompiling shaders programs ...\n\n";
     ShaderGLSL shader("../src/glsl-files/debug/debug.vert", "../src/glsl-files/debug/normal.frag");
@@ -100,6 +100,7 @@ int main(int argc, char* argv[]) {
     double curr_time = 0.0;
     double time_delta;
     unsigned int counter = 0;
+
 
     
     while (!glfwWindowShouldClose(window)){
@@ -135,7 +136,9 @@ int main(int argc, char* argv[]) {
         if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
             gouraudframe = !gouraudframe;
         }
-            cameraGLSL.handle_inputs(window, width, height);
+
+        cameraGLSL.handle_inputs(window, width, height);
+        objectGLSL.handle_inputs(window, width, height);
 
         if(defaultframe) {
             shader.active_shader();

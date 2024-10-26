@@ -22,6 +22,8 @@ class GeometricObject {
         Matrix4                  get_transformation() const;
         std::vector<Vertex>            get_vertices() const;
         std::vector<unsigned int>       get_indices() const;
+
+        void transform(Matrix4& _transformation);
                 
     private: 
         Material      material;
