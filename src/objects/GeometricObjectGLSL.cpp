@@ -77,21 +77,13 @@ void GeometricObjectGLSL::handle_inputs(GLFWwindow* window, unsigned int width, 
             last_x = mouseX;
             last_y = mouseY;
 
-            float sensitivity = 0.01f;
-            /* float angle = sqrt(deltaX * deltaX + deltaY * deltaY) * sensitivity; */
-            Matrix4 rotate_x = Transformation::rotation_x(glm::radians(deltaX));
-            Matrix4 rotate_y = Transformation::rotation_y(glm::radians(deltaY));
+            float sensitivity = 0.2f;
+            float angle = sqrt(deltaX * deltaX + deltaY * deltaY) * sensitivity;
+            Matrix4 rotate_x = Transformation::rotation_x(glm::radians(deltaX * sensitivity));
+            Matrix4 rotate_y = Transformation::rotation_y(glm::radians(deltaY * sensitivity));
 
-            /* Vector4 axis(deltaY, deltaX, 1.0f, 0.0); // Use deltaY and deltaX to define the rotation axis */
-            /* axis = axis.normalize(); // Normalize the axis */
-
-            // Apply the rotation
-            /* if (angle != 0) { // Avoid applying zero rotation */
-                /* Matrix4 rotationMatrix = Transformation::rotation(angle, axis); */
-                Matrix4 rotationMatrix = rotate_x * rotate_y;
-                object.transform(rotationMatrix);
-                /* object = object.with_transformation(object.get_transformation() * rotationMatrix); */
-            /* } */
+            Matrix4 rotationMatrix = rotate_x * rotate_y;
+            object.transform(rotationMatrix);
         }
     } else {
         is_dragging = false;
