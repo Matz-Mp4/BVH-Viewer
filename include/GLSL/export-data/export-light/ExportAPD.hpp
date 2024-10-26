@@ -1,6 +1,6 @@
 #include "../ExportLight.hpp"
 
-class ExportAPD: ExportLight{
+class ExportAPD: public ExportLight{
     public:
          ExportAPD(std::string _ambient, std::string _point_light[]);
          ExportAPD();

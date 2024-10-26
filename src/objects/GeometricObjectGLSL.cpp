@@ -62,7 +62,7 @@ void GeometricObjectGLSL::draw() {
 void GeometricObjectGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height) {
     // Get the current mouse position
     double mouseX, mouseY;
-    glfwGetCursorPos(window, &mouseX, &mouseY);
+    glfwGetCursorPos(window, &mouseY, &mouseX);
 
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
         if (!is_dragging) {
@@ -78,17 +78,20 @@ void GeometricObjectGLSL::handle_inputs(GLFWwindow* window, unsigned int width, 
             last_y = mouseY;
 
             float sensitivity = 0.01f;
-            float angle = sqrt(deltaX * deltaX + deltaY * deltaY) * sensitivity;
+            /* float angle = sqrt(deltaX * deltaX + deltaY * deltaY) * sensitivity; */
+            Matrix4 rotate_x = Transformation::rotation_x(glm::radians(deltaX));
+            Matrix4 rotate_y = Transformation::rotation_y(glm::radians(deltaY));
 
-            Vector4 axis(deltaY, deltaX, 0.0f); // Use deltaY and deltaX to define the rotation axis
-            axis = axis.normalize(); // Normalize the axis
+            /* Vector4 axis(deltaY, deltaX, 1.0f, 0.0); // Use deltaY and deltaX to define the rotation axis */
+            /* axis = axis.normalize(); // Normalize the axis */
 
             // Apply the rotation
-            if (angle != 0) { // Avoid applying zero rotation
-                Matrix4 rotationMatrix = Transformation::rotation(angle, axis);
+            /* if (angle != 0) { // Avoid applying zero rotation */
+                /* Matrix4 rotationMatrix = Transformation::rotation(angle, axis); */
+                Matrix4 rotationMatrix = rotate_x * rotate_y;
                 object.transform(rotationMatrix);
                 /* object = object.with_transformation(object.get_transformation() * rotationMatrix); */
-            }
+            /* } */
         }
     } else {
         is_dragging = false;

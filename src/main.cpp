@@ -5,9 +5,9 @@
 
 #include "../include/GLSL/utils/ShaderGLSL.hpp"
 #include "../include/GLSL/export-data/export-camera/ExportVP.hpp"
-#include "../include/GLSL/export-data/export-light/ExportAPD.hpp"
 #include "../include/light/GlobalAmbient.hpp"
 #include "../include/light/PointLight.hpp"
+#include "../include/light/LightGLSL.hpp"
 #include "../include/camera/Camera.hpp"
 #include "../include/math/Transforamation.hpp"
 #include "../include/camera/camera-types/PinHole.hpp"
@@ -50,20 +50,8 @@ int main(int argc, char* argv[]) {
     bool gouraudframe = true;
     Material material = RED_PLASTIC;
 
-    if (argc == 2){
-        std::cout << argv[1];
+    if (argc == 2) {
         object = GeometricObject(new ModelLoader(argv[1]) , material);
-    }else if (argc == 3) {
-        object = GeometricObject(new ModelLoader(argv[1]) , material);
-        float value =   std::stof(argv[2]);
-        transformation = Transformation::scaling(value, value, value);
-    }else if ( argc == 4) {
-        object = GeometricObject(new ModelLoader(argv[1]) , material);
-        float value =   std::stof(argv[2]);
-        transformation = Transformation::scaling(value, value, value);
-        std::string mode = argv[3];
-        wireframe = !mode.find("--w");
-     
     }else {
         object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 3.5, 1.5, 500, 500), material);
     }
@@ -92,7 +80,7 @@ int main(int argc, char* argv[]) {
 
     GlobalAmbient ambient_light = GlobalAmbient(WHITE);
     PointLight point_light = PointLight(WHITE, Vector4(560.0, 100.0, 600.0, 1.0));
-    ExportAPD export_light = ExportAPD();
+    LightGLSL lightGLSL = LightGLSL(gouraud_shader.ID, ambient_light, point_light);
 
 
 	glEnable(GL_DEPTH_TEST);
@@ -177,8 +165,8 @@ int main(int argc, char* argv[]) {
             objectGLSL.export_transformation();
             objectGLSL.export_material();
             cameraGLSL.export_projection();
-            export_light.export_ambient(gouraud_shader.ID, ambient_light);
-            export_light.export_point_light(gouraud_shader.ID, point_light);
+            lightGLSL.export_ambient();
+            lightGLSL.export_point_light();
             objectGLSL.draw();
 
 
