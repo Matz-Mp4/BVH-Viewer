@@ -77,7 +77,7 @@ Material Material::create_plastic(Color c) {
 }
 
 Material Material::create_metallic(Color c) {
-    return Material(c, 0.1f, 0.9f, 1.0f, 500.0f);
+    return Material(c, 0.05f, 0.5f, 1.0f, 300.0f);
 }
 
 

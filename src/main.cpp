@@ -16,6 +16,7 @@
 #include "../include/objects/GeometricObjectGLSL.hpp"
 #include "../include/material/Material.hpp"
 #include "../include/objects/shapes/Torus.hpp"
+#include "../include/objects/shapes/Sphere.hpp"
 #include "../include/objects/shapes/ModelLoader.hpp"
 
 const unsigned int width = 800;
@@ -49,13 +50,16 @@ int main(int argc, char* argv[]) {
     bool defaultframe= false;
     bool gouraudframe = false;
     bool blin_phong_frame = true;
-    Material material = RED_PLASTIC;
+    bool toon_frame = false;
+    Material material = RED_METALLIC;
 
     if (argc == 2) {
         object = GeometricObject(new ModelLoader(argv[1]) , material);
     }else {
-        object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 3.5, 1.5, 500, 500), material);
+        object =  GeometricObject(new Sphere(Vector4(0.0 , 0.0, 0.0), 1.5, 50, 50), material);
     }
+
+
 
     GLFWwindow* window = create_window(width, height);
     glewInit();
@@ -68,6 +72,7 @@ int main(int argc, char* argv[]) {
     ShaderGLSL shader3("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/normal.geom");
     ShaderGLSL gouraud_shader("../src/glsl-files/gouraud/gouraud.vert", "../src/glsl-files/gouraud/gouraud.frag");
     ShaderGLSL blin_phong_shader("../src/glsl-files/blin-phong/blin-phong.vert", "../src/glsl-files/blin-phong/blin-phong.frag");
+    ShaderGLSL toon_shader("../src/glsl-files/toon/toon.vert", "../src/glsl-files/toon/toon.frag");
 
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
@@ -81,7 +86,7 @@ int main(int argc, char* argv[]) {
     objectGLSL.export_mesh();
 
     GlobalAmbient ambient_light = GlobalAmbient(WHITE);
-    PointLight point_light = PointLight(WHITE, Vector4(360.0, 100.0, 600.0, 1.0));
+    PointLight point_light = PointLight(WHITE, Vector4(10.0, 10.0, 10.0, 1.0));
     LightGLSL lightGLSL = LightGLSL(gouraud_shader.ID, ambient_light, point_light);
 
 
@@ -130,6 +135,12 @@ int main(int argc, char* argv[]) {
         if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
             blin_phong_frame = !blin_phong_frame;
         }
+
+        if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS) {
+            toon_frame = !toon_frame;
+        }
+
+
 
 
 
@@ -186,6 +197,19 @@ int main(int argc, char* argv[]) {
             cameraGLSL.change_shader(blin_phong_shader.ID);
             objectGLSL.change_shader(blin_phong_shader.ID);
             lightGLSL.change_shader(blin_phong_shader.ID);
+            objectGLSL.export_transformation();
+            objectGLSL.export_material();
+            cameraGLSL.export_projection();
+            lightGLSL.export_ambient();
+            lightGLSL.export_point_light();
+            objectGLSL.draw();
+        }
+
+        if(toon_frame) {
+            toon_shader.active_shader();
+            cameraGLSL.change_shader(toon_shader.ID);
+            objectGLSL.change_shader(toon_shader.ID);
+            lightGLSL.change_shader(toon_shader.ID);
             objectGLSL.export_transformation();
             objectGLSL.export_material();
             cameraGLSL.export_projection();
