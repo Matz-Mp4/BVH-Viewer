@@ -47,7 +47,8 @@ int main(int argc, char* argv[]) {
     bool wireframe = false;
     bool normalframe = false;
     bool defaultframe= false;
-    bool gouraudframe = true;
+    bool gouraudframe = false;
+    bool blin_phong_frame = true;
     Material material = RED_PLASTIC;
 
     if (argc == 2) {
@@ -66,6 +67,7 @@ int main(int argc, char* argv[]) {
     ShaderGLSL shader2("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/wireframe.geom");
     ShaderGLSL shader3("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/normal.geom");
     ShaderGLSL gouraud_shader("../src/glsl-files/gouraud/gouraud.vert", "../src/glsl-files/gouraud/gouraud.frag");
+    ShaderGLSL blin_phong_shader("../src/glsl-files/blin-phong/blin-phong.vert", "../src/glsl-files/blin-phong/blin-phong.frag");
 
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
@@ -79,7 +81,7 @@ int main(int argc, char* argv[]) {
     objectGLSL.export_mesh();
 
     GlobalAmbient ambient_light = GlobalAmbient(WHITE);
-    PointLight point_light = PointLight(WHITE, Vector4(560.0, 100.0, 600.0, 1.0));
+    PointLight point_light = PointLight(WHITE, Vector4(360.0, 100.0, 600.0, 1.0));
     LightGLSL lightGLSL = LightGLSL(gouraud_shader.ID, ambient_light, point_light);
 
 
@@ -113,6 +115,7 @@ int main(int argc, char* argv[]) {
             defaultframe = !defaultframe;
         }
 
+
         if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
             wireframe = !wireframe;
         }
@@ -124,6 +127,11 @@ int main(int argc, char* argv[]) {
         if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
             gouraudframe = !gouraudframe;
         }
+        if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
+            blin_phong_frame = !blin_phong_frame;
+        }
+
+
 
         cameraGLSL.handle_inputs(window, width, height);
         objectGLSL.handle_inputs(window, width, height);
@@ -162,6 +170,7 @@ int main(int argc, char* argv[]) {
             gouraud_shader.active_shader();
             cameraGLSL.change_shader(gouraud_shader.ID);
             objectGLSL.change_shader(gouraud_shader.ID);
+            lightGLSL.change_shader(gouraud_shader.ID);
             objectGLSL.export_transformation();
             objectGLSL.export_material();
             cameraGLSL.export_projection();
@@ -170,6 +179,19 @@ int main(int argc, char* argv[]) {
             objectGLSL.draw();
 
 
+        }
+
+        if(blin_phong_frame) {
+            blin_phong_shader.active_shader();
+            cameraGLSL.change_shader(blin_phong_shader.ID);
+            objectGLSL.change_shader(blin_phong_shader.ID);
+            lightGLSL.change_shader(blin_phong_shader.ID);
+            objectGLSL.export_transformation();
+            objectGLSL.export_material();
+            cameraGLSL.export_projection();
+            lightGLSL.export_ambient();
+            lightGLSL.export_point_light();
+            objectGLSL.draw();
         }
         glfwSwapBuffers(window);
         glfwPollEvents();

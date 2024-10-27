@@ -1,4 +1,4 @@
-#version 420 
+#version 330 
 
 out vec4 FragColor;
 in vec4 varying_color;
