@@ -1,6 +1,6 @@
 #include "../../include/objects/GeometricObject.hpp"
-#include "../../include/math/Transforamation.hpp"
-#include <glm/trigonometric.hpp>
+/* #include "../../include/math/Transforamation.hpp" */
+/* #include <glm/trigonometric.hpp> */
 
 GeometricObject::GeometricObject(const IShape* shape, const Material& _material) {
     material = _material;
@@ -60,4 +60,13 @@ std::vector<Vertex> GeometricObject::get_vertices() const {
 
 std::vector<unsigned int> GeometricObject::get_indices() const {
     return mesh.indices;
+}
+
+std::ostream& operator<<(std::ostream& stream, const GeometricObject& object) {
+    stream << "## Object Info \n";
+    stream << "  - Vertices: "<< object.get_vertices().size() << "\n";
+    stream << "  - Indices: "<< object.get_indices().size() << "\n";
+    stream << "  - Triangles: "<< (int)(object.get_indices().size() / 3) << "\n";
+    return stream;
+
 }

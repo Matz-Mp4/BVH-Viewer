@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+#include "../../../third-party/glew/include/GL/glew.h"
 #include <vector>
 #pragma once
 

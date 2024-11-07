@@ -94,6 +94,10 @@ Vector4 operator/(float t, const Vector4 &v) {
   return v / t;
 }
 
+float Vector4::operator[](unsigned int idx) const {
+    int i = idx % 4;
+    return data[i];
+}
 bool  Vector4::operator==(const Vector4&   v) const {
     return this->x == v.x && 
            this->y == v.y && 

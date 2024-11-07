@@ -1,6 +1,6 @@
 #include "../../../include/objects/shapes/Torus.hpp"
 #include <cmath>
-#include <glm/trigonometric.hpp>
+#include "../../../third-party/glm/glm/trigonometric.hpp"
 
 
 Torus::Torus(const Vector4 &center, const float _r_torus, float _r_tube, unsigned int u , unsigned int v )

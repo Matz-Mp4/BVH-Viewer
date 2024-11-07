@@ -23,6 +23,9 @@ class GeometricObject {
         std::vector<Vertex>            get_vertices() const;
         std::vector<unsigned int>       get_indices() const;
 
+
+        friend std::ostream& operator<<(std::ostream& stream, const GeometricObject& object); 
+
         void transform(Matrix4& _transformation);
                 
     private: 

@@ -26,6 +26,7 @@ class Vector4 {
         Vector4    operator/(float t) const;
         Vector4    operator|(const Vector4&   v) const;
         bool      operator==(const Vector4&   v) const;
+        float     operator[](unsigned int idx) const;
         float         length() const;
         Vector4    normalize()const;
        

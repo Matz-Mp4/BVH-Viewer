@@ -1,7 +1,7 @@
 #include "../../include/objects/GeometricObjectGLSL.hpp"
 #include "../../include/GLSL/export-data/export-object/ExportMMT.hpp"
 #include "../../include/math/Transforamation.hpp"
-#include <glm/glm.hpp>
+#include "../../third-party/glm/glm/trigonometric.hpp"
 
 GeometricObjectGLSL::GeometricObjectGLSL(const size_t& shader_id, const GeometricObject& object) :
     object(object),
@@ -45,9 +45,6 @@ void GeometricObjectGLSL::export_transformation() {
 void GeometricObjectGLSL::change_export(ExportObject* _export_object) {
     this->export_object = _export_object;
 }
-
-
-
 
  void GeometricObjectGLSL::change_shader(const size_t& _shader_id) {
      shader_id = _shader_id;

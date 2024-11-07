@@ -1,6 +1,6 @@
 #include "../../../include/objects/shapes/Sphere.hpp"
 #include <cmath>
-#include <glm/trigonometric.hpp>
+#include "../../../third-party/glm/glm/trigonometric.hpp"
 
 
 Sphere::Sphere(const Vector4 &center, const float radius, unsigned int u , unsigned int v )
