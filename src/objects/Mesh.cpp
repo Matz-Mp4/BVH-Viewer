@@ -25,16 +25,17 @@ void Mesh::update_num_triangles() {
 std::vector<Vector4> Mesh::centroids() const {
     std::vector<Vector4> centroids;
     Vector4 centroid_with_index;
-    int num_triangles = vertices.size() / 3;
+    int num_triangles =  indices.size()  / 3;
 
     for(int i = 0; i < num_triangles; i++) {
-        Vector4 p0 = Vector4(vertices[i * 3 + 0].position);
-        Vector4 p1 = Vector4(vertices[i * 3 + 1].position);
-        Vector4 p2 = Vector4(vertices[i * 3 + 2].position);
+        int j = indices[i * 3 ];
+        Vector4 p0 = Vector4(vertices[j].position);
+        j = indices[i * 3 + 1];
+        Vector4 p1 = Vector4(vertices[j ].position);
+        j = indices[i * 3 + 2];
+        Vector4 p2 = Vector4(vertices[j ].position);
 
-        centroid_with_index.x = (p0.x + p1.x + p2.x) / 3.0;
-        centroid_with_index.y = (p0.y + p1.y + p2.y) / 3.0;
-        centroid_with_index.z = (p0.z + p1.z + p2.z) / 3.0;
+        centroid_with_index = (p1 + p2 + p0) / 3.0;
         centroid_with_index.w = (float)i;
 
         centroids.push_back(centroid_with_index);

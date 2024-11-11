@@ -25,8 +25,9 @@ class MDBVH: BVH {
         MDBVHNode root;
 
         void        init_node(MDBVHNode*  node);
-        MDBVHNode* build_node(const Mesh& mesh, int n_vertices, int axis, int left, int right, std::vector<Vector4> centroids);
+        MDBVHNode* build_node(const Mesh& mesh, int axis, int left, int right, std::vector<Vector4>& centroids) ;
         void      delete_node(MDBVHNode* node);
         void  nodes_into_mesh(MDBVH::MDBVHNode* node, Mesh& mesh, unsigned int count, unsigned int height) ;
+        /* void  nodes_into_mesh(MDBVH::MDBVHNode* node, Mesh& mesh, unsigned int height) ; */
 
 };

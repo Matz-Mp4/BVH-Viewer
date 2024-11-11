@@ -14,6 +14,10 @@ class CameraGLSL {
         void     handle_inputs(GLFWwindow* window, unsigned int width, unsigned int height);
         void     change_export(ExportCamera* _export_camera);
         void     change_shader(const size_t& _shader_id);
+
+        Vector4   get_position() const;
+        Vector4  get_direction() const;
+        Vector4         get_up() const;
        
     private:
        size_t            shader_id;
@@ -22,7 +26,6 @@ class CameraGLSL {
        float                 speed;
        Camera                  cam;
        TypeCamera*    type_cam_ptr;
-       std::string    uniform_proj;
        ExportCamera* export_camera;
        float          x_pos, y_pos;
        float        x_prev, y_prev;

@@ -24,9 +24,8 @@ Material& Material::turn_into_glossy(float k_spec, float exp) {
     this->exp = exp;
     return *this;
 }
-
-Material& Material::change_color(Color c) {
-    this->color = c;
+Material&   Material::change_color(float r, float g, float b) {
+    this->color = Color(r, g, b);
     return *this;
 }
 

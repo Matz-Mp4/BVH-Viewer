@@ -28,7 +28,6 @@ class GeometricObject {
 
         void transform(Matrix4& _transformation);
                 
-    private: 
         Material      material;
         Mesh              mesh;
         Matrix4 transformation;

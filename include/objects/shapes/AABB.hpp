@@ -23,6 +23,9 @@ class AABB : public IShape {
          bool contains(const AABB& other) const;
          bool contains(const Vector4& point) const;
          Vector4 center() const;
+         void expand(const Vector4& point) ;
+        void expand(const AABB& box) ;
+
 
         Vector4 bmin;
         Vector4 bmax;

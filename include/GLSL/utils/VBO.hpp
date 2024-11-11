@@ -1,4 +1,4 @@
-#include "../../../third-party/glew/include/GL/glew.h"
+#include <GL/glew.h>
 #include <vector>
 #include "../../objects/Vertex.hpp"
 #pragma once

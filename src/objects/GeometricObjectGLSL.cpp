@@ -97,3 +97,64 @@ void GeometricObjectGLSL::handle_inputs(GLFWwindow* window, unsigned int width, 
     }
 }
 
+GeometricObjectGLSL  GeometricObjectGLSL::with_material(const Material& _material) {
+    GeometricObjectGLSL _objectGLSL = *this;
+    _objectGLSL.object.material = _material;
+    return _objectGLSL;
+}
+
+
+GeometricObjectGLSL  GeometricObjectGLSL::with_shape(const IShape* shape) {
+    GeometricObjectGLSL _objectGLSL = *this;
+    _objectGLSL.object = GeometricObject(shape, _objectGLSL.object.material, _objectGLSL.object.transformation);
+    return _objectGLSL;
+}
+
+
+GeometricObjectGLSL  GeometricObjectGLSL::with_transformation(const Matrix4& transformation) {
+    GeometricObjectGLSL _objectGLSL = *this;
+    _objectGLSL.object = GeometricObject(_objectGLSL.object.mesh, _objectGLSL.object.material, transformation);
+    return _objectGLSL;
+}
+
+GeometricObjectGLSL   GeometricObjectGLSL::with_color(float r, float g, float b) {
+    GeometricObjectGLSL _objectGLSL = *this;
+    _objectGLSL.object.material.change_color(r,g,b);
+    return _objectGLSL;
+}
+
+
+GeometricObjectGLSL GeometricObjectGLSL::with_mesh(const Mesh& _mesh) {
+    GeometricObjectGLSL _objectGLSL = *this;
+    _objectGLSL.object.mesh = _mesh;
+    return _objectGLSL;
+}
+
+void GeometricObjectGLSL::transform(Matrix4& _transformation) {
+    object.transformation =  _transformation *  object.transformation;
+}
+
+
+Matrix4 GeometricObjectGLSL::get_transformation() const {
+    return object.transformation;
+}
+
+Material GeometricObjectGLSL::get_material() const {
+    return object.material;
+}
+
+Mesh GeometricObjectGLSL::get_mesh() const {
+    return object.mesh;
+}
+
+
+std::vector<Vertex> GeometricObjectGLSL::get_vertices() const {
+    return object.mesh.vertices;
+}
+
+
+std::vector<unsigned int> GeometricObjectGLSL::get_indices() const {
+    return object.mesh.indices;
+}
+
+

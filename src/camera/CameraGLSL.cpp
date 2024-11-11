@@ -145,3 +145,13 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
 
 }
 
+Vector4 CameraGLSL::get_position() const {
+    return cam.eye;
+}
+Vector4 CameraGLSL::get_direction() const {
+    return cam.direction;
+}
+Vector4 CameraGLSL::get_up() const {
+    return cam.new_up;
+}
+ 

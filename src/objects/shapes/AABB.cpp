@@ -16,9 +16,9 @@ AABB::AABB( Vector4 p0, Vector4 p1, Vector4 p2) {
     bmin.z = std::min(std::min(p0.z, p1.z), p2.z);
     bmin.w = 1.0;
 
-    bmax.x = std::max(std::max(p2.x, p1.x), p0.x);
-    bmax.y = std::max(std::max(p2.y, p1.y), p0.y);
-    bmax.z = std::max(std::max(p2.z, p1.z), p0.z);
+    bmax.x = std::max(std::max(p0.x, p1.x), p2.x);
+    bmax.y = std::max(std::max(p0.y, p1.y), p2.y);
+    bmax.z = std::max(std::max(p0.z, p1.z), p2.z);
     bmax.w = 1.0;
 }
 
@@ -84,7 +84,7 @@ Mesh AABB::generate_mesh() const {
 
 float AABB::surface_area() const {
     Vector4 e = bmax - bmin; // box extent
-    return e.x * e.y + e.y * e.z + e.z * e.x; 
+    return 2 * (e.x * e.y + e.y * e.z + e.z * e.x); 
 }
 
 bool AABB::contains(const AABB& other) const {
@@ -101,4 +101,19 @@ Vector4 AABB::center() const {
 bool AABB::contains(const Vector4& point) const {
     return (bmin.x <= point.x && bmin.y <= point.y && bmin.z <= point.z) &&
            (bmax.x >= point.x && bmax.y >= point.y && bmax.z >= point.z);
+}
+void AABB::expand(const Vector4& point) {
+    bmin.x = std::min(bmin.x, point.x);
+    bmin.y = std::min(bmin.y, point.y);
+    bmin.z = std::min(bmin.z, point.z);
+
+    bmax.x = std::max(bmax.x, point.x);
+    bmax.y = std::max(bmax.y, point.y);
+    bmax.z = std::max(bmax.z, point.z);
+}
+
+// Overloaded expand method to expand based on another AABB
+void AABB::expand(const AABB& box) {
+    expand(box.bmin);
+    expand(box.bmax);
 }

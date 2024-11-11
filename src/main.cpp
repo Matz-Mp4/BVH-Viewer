@@ -1,7 +1,7 @@
 #include <iostream>
-#include <algorithm>
-#include "../third-party/glew/include/GL/glew.h"
-#include "../third-party/glfw/include/GLFW/glfw3.h"
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 #include "../include/GLSL/utils/ShaderGLSL.hpp"
 #include "../include/GLSL/export-data/export-camera/ExportVP.hpp"
 #include "../include/light/GlobalAmbient.hpp"
@@ -13,19 +13,19 @@
 #include "../include/objects/GeometricObject.hpp"
 #include "../include/objects/GeometricObjectGLSL.hpp"
 #include "../include/material/Material.hpp"
-#include "../include/objects/shapes/Sphere.hpp"
-#include "../include/objects/shapes/Cylinder.hpp"
 #include "../include/objects/shapes/Torus.hpp"
 #include "../include/objects/shapes/ModelLoader.hpp"
 #include "../include/bvh/MDBVH.hpp"
 
+#include "../third-party/imgui/imgui_impl_glfw.h"
+#include "../third-party/imgui/imgui_impl_opengl3.h"
+
+
 const unsigned int width = 800;
 const unsigned int height = 800;
 
-
-
-
 GLFWwindow* create_window( unsigned int width, unsigned int height);
+void render_gui();
  
 int main(int argc, char* argv[]) {
     GeometricObject object;
@@ -45,13 +45,26 @@ int main(int argc, char* argv[]) {
     GLFWwindow* window = create_window(width, height);
     glewInit();
     glViewport(0, 0, width, height);
+
+
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    // Setup Platform/Renderer bindings
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init("#version 330");
+    // Setup Dear ImGui style
+    ImGui::StyleColorsDark();
  
 
-    std::cout << "## Creating the object ...\n";
+
+
+      std::cout << "## Creating the object ...\n";
       if (argc == 2) {
         object = GeometricObject(new ModelLoader(argv[1]) , material);
     }else {
-        object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 2.5, 1.0, 50, 50), material);
+        object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 4.5, 1.0), material);
     }
 
     curr_time = glfwGetTime();
@@ -67,8 +80,8 @@ int main(int argc, char* argv[]) {
     time_delta = curr_time - prev_time;
     std::cout << "** Duration: "<< time_delta << " seconds **\n\n";
 
-    GeometricObject bvh_object = GeometricObject(bvh.into_mesh(11), BLACK_RUBBER, UNIT_MATRIX4);
-    /* GeometricObject bvh_object = object; */
+    GeometricObject bvh_object = GeometricObject(bvh.into_mesh(1), BLACK_RUBBER, UNIT_MATRIX4);
+    std::cout << "## BVH Info \n";
     std::cout << bvh_object;
 
 
@@ -107,24 +120,31 @@ int main(int argc, char* argv[]) {
 
 	glEnable(GL_DEPTH_TEST);
 
+
+    float color[4] = { 1.0f,1.0f,1.0f,1.0f };
+    float k_a = 0.2, k_d = 0.2, k_s = 0.2, exp  =100;
+    bool is_camera_fixed = false;
+    int bvh_depth = 1;
     
     while (!glfwWindowShouldClose(window)){
         glClearColor(0.7f, 0.7f, 0.75f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        // feed inputs to dear imgui, start new frame
+         ImGui_ImplOpenGL3_NewFrame();
+         ImGui_ImplGlfw_NewFrame();
+         ImGui::NewFrame();
+
         // Calculate FPS
         curr_time = glfwGetTime();
         time_delta = curr_time - prev_time;
         counter++;
-        if (time_delta >= 0.0333) { // 1.0 / 30.0
-            std::string fps = std::to_string((1.0 / time_delta) * counter);
-            std::string ms = std::to_string((time_delta / counter) * 1000);
-            std::string title = "FPS: " + fps + " - ms: " + ms;
-            std::cout << title <<"\r";
-            glfwSetWindowTitle(window, title.c_str());
+        /* if (time_delta >= 0.0333) { // 1.0 / 30.0 */
+            float fps = (1.0 / time_delta) * counter;
+            float ms = (time_delta / counter) * 1000;
             prev_time = curr_time;
             counter = 0;
-        }
+        /* } */
 
         if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
             defaultframe = !defaultframe;
@@ -151,10 +171,17 @@ int main(int argc, char* argv[]) {
         }
 
 
+        if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+            is_camera_fixed = !is_camera_fixed;
+        }
 
 
 
-        cameraGLSL.handle_inputs(window, width, height);
+
+
+        if(!is_camera_fixed) {
+            cameraGLSL.handle_inputs(window, width, height);
+        }
         objectGLSL.handle_inputs(window, width, height);
         bvh_objectGLSL.handle_inputs(window, width, height);
 
@@ -240,6 +267,35 @@ int main(int argc, char* argv[]) {
             lightGLSL.export_point_light();
             objectGLSL.draw();
         }
+
+
+        //GUI
+        //Object
+        ImGui::Begin("Settings");
+        ImGui::ColorEdit3("color", color);
+        objectGLSL = objectGLSL.with_color(color[0], color[1], color[2]);
+        ImGui::SliderFloat("ambient", &k_a, 0, 1.0);
+        ImGui::SliderFloat("diffuse", &k_d, 0, 1.0);
+        ImGui::SliderFloat("specular", &k_s, 0, 1.0);
+        ImGui::SliderFloat("expoent", &exp, 0, 500.0);
+        objectGLSL = objectGLSL.with_material(objectGLSL.get_material()
+                                                        .turn_into_matte(k_a, k_d)
+                                                        .turn_into_glossy(k_s, exp));
+
+        //BVH
+        if (ImGui::SliderInt("BVH Deapth", &bvh_depth, 0, 30)) {
+         bvh.into_mesh(bvh_depth);
+         bvh_objectGLSL = bvh_objectGLSL.with_mesh(bvh.into_mesh(bvh_depth));
+         bvh_objectGLSL.export_mesh();
+        }
+
+        //General Info
+        ImGui::Text("## FPS = %.2f, MS: = %.2f", fps, ms);
+        ImGui::Text("Press <F> to lock camera");
+        ImGui::End();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
         glfwPollEvents();
     } 
@@ -250,6 +306,7 @@ int main(int argc, char* argv[]) {
     shader2.delete_shader();
     shader3.delete_shader();
     gouraud_shader.delete_shader();
+    blin_phong_shader.delete_shader();
     glfwDestroyWindow(window);
     glfwTerminate();
 

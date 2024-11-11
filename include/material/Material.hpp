@@ -23,7 +23,7 @@ class Material {
 
         Material&      turn_into_matte(float k_amb, float k_dif);
         Material&     turn_into_glossy(float k_spec, float exp);
-        Material&         change_color(Color c);
+        Material&         change_color(float r, float g, float b);
 
          Color    get_color() const;
         float   get_ambient() const;
