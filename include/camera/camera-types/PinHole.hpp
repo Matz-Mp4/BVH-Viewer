@@ -12,7 +12,6 @@ class PinHole: public TypeCamera{
         PinHole(float fov, float ratio, float near, float far);
         Matrix4 projection_matrix(CoordSystem coord_system) const override;
 
-    private:
         float       fov;
         float asp_ratio;
         float      near;

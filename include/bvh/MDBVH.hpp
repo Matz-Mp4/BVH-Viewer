@@ -13,6 +13,9 @@ class MDBVH: BVH {
          void tranverse() override;
          Mesh into_mesh(unsigned int height) override;
 
+        uint  nodes_size;
+        uint leaves_size;
+
     private:
 
         struct MDBVHNode {

@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -20,16 +21,14 @@
 #include "../third-party/imgui/imgui_impl_glfw.h"
 #include "../third-party/imgui/imgui_impl_opengl3.h"
 
-
 const unsigned int width = 800;
 const unsigned int height = 800;
 
-GLFWwindow* create_window( unsigned int width, unsigned int height);
-void render_gui();
- 
+GLFWwindow* create_window(unsigned int width, unsigned int height);
+
 int main(int argc, char* argv[]) {
     GeometricObject object;
-    Matrix4 transformation = UNIT_MATRIX4; 
+    Matrix4 transformation = UNIT_MATRIX4;
     bool wireframe = false;
     bool normalframe = false;
     bool defaultframe= false;
@@ -46,25 +45,18 @@ int main(int argc, char* argv[]) {
     glewInit();
     glViewport(0, 0, width, height);
 
-
-    // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
-    // Setup Platform/Renderer bindings
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
-    // Setup Dear ImGui style
     ImGui::StyleColorsDark();
- 
 
-
-
-      std::cout << "## Creating the object ...\n";
-      if (argc == 2) {
-        object = GeometricObject(new ModelLoader(argv[1]) , material);
-    }else {
-        object =  GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 4.5, 1.0), material);
+    std::cout << "## Creating the object ...\n";
+    if (argc == 2) {
+        object = GeometricObject(new ModelLoader(argv[1]), material);
+    } else {
+        object = GeometricObject(new Torus(Vector4(0.0 , 0.0, 0.0), 1.5, 0.3, 50, 50), material);
     }
 
     curr_time = glfwGetTime();
@@ -73,37 +65,23 @@ int main(int argc, char* argv[]) {
     std::cout << "** Duration: "<< time_delta << " seconds **\n\n";
 
     std::cout << "## Creating a BVH for this object ...\n";
-    prev_time = curr_time; 
+    prev_time = curr_time;
     MDBVH bvh = MDBVH();
     bvh.build(object.get_mesh());
     curr_time = glfwGetTime();
     time_delta = curr_time - prev_time;
     std::cout << "** Duration: "<< time_delta << " seconds **\n\n";
+    GeometricObject bvh_object = GeometricObject(bvh.into_mesh(0), BLACK_RUBBER, UNIT_MATRIX4);
 
-    GeometricObject bvh_object = GeometricObject(bvh.into_mesh(1), BLACK_RUBBER, UNIT_MATRIX4);
-    std::cout << "## BVH Info \n";
-    std::cout << bvh_object;
-
-
-    std::cout << "## Precompiling shaders programs ...\n";
     ShaderGLSL shader("../src/glsl-files/debug/debug.vert", "../src/glsl-files/debug/normal.frag");
-    std::cout << "  - Normal Color Shader compiled\n";
-    ShaderGLSL shader2("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/wireframe.geom");
-    std::cout << "  - WireFrame Shader compiled\n";
-    ShaderGLSL shader3("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/normal.geom");
-    std::cout << "  - Normals Viewer Shader compiled\n";
+    ShaderGLSL wireframe_shader("../src/glsl-files/debug/normal.vert", "../src/glsl-files/debug/normal.frag", "../src/glsl-files/debug/wireframe.geom");
     ShaderGLSL gouraud_shader("../src/glsl-files/gouraud/gouraud.vert", "../src/glsl-files/gouraud/gouraud.frag");
-    std::cout << "  - Gouraud Shader compiled\n";
     ShaderGLSL blin_phong_shader("../src/glsl-files/blin-phong/blin-phong.vert", "../src/glsl-files/blin-phong/blin-phong.frag");
-    std::cout << "  - Blin-Phong Shader compiled\n";
-    ShaderGLSL toon_shader("../src/glsl-files/toon/toon.vert", "../src/glsl-files/toon/toon.frag");
-    std::cout << "  - Toon Shader compiled\n\n";
-
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
-    PinHole *pinhole_ptr = new PinHole(90, (float)width / height, 0.1f, 200.0f);
+    PinHole *pinhole_ptr = new PinHole(90, 4/3.0, 0.1f, 200.0f);
     ExportCamera* export_camera = new ExportVP();
-    CameraGLSL cameraGLSL = CameraGLSL(shader.ID, export_camera, camera, pinhole_ptr );
+    CameraGLSL cameraGLSL(shader.ID, export_camera, camera, pinhole_ptr);
 
     GeometricObjectGLSL objectGLSL(shader.ID, object.with_transformation(transformation));
     objectGLSL.export_mesh();
@@ -111,76 +89,106 @@ int main(int argc, char* argv[]) {
     GeometricObjectGLSL bvh_objectGLSL(shader.ID, bvh_object.with_transformation(transformation));
     bvh_objectGLSL.export_mesh();
 
-
-
     GlobalAmbient ambient_light = GlobalAmbient(WHITE);
     PointLight point_light = PointLight(WHITE, Vector4(10.0, 10.0, 10.0, 1.0));
-    LightGLSL lightGLSL = LightGLSL(gouraud_shader.ID, ambient_light, point_light);
+    LightGLSL lightGLSL(gouraud_shader.ID, ambient_light, point_light);
 
-
-	glEnable(GL_DEPTH_TEST);
-
+    glEnable(GL_DEPTH_TEST);
 
     float color[4] = { 1.0f,1.0f,1.0f,1.0f };
-    float k_a = 0.2, k_d = 0.2, k_s = 0.2, exp  =100;
+    float k_a = 0.2, k_d = 0.2, k_s = 0.2, exp = 100;
     bool is_camera_fixed = false;
     int bvh_depth = 1;
-    
-    while (!glfwWindowShouldClose(window)){
+    bool draw_bvh = false;
+    bool draw_object = true;
+    float wf_tickness = 0.01;
+
+    while (!glfwWindowShouldClose(window)) {
         glClearColor(0.7f, 0.7f, 0.75f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // feed inputs to dear imgui, start new frame
-         ImGui_ImplOpenGL3_NewFrame();
-         ImGui_ImplGlfw_NewFrame();
-         ImGui::NewFrame();
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
 
-        // Calculate FPS
         curr_time = glfwGetTime();
         time_delta = curr_time - prev_time;
         counter++;
-        /* if (time_delta >= 0.0333) { // 1.0 / 30.0 */
-            float fps = (1.0 / time_delta) * counter;
-            float ms = (time_delta / counter) * 1000;
-            prev_time = curr_time;
-            counter = 0;
-        /* } */
+        float fps = (1.0 / time_delta) * counter;
+        float ms = (time_delta / counter) * 1000;
+        prev_time = curr_time;
+        counter = 0;
 
-        if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
-            defaultframe = !defaultframe;
+        ImGui::Begin("Settings");
+
+        if (ImGui::CollapsingHeader("Rendering ")) {
+            ImGui::Checkbox("WireFrame", &wireframe); 
+            ImGui::SameLine();
+            ImGui::Checkbox("Gouraud", &gouraudframe); 
+            ImGui::SameLine();
+            ImGui::Checkbox("Blin-Phong", &blin_phong_frame); 
+            ImGui::SameLine();
+            ImGui::Checkbox("Normals", &defaultframe);
+            ImGui::Separator();
+
+
+            if (wireframe ) {
+                ImGui::SliderFloat("WireFrame Thickness", &wf_tickness, 0.001, 0.02, "Thickness: %.3f");
+            }
+            if (blin_phong_frame || gouraudframe) {
+                  if(ImGui::ColorEdit3("Object Color", color)) {
+                    objectGLSL = objectGLSL.with_color(color[0], color[1], color[2]);
+                }
+                ImGui::SliderFloat("Ambient", &k_a, 0, 1.0, "Ambient: %.2f");
+                ImGui::SliderFloat("Diffuse", &k_d, 0, 1.0, "Diffuse: %.2f");
+                ImGui::SliderFloat("Specular", &k_s, 0, 1.0, "Specular: %.2f");
+                ImGui::SliderFloat("Exponent", &exp, 0, 500.0, "Exponent: %.1f");
+                objectGLSL = objectGLSL.with_material(objectGLSL.get_material()
+                                                                .turn_into_matte(k_a, k_d)
+                                                                .turn_into_glossy(k_s, exp));
+            }
         }
 
+        if (ImGui::CollapsingHeader("Object")) {
+            ImGui::Checkbox("Draw Object", &draw_object);
 
-        if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
-            wireframe = !wireframe;
+            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f),"Vertices Amount: %d", (int)object.get_vertices().size());
+            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f),"Triangles Amount: %d", (int)object.get_indices().size() / 3);
         }
 
-        if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
-            normalframe = !normalframe;
+        if (ImGui::CollapsingHeader("BVH ")) {
+            ImGui::Checkbox("Draw BVH", &draw_bvh);
+            if (ImGui::SliderInt("BVH Depth", &bvh_depth, 0, 30, "Depth: %d")) {
+                bvh.into_mesh(bvh_depth);
+                bvh_objectGLSL = bvh_objectGLSL.with_mesh(bvh.into_mesh(bvh_depth));
+                bvh_objectGLSL.export_mesh();
+            }
+            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f),"Nodes Amount: %d", bvh.nodes_size);
+            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f),"Leaves Amount: %d", bvh.leaves_size);
         }
 
-        if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
-            gouraudframe = !gouraudframe;
+        if (ImGui::CollapsingHeader("Camera")) {
+            ImGui::Text("Press <F> to toggle camera lock/unlock");
+            ImGui::Text("Press <W> to move forward");
+            ImGui::Text("Press <S> to move backward");
+            ImGui::Text("Press <A> to move left");
+            ImGui::Text("Press <D> to move right");
+            ImGui::Text("Press <Space> to move up");
+            ImGui::Text("Press <Crtl> to move down");
+            Vector4 camera_pos = cameraGLSL.get_position();
+            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f), "Camera Postion: (%.3f, %.3f, %.3f)", camera_pos.x, camera_pos.y, camera_pos.z);
+            Vector4 camera_dir= cameraGLSL.get_direction();
+            ImGui::TextColored(ImVec4(0.0f, 1.0f, 0.0f, 1.0f),"Camera Direction: (%.3f, %.3f, %.3f)", camera_dir.x, camera_dir.y, camera_dir.z);
         }
-        if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
-            blin_phong_frame = !blin_phong_frame;
-        }
-
-        if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS) {
-            toon_frame = !toon_frame;
-        }
-
+        ImGui::Text("FPS: %.2f | MS: %.2f", fps, ms);
+        ImGui::End();
 
         if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
             is_camera_fixed = !is_camera_fixed;
         }
-
-
-
-
-
+ 
         if(!is_camera_fixed) {
-            cameraGLSL.handle_inputs(window, width, height);
+           cameraGLSL.handle_inputs(window, width, height);
         }
         objectGLSL.handle_inputs(window, width, height);
         bvh_objectGLSL.handle_inputs(window, width, height);
@@ -189,36 +197,32 @@ int main(int argc, char* argv[]) {
             shader.active_shader();
             cameraGLSL.change_shader(shader.ID);
             objectGLSL.change_shader(shader.ID);
-            objectGLSL.export_transformation();
-            cameraGLSL.export_projection();
-            objectGLSL.draw();
-        }
-
-
-
-        if(normalframe) {
-            shader2.active_shader();
-            cameraGLSL.change_shader(shader3.ID);
-            objectGLSL.change_shader(shader3.ID);
-            bvh_objectGLSL.change_shader(shader3.ID);
+            bvh_objectGLSL.change_shader(shader.ID);
             objectGLSL.export_transformation();
             bvh_objectGLSL.export_transformation();
             cameraGLSL.export_projection();
-            /* objectGLSL.draw(); */
-            bvh_objectGLSL.draw();
+
+            if (draw_object)
+                objectGLSL.draw();
+            if (draw_bvh)
+                bvh_objectGLSL.draw();
+ 
         }
 
         if(wireframe) {
-            shader3.active_shader();
-            cameraGLSL.change_shader(shader2.ID);
-            objectGLSL.change_shader(shader2.ID);
-            bvh_objectGLSL.change_shader(shader2.ID);
+            wireframe_shader.active_shader();
+            cameraGLSL.change_shader(wireframe_shader.ID);
+            objectGLSL.change_shader(wireframe_shader.ID);
+            bvh_objectGLSL.change_shader(wireframe_shader.ID);
             objectGLSL.export_transformation();
             bvh_objectGLSL.export_transformation();
             cameraGLSL.export_projection();
-            objectGLSL.draw();
-            /* bvh_objectGLSL.draw(); */
+            ShaderGLSL::set_float(wireframe_shader.ID, "thickness", wf_tickness);
 
+            if(draw_bvh)
+                bvh_objectGLSL.draw();
+            if(draw_object)
+                objectGLSL.draw();
         }
 
         if(gouraudframe) {
@@ -226,20 +230,18 @@ int main(int argc, char* argv[]) {
             cameraGLSL.change_shader(gouraud_shader.ID);
             objectGLSL.change_shader(gouraud_shader.ID);
             lightGLSL.change_shader(gouraud_shader.ID);
+            bvh_objectGLSL.change_shader(gouraud_shader.ID);
             objectGLSL.export_transformation();
             objectGLSL.export_material();
             cameraGLSL.export_projection();
             lightGLSL.export_ambient();
             lightGLSL.export_point_light();
-            /* objectGLSL.draw(); */
-
-
-            bvh_objectGLSL.change_shader(shader2.ID);
             bvh_objectGLSL.export_transformation();
-            bvh_objectGLSL.draw();
 
-
-
+            if(draw_bvh)
+                bvh_objectGLSL.draw();
+            if(draw_object)
+                objectGLSL.draw();
         }
 
         if(blin_phong_frame) {
@@ -247,70 +249,39 @@ int main(int argc, char* argv[]) {
             cameraGLSL.change_shader(blin_phong_shader.ID);
             objectGLSL.change_shader(blin_phong_shader.ID);
             lightGLSL.change_shader(blin_phong_shader.ID);
+            bvh_objectGLSL.change_shader(blin_phong_shader.ID);
             objectGLSL.export_transformation();
             objectGLSL.export_material();
             cameraGLSL.export_projection();
             lightGLSL.export_ambient();
             lightGLSL.export_point_light();
-            objectGLSL.draw();
+            bvh_objectGLSL.export_transformation();
+
+
+            if(draw_bvh)
+                bvh_objectGLSL.draw();
+            if(draw_object)
+                objectGLSL.draw();
+
+
         }
-
-        if(toon_frame) {
-            toon_shader.active_shader();
-            cameraGLSL.change_shader(toon_shader.ID);
-            objectGLSL.change_shader(toon_shader.ID);
-            lightGLSL.change_shader(toon_shader.ID);
-            objectGLSL.export_transformation();
-            objectGLSL.export_material();
-            cameraGLSL.export_projection();
-            lightGLSL.export_ambient();
-            lightGLSL.export_point_light();
-            objectGLSL.draw();
-        }
-
-
-        //GUI
-        //Object
-        ImGui::Begin("Settings");
-        ImGui::ColorEdit3("color", color);
-        objectGLSL = objectGLSL.with_color(color[0], color[1], color[2]);
-        ImGui::SliderFloat("ambient", &k_a, 0, 1.0);
-        ImGui::SliderFloat("diffuse", &k_d, 0, 1.0);
-        ImGui::SliderFloat("specular", &k_s, 0, 1.0);
-        ImGui::SliderFloat("expoent", &exp, 0, 500.0);
-        objectGLSL = objectGLSL.with_material(objectGLSL.get_material()
-                                                        .turn_into_matte(k_a, k_d)
-                                                        .turn_into_glossy(k_s, exp));
-
-        //BVH
-        if (ImGui::SliderInt("BVH Deapth", &bvh_depth, 0, 30)) {
-         bvh.into_mesh(bvh_depth);
-         bvh_objectGLSL = bvh_objectGLSL.with_mesh(bvh.into_mesh(bvh_depth));
-         bvh_objectGLSL.export_mesh();
-        }
-
-        //General Info
-        ImGui::Text("## FPS = %.2f, MS: = %.2f", fps, ms);
-        ImGui::Text("Press <F> to lock camera");
-        ImGui::End();
 
         ImGui::Render();
+
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         glfwSwapBuffers(window);
         glfwPollEvents();
-    } 
+    }
 
     delete pinhole_ptr;
     objectGLSL.delete_mesh();
     shader.delete_shader();
-    shader2.delete_shader();
-    shader3.delete_shader();
+    wireframe_shader.delete_shader();
     gouraud_shader.delete_shader();
     blin_phong_shader.delete_shader();
     glfwDestroyWindow(window);
     glfwTerminate();
 
-    
     exit(EXIT_SUCCESS);
 }
 
@@ -324,13 +295,11 @@ GLFWwindow* create_window( unsigned int width, unsigned int height){
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     GLFWwindow* window = glfwCreateWindow(width, height, "Volumetric-Viewer", nullptr, nullptr);
     if (window == nullptr) {
-		std::cerr << "Could not open the Window" << std::endl;
-		glfwTerminate();
-		exit(EXIT_FAILURE);
-	}
+                std::cerr << "Could not open the Window" << std::endl;
+                glfwTerminate();
+                exit(EXIT_FAILURE);
+        }
     glfwMakeContextCurrent(window);
-   
+
     return window;
 }
-
-

@@ -9,11 +9,15 @@
 
 MDBVH::MDBVH() {
     init_node(&root);
+    nodes_size = 0;
+    leaves_size = 0;
 }
 
 MDBVH::~MDBVH() {
     delete_node(root.left);
     delete_node(root.right);
+    nodes_size = 0;
+    leaves_size = 0;
     /* delete_tree(&root); */
 }
 
@@ -190,6 +194,8 @@ MDBVH::MDBVHNode* MDBVH::build_node(const Mesh& mesh, int axis, int left, int ri
         node->left = nullptr;
         node->right= nullptr;
         node->trinagle_index = i;
+        leaves_size++;
+        nodes_size++;
         return node;
 
     } else {
@@ -214,6 +220,7 @@ MDBVH::MDBVHNode* MDBVH::build_node(const Mesh& mesh, int axis, int left, int ri
         node->bounds = AABB(bv_left, bv_right);
 
         node->trinagle_index = -1;
+        nodes_size++;
 
         return node;
 

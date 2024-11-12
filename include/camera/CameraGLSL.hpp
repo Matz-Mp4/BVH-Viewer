@@ -18,7 +18,7 @@ class CameraGLSL {
         Vector4   get_position() const;
         Vector4  get_direction() const;
         Vector4         get_up() const;
-       
+
     private:
        size_t            shader_id;
        float           sensitivity;

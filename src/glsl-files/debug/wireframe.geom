@@ -4,7 +4,8 @@ layout (triangles) in;
 layout (triangle_strip, max_vertices = 12) out;
 
 uniform mat4 p_matrix;
-float thickness = 0.01;  
+uniform float thickness ;  
+//float thickness = 0.01;  
 
 out vec4 vertex_color;
 

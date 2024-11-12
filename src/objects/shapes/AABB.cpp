@@ -51,14 +51,14 @@ Mesh AABB::generate_mesh() const {
     Vector4 p7 = bmax;                                 // Top-right-back
 
     unsigned int idx0 = mesh.add_vertex(p0, Vector4(0, 0, -1, 0));
-    unsigned int idx1 = mesh.add_vertex(p1, Vector4(0, 0, -1, 0));
-    unsigned int idx2 = mesh.add_vertex(p2, Vector4(0, 0, -1, 0));
-    unsigned int idx3 = mesh.add_vertex(p3, Vector4(0, 0, -1, 0));
+    unsigned int idx1 = mesh.add_vertex(p1, Vector4(0, -1, 0, 0));
+    unsigned int idx2 = mesh.add_vertex(p2, Vector4(-1, 0, 0, 0));
+    unsigned int idx3 = mesh.add_vertex(p3, Vector4(-1, -1, -1, 0));
     
     unsigned int idx4 = mesh.add_vertex(p4, Vector4(0, 0, 1, 0));
-    unsigned int idx5 = mesh.add_vertex(p5, Vector4(0, 0, 1, 0));
-    unsigned int idx6 = mesh.add_vertex(p6, Vector4(0, 0, 1, 0));
-    unsigned int idx7 = mesh.add_vertex(p7, Vector4(0, 0, 1, 0));
+    unsigned int idx5 = mesh.add_vertex(p5, Vector4(0, 1, 0, 0));
+    unsigned int idx6 = mesh.add_vertex(p6, Vector4(1, 0, 1, 0));
+    unsigned int idx7 = mesh.add_vertex(p7, Vector4(1, 1, 1, 0));
 
     indices.push_back(idx0); indices.push_back(idx1); indices.push_back(idx2);
     indices.push_back(idx2); indices.push_back(idx1); indices.push_back(idx3);
