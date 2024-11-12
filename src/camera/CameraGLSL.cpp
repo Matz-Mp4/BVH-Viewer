@@ -104,7 +104,7 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
         /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
         // Hide mouse cursor
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-        glfwSetCursorPos(window, width / 2.0, height / 2.0);
+        /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
         // Prevent camera jump on first click
         if (first_click) {
             glfwSetCursorPos(window, width / 2.0, height / 2.0);
@@ -136,7 +136,7 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
     } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
         x_prev = x_pos;
         y_prev = y_pos;
-        glfwSetCursorPos(window, width / 2.0, height / 2.0);
+        /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         first_click = true;
 
