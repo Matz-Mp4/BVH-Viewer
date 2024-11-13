@@ -16,7 +16,7 @@
 #include "../include/material/Material.hpp"
 #include "../include/objects/shapes/Torus.hpp"
 #include "../include/objects/shapes/ModelLoader.hpp"
-#include "../include/bvh/MDBVH.hpp"
+#include "../include/bvh/MCBVH.hpp"
 
 #include "../third-party/imgui/imgui_impl_glfw.h"
 #include "../third-party/imgui/imgui_impl_opengl3.h"
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << "## Creating a BVH for this object ...\n";
     prev_time = curr_time;
-    MDBVH bvh = MDBVH();
+    MCBVH bvh = MCBVH(object.get_mesh().indices.size());
     bvh.build(object.get_mesh());
     curr_time = glfwGetTime();
     time_delta = curr_time - prev_time;
