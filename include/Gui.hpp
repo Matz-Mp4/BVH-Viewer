@@ -1,11 +1,14 @@
+#pragma once
+
 #include "../third-party/imgui/imgui_impl_glfw.h"
 #include "../third-party/imgui/imgui_impl_opengl3.h"
-
+#include "../include/bvh/MCBVH.hpp"
+#include "../include/objects/GeometricObjectGLSL.hpp"
 
 class Gui {
     public:
         void render();
-        void   init(GLFWwindow* window);
+        void   init(GLFWwindow* window, MCBVH& bvh, GeometricObjectGLSL& object);
 
         //Draw Normals
         bool draw_obj_normals;
@@ -28,6 +31,8 @@ class Gui {
         int     triangles_size;
         int         nodes_size;
         int        leaves_size;
+
+        float        prev_time;
         
     private:
         void render_object_ui();
@@ -35,5 +40,3 @@ class Gui {
         void  render_usage_ui();
         void   render_misc_ui();
 };
-
-

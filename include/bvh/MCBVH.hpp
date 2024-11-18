@@ -1,9 +1,9 @@
+#pragma once
+
 #include "BVH.hpp"
 #include "../objects/shapes/AABB.hpp"
 #include <functional>
 #include <future>
-
-
 
 /*
  * Mid-Cut Bounding Volume Hierarchy 

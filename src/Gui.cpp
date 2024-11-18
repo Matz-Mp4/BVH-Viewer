@@ -1,12 +1,18 @@
 #include "../include/Gui.hpp"
 
-void Gui::init(GLFWwindow* window) {
+#include <GLFW/glfw3.h>
+
+void Gui::init(GLFWwindow* window, MCBVH& bvh, GeometricObjectGLSL& object) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO &io = ImGui::GetIO();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 330");
     ImGui::StyleColorsDark();
+
+    nodes_size = bvh.nodes_size;
+    leaves_size = bvh.leaves_size;
+    triangles_size = object.get_indices().size() / 3;
 
     color[0] = 1.0;
     color[1] = 1.0;
@@ -15,7 +21,7 @@ void Gui::init(GLFWwindow* window) {
     ka = kd = ks = 0.2;
     exp = 100;
 
-    bvh_depth_changed = draw_bvh_bp = draw_bvh_wf = draw_obj_normals =  draw_obj_wf = false;
+    bvh_depth_changed = draw_bvh_bp = draw_bvh_wf = draw_obj_normals = draw_obj_wf = false;
     draw_obj_bp = true;
     wf_tickness = 0.01;
     bvh_depth = 1;
@@ -26,6 +32,14 @@ void Gui::init(GLFWwindow* window) {
 
 }
 void Gui::render() {
+    float curr_time = glfwGetTime();
+    float delta_time = curr_time - prev_time;
+
+    float fps = 1.0 / delta_time;
+    float ms = delta_time * 1000;
+
+    prev_time = curr_time;
+    
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
@@ -35,11 +49,12 @@ void Gui::render() {
     render_bvh_ui();
     render_usage_ui();
     render_misc_ui();
+    ImGui::Text("FPS: %.2f", fps);
+    ImGui::Text("Delta: %.2f ms", ms);
     ImGui::End();
 
     ImGui::Render();
-    /* ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); */
-        
+    /* ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); */    
 };
 
 
@@ -60,11 +75,13 @@ void Gui::render_misc_ui() {
 void Gui::render_bvh_ui() {
     if (ImGui::CollapsingHeader("BVH")) {
         ImGui::Checkbox("Draw BVH", &draw_bvh);
+        ImGui::Text("Nodes: %d", nodes_size);
+        ImGui::Text("Leaves: %d", leaves_size);
         if(draw_bvh) {
             ImGui::Checkbox("WireFrame", &draw_bvh_wf); 
             ImGui::Checkbox("Blin-Phong", &draw_bvh_bp); 
             bvh_depth_changed = ImGui::SliderInt("BVH Depth", &bvh_depth, 0, 30, "Depth: %d");
-        }else {
+        } else {
             draw_bvh_wf = draw_bvh_bp = draw_bvh;
         }
     }
@@ -73,15 +90,14 @@ void Gui::render_bvh_ui() {
 void Gui::render_object_ui() {
     if (ImGui::CollapsingHeader("Object")) {
         ImGui::Checkbox("Draw Object", &draw_obj);
+        ImGui::SameLine();
+        ImGui::Text("- %d triangles", triangles_size);
         if( draw_obj) {
-            ImGui::SameLine();
             ImGui::Checkbox("WireFrame", &draw_obj_wf); 
-            ImGui::SameLine();
-            ImGui::Checkbox("Blin-Phong", &draw_obj_bp); 
-            ImGui::SameLine();
+            ImGui::Checkbox("Blin-Phong", &draw_obj_bp);
             ImGui::Checkbox("Normals", &draw_obj_normals);
             ImGui::Separator();
-        }else {
+        } else {
             draw_obj_normals = draw_obj_wf = draw_obj_bp = draw_obj;
         }
     }

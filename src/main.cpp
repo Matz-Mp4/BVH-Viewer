@@ -44,9 +44,6 @@ int main(int argc, char* argv[]) {
     glewInit();
     glViewport(0, 0, width, height);
 
-    Gui gui;
-    gui.init(window);
-
     std::cout << "## Creating the object ...\n";
     if (argc == 2) {
         object = GeometricObject(new ModelLoader(argv[1]), material);
@@ -91,6 +88,9 @@ int main(int argc, char* argv[]) {
 
     glEnable(GL_DEPTH_TEST);
     bool is_camera_fixed = false;
+
+    Gui gui;
+    gui.init(window, bvh, objectGLSL);
 
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.7f, 0.7f, 0.75f, 0.0f);
