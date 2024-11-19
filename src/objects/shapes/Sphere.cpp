@@ -1,6 +1,6 @@
 #include "../../../include/objects/shapes/Sphere.hpp"
 #include <cmath>
-#include "../../../third-party/glm/glm/trigonometric.hpp"
+#include "../../../include/math/Utils.hpp"
 
 
 Sphere::Sphere(const Vector4 &center, const float radius, unsigned int u , unsigned int v )
@@ -53,8 +53,8 @@ Mesh Sphere::generate_mesh() const {
 }
 
 Vector4 Sphere::position(float radius, float theta, float phi) {
-    theta = glm::radians(theta);
-    phi = glm::radians(phi);
+    theta = math_utils::radians(theta);
+    phi = math_utils::radians(phi);
     return Vector4(
          radius * sin(theta) * cos(phi),
          radius * cos(theta),

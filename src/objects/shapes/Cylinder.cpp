@@ -1,6 +1,6 @@
 #include "../../../include/objects/shapes/Cylinder.hpp"
-#include "../../../third-party/glm/glm/trigonometric.hpp"
 #include <cmath>
+#include "../../../include/math/Utils.hpp"
 
 Cylinder::Cylinder(const Vector4 &center, const float radius, const float height,  unsigned int u  )
     : center(center), radius(radius), height(height), u(u){}
@@ -72,7 +72,7 @@ Mesh Cylinder::generate_mesh() const {
     return mesh;
 }
 Vector4 Cylinder::position(float radius, float theta, float v_segment) {
-    theta = glm::radians(theta);
+    theta = math_utils::radians(theta);
     return Vector4(
          radius * sin(theta),
          radius * cos(theta),

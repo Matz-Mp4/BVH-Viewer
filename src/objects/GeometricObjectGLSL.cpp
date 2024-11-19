@@ -1,7 +1,9 @@
 #include "../../include/objects/GeometricObjectGLSL.hpp"
 #include "../../include/GLSL/export-data/export-object/ExportMMT.hpp"
 #include "../../include/math/Transforamation.hpp"
-#include "../../third-party/glm/glm/trigonometric.hpp"
+#include "../../include/math/Utils.hpp"
+/* #include <cmath> */
+
 
 GeometricObjectGLSL::GeometricObjectGLSL(const size_t& shader_id, const GeometricObject& object) :
     object(object),
@@ -75,9 +77,9 @@ void GeometricObjectGLSL::handle_inputs(GLFWwindow* window, unsigned int width, 
             last_y = mouseY;
 
             float sensitivity = 0.2f;
-            float angle = sqrt(deltaX * deltaX + deltaY * deltaY) * sensitivity;
-            Matrix4 rotate_x = Transformation::rotation_x(glm::radians(deltaX * sensitivity));
-            Matrix4 rotate_y = Transformation::rotation_y(glm::radians(deltaY * sensitivity));
+            float angle = math_utils::sqrt(deltaX * deltaX + deltaY * deltaY) * sensitivity;
+            Matrix4 rotate_x = Transformation::rotation_x(math_utils::radians(deltaX * sensitivity));
+            Matrix4 rotate_y = Transformation::rotation_y(math_utils::radians(deltaY * sensitivity));
 
             Matrix4 rotationMatrix = rotate_x * rotate_y;
             object.transform(rotationMatrix);

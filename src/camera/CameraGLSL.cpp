@@ -1,7 +1,9 @@
 #include "../../include/math/Transforamation.hpp"
-#include "../../third-party/glm/glm/trigonometric.hpp"
 #include "../../include/camera/CameraGLSL.hpp"
+#include "../../include/math/Utils.hpp"
 #include "../../include/GLSL/export-data/export-camera/ExportVP.hpp"
+#include <cmath>
+
 
 CameraGLSL::CameraGLSL(size_t shader_id, const Camera& cam, TypeCamera* type_cam):
     shader_id (shader_id),
@@ -125,11 +127,11 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
         x_prev = x_pos;
         y_prev = y_pos;
         // Vertical rotation (rotate around global X axis)j
-        Vector4 newDirection = Transformation::rotation(glm::radians( -rotX) , (cam.direction | cam.up).normalize() ) * cam.direction;
-        if (fabs(acos(newDirection.y) - glm::radians(90.0f)) <= glm::radians(85.0f)) {
+        Vector4 newDirection = Transformation::rotation(math_utils::radians( -rotX) , (cam.direction | cam.up).normalize() ) * cam.direction;
+        if (fabs(acos(newDirection.y) - math_utils::radians(90.0f)) <= math_utils::radians(85.0f)) {
             cam.direction = newDirection;
         }
-        cam.direction = Transformation::rotation(glm::radians( -rotY) , cam.up) * cam.direction;
+        cam.direction = Transformation::rotation(math_utils::radians( -rotY) , cam.up) * cam.direction;
         // Horizontal rotation (rotate around global Y axis)
         // Reset the cursor to the center of the screen
         /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */

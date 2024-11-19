@@ -1,6 +1,6 @@
 #include "../../../include/objects/shapes/Torus.hpp"
+#include "../../../include/math/Utils.hpp"
 #include <cmath>
-#include "../../../third-party/glm/glm/trigonometric.hpp"
 
 
 Torus::Torus(const Vector4 &center, const float _r_torus, float _r_tube, unsigned int u , unsigned int v )
@@ -51,8 +51,8 @@ Mesh Torus::generate_mesh() const {
 }
 
 Vector4 Torus::position(float r_torus, float r_tube, float u, float v) {
-    u = glm::radians(u);
-    v = glm::radians(v);
+    u = math_utils::radians(u);
+    v = math_utils::radians(v);
     return Vector4(
         (r_torus + r_tube * cos(v)) * cos(u) ,
         (r_tube * sin(v)),

@@ -82,7 +82,7 @@ float Vector4::length() const {
   float y2 = this->data[1] * this->data[1];
   float z2 = this->data[2] * this->data[2];
   float w2 = this->data[3] * this->data[3];
-  return std::sqrt(x2 + y2 + z2 + w2);
+  return ::sqrt(x2 + y2 + z2 + w2);
 }
 
 
