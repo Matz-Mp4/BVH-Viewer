@@ -9,7 +9,6 @@ class ExportAPD: public ExportLight{
          void export_point_light(size_t shader_id, const PointLight &_point_light)override;
          
     private:
-        //Ambient Color
         std::string     ambient;
         //point_light[0] = position
         //point_light[1] = color 

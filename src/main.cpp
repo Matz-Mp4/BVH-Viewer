@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
@@ -18,10 +17,6 @@
 #include "../include/objects/shapes/ModelLoader.hpp"
 #include "../include/bvh/MCBVH.hpp"
 #include "../include/Gui.hpp"
-
-#include "../third-party/imgui/imgui_impl_glfw.h"
-#include "../third-party/imgui/imgui_impl_opengl3.h"
-
 
 const unsigned int width = 800;
 const unsigned int height = 800;
@@ -72,7 +67,7 @@ int main(int argc, char* argv[]) {
     ShaderGLSL blin_phong_shader("../src/glsl-files/blin-phong/blin-phong.vert", "../src/glsl-files/blin-phong/blin-phong.frag");
 
     Camera camera(Vector4(0.0f, 0.0f,  5.0f, 1.0));
-    PinHole *pinhole_ptr = new PinHole(90, 4/3.0, 0.1f, 200.0f);
+    PinHole *pinhole_ptr = new PinHole(90, float(width)/height, 0.1f, 200.0f);
     ExportCamera* export_camera = new ExportVP();
     CameraGLSL cameraGLSL(shader.ID, export_camera, camera, pinhole_ptr);
 

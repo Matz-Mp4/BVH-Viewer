@@ -104,7 +104,6 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
     // Handles mouse inputs for rotation (camera orientation)
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
         /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
-        // Hide mouse cursor
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
         /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
         // Prevent camera jump on first click
@@ -114,7 +113,6 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
             /* y_pos = height / 2.0; */
             first_click = false;
         }
-        // Get cursor position
         double mouseX, mouseY;
         glfwGetCursorPos(window, &mouseX, &mouseY);
         x_pos = mouseX;
@@ -126,14 +124,11 @@ void CameraGLSL::handle_inputs(GLFWwindow* window, unsigned int width, unsigned 
         float rotX = sensitivity * (y_pos - y_prev);
         x_prev = x_pos;
         y_prev = y_pos;
-        // Vertical rotation (rotate around global X axis)j
         Vector4 newDirection = Transformation::rotation(math_utils::radians( -rotX) , (cam.direction | cam.up).normalize() ) * cam.direction;
         if (fabs(acos(newDirection.y) - math_utils::radians(90.0f)) <= math_utils::radians(85.0f)) {
             cam.direction = newDirection;
         }
         cam.direction = Transformation::rotation(math_utils::radians( -rotY) , cam.up) * cam.direction;
-        // Horizontal rotation (rotate around global Y axis)
-        // Reset the cursor to the center of the screen
         /* glfwSetCursorPos(window, width / 2.0, height / 2.0); */
     } else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_RELEASE) {
         x_prev = x_pos;

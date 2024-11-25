@@ -12,6 +12,5 @@ class EBO{
         void  Unbind();
         void  Delete();
         
-        // ID reference for the Vertex Array Indices
         GLuint ID;
 };

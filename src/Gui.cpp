@@ -24,7 +24,7 @@ void Gui::init(GLFWwindow* window, MCBVH& bvh, GeometricObjectGLSL& object) {
     bvh_depth_changed = draw_bvh_bp = draw_bvh_wf = draw_obj_normals = draw_obj_wf = false;
     draw_obj_bp = true;
     wf_tickness = 0.01;
-    bvh_depth = 1;
+    bvh_depth = 0;
 
     draw_bvh = false;
     draw_obj = true;

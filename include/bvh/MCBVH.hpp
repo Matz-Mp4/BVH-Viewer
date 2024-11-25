@@ -25,19 +25,16 @@ class MCBVH: BVH {
         struct MCBVHNode {
             int triangle_index = -1;
             AABB bounds;
-            int left_index = -1;  // Index in the array
-            int right_index = -1; // Index in the array
+            int left_index = -1;  
+            int right_index = -1;         
         };
 
-        MCBVHNode* nodes;  // Array of nodes
-        int root_index;    // Root node index
+        MCBVHNode* nodes;  
+        int root_index;    
 
         void init_node(int index);
         int build_node(const Mesh& mesh, int axis, int left, int right, std::vector<Vector4>& centroids);
         void delete_nodes();
-        /* void nodes_into_mesh(int node_index, Mesh& mesh, unsigned int count, unsigned int height); */
         void    nodes_into_mesh(int node_index, Mesh& mesh, unsigned int height) ;
 
-void process_subtree(int current_node_index, Mesh& mesh, unsigned int current_height, unsigned int height, 
-                           std::vector<std::future<void>>& futures) ;
 };

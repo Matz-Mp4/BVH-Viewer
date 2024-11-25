@@ -18,7 +18,6 @@ class Vector4 {
         Vector4(float x, float y, float z, float w);
         
         Vector4    operator+(const Vector4& rhs) const;
-        /* Vector4&  operator+=(const Vector4& rhs) const; */
         Vector4    operator-(const Vector4& rhs) const;
         Vector4    operator-() const;
         Vector4    operator*(float t) const;

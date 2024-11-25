@@ -12,7 +12,7 @@ MCBVH::MCBVH() {
 }
 
 MCBVH::MCBVH(uint num_triangles) {
-    uint max_nodes = num_triangles * 2 - 1;
+    uint max_nodes = num_triangles * 2 - 3;
     nodes = new MCBVHNode[max_nodes];  
     root_index = -1;
     nodes_size = 0;
@@ -25,7 +25,7 @@ MCBVH::~MCBVH() {
 }
 
 
-/*
+
 void  sorta_centroids(std::vector<Vector4>& centroids, int axis, int left, int right)  {
     std::sort(
         centroids.begin() + left,
@@ -39,8 +39,9 @@ void  sorta_centroids(std::vector<Vector4>& centroids, int axis, int left, int r
                   return a.z < b.z;
         } 
     );
+}
 
-}*/
+/*
 void sorta_centroids(std::vector<Vector4>& centroids, int axis, int left, int right) {
     int middle = left + (right - left) / 2;
 
@@ -68,6 +69,7 @@ void sorta_centroids(std::vector<Vector4>& centroids, int axis, int left, int ri
 }
 
 
+*/
 
 
 void MCBVH::delete_nodes() {
@@ -91,8 +93,8 @@ void MCBVH::build(const Mesh& mesh) {
 void MCBVH::tranverse() {}
 
 Mesh MCBVH::into_mesh(unsigned int height) {
-    Mesh mesh;
-    nodes_into_mesh(root_index, mesh, height);
+    Mesh mesh ;
+    nodes_into_mesh(0, mesh, height);
     return mesh;
 }
 
@@ -136,8 +138,7 @@ void MCBVH::nodes_into_mesh(int node_index, Mesh& mesh, unsigned int height) {
         return;
 
     std::stack<std::pair<int, unsigned int>> stack; 
-    stack.push({node_index, 0});  // Coloca o nó inicial e a altura inicial na pilha
-
+    stack.push({node_index, 0});  
     while (!stack.empty()) {
         auto [current_node_index, current_height] = stack.top();
         stack.pop();
@@ -155,17 +156,20 @@ void MCBVH::nodes_into_mesh(int node_index, Mesh& mesh, unsigned int height) {
                     mesh.add_indice(current_vertex_count + indice);
                 }
             }
-
-            current_height++;
-
-            if (nodes[current_node_index].left_index != -1) {
-                stack.push({nodes[current_node_index].left_index, current_height});
-            }
-
-            if (nodes[current_node_index].right_index != -1) {
-                stack.push({nodes[current_node_index].right_index, current_height});
-            }
+               
         }
+        current_height++;
+
+        if (nodes[current_node_index].left_index != -1) {
+            stack.push({nodes[current_node_index].left_index, current_height});
+        }
+
+        if (nodes[current_node_index].right_index != -1) {
+            stack.push({nodes[current_node_index].right_index, current_height});
+        }
+
+
+       
     }
 }
 

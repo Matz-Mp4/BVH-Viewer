@@ -63,10 +63,6 @@ float Material::get_expoent() const {
 } 
 
 
-
-
-
-// Static methods for material types
 Material Material::create_rubber(Color c) {
     return Material(c, 0.4f, 0.5f, 0.1f, 10.0f);
 }
