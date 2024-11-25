@@ -15,8 +15,8 @@ void Gui::init(GLFWwindow* window, MCBVH& bvh, GeometricObjectGLSL& object) {
     triangles_size = object.get_indices().size() / 3;
 
     color[0] = 1.0;
-    color[1] = 1.0;
-    color[2] = 1.0;
+    color[1] = 0.3;
+    color[2] = 0.5;
 
     ka = kd = ks = 0.2;
     exp = 100;

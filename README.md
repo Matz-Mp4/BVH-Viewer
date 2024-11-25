@@ -23,9 +23,7 @@ The following libraries and tools are required to run the application:
 
 ---
 ## **Usage**
-
-### **Controls**
-#### **Camera Navigation**
+### **Camera Navigation**
 - **`W`**: Move forward.
 - **`S`**: Move backward.
 - **`A`**: Move left.
@@ -33,6 +31,39 @@ The following libraries and tools are required to run the application:
 - **`Space`**: Move up.
 - **`Ctrl`**: Move down.
 - **`F`**: Toggle camera lock/unlock.
+- **`Mouse Left-Buttom `**: Rotate Camera Orientation (Hold It)
+
+### **Object Navigation**
+- **`Q`**: Increase object's size
+- **`E`**: Decrease object's size
+- **`Mouse Right-Buttom `**: Rotate Object Orientation (Hold It)
+
+
+### **Running the Application**
+- Run the application with the following command:
+```bash
+./BVHViwer <model_name> 
+```
+- for instance run the command below to render a horse 
+```bash
+./BVHViwer ../models/horse.ply
+```
+or a Torus with following command
+```bash
+./BVHViwer 
+```
+
+
+- Note that sometimes some models can not be seen due to its size, it is either to0 small or too big.
+However, changing its size using **Q** or **E** it is a solution.
+
+### **Features**
+- Navigate the scene using the camera controls.
+- Load 3D models in **OBJ** or **PLY** formats.
+- Visualize BVH construction for loaded models.
+- Adjust the depth of the BVH visualization.
+- Manipulate objects via translation, rotation, and scaling.
+- Observe lighting effects with Blinn-Phong shading.
 
 #### **GUI Features**
 Access various features through the graphical user interface:
@@ -48,20 +79,6 @@ Access various features through the graphical user interface:
 - **Lighting**:
   - Customize Blinn-Phong lighting parameters, such as ambient, diffuse, specular, and exponent values.
 
-### **Running the Application**
-Run the application with the following command:
-```bash
-./BVHViwer <model_name> # for instance (./BVHViwer ../models/horse.ply)
-
-```
-
-### **Features**
-- Navigate the scene using the camera controls.
-- Load 3D models in **OBJ** or **PLY** formats.
-- Visualize BVH construction for loaded models.
-- Adjust the depth of the BVH visualization.
-- Manipulate objects via translation, rotation, and scaling.
-- Observe lighting effects with Blinn-Phong shading.
 
 ---
 
