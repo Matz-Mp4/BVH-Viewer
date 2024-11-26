@@ -12,13 +12,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 file(GLOB_RECURSE SOURCES
     src/*.cpp
     third-party/happly/happly.h
-    third-party/glm/glm/*.cpp
     third-party/imgui/*.cpp
 )
 
 # Add include directories
 include_directories(${PROJECT_SOURCE_DIR}/include)
-include_directories(${PROJECT_SOURCE_DIR}/third-party/glm)
 include_directories(${PROJECT_SOURCE_DIR}/third-party/happly)
 include_directories(${PROJECT_SOURCE_DIR}/third-party/imgui)
 
@@ -35,10 +33,3 @@ target_link_libraries(BVH-VIEWER
     GLEW::GLEW
     ${OPENGL_gl_LIBRARY}
 )
-
-# Optionally include GLM (if using)
-find_package(glm CONFIG REQUIRED)
-if (glm_FOUND)
-    target_link_libraries(BVH-VIEWER glm::glm)
-endif()
-

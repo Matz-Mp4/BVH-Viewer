@@ -5,6 +5,8 @@ This project is a **prototype interactive application** designed to visualize an
 
 ---
 
+## We sugest to run only on Linux
+
 ## **Main Features**
 - **Interactive BVH Visualization**: Real-time exploration of the BVH at various depth levels.
 - **3D Object Manipulation**: Translate, rotate, and scale objects directly in the scene.
