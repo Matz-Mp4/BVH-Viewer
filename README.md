@@ -44,15 +44,15 @@ The following libraries and tools are required to run the application:
 ### **Running the Application**
 - Run the application with the following command:
 ```bash
-./BVHViwer <model_name> 
+./BVH-VIEWER <model_name> 
 ```
 - for instance run the command below to render a horse 
 ```bash
-./BVHViwer ../models/horse.ply
+./BVH-VIEWER ../models/horse.ply
 ```
 or a Torus with following command
 ```bash
-./BVHViwer 
+./BVH-VIEWER
 ```
 
 
@@ -103,4 +103,3 @@ Access various features through the graphical user interface:
     cmake ..
     cmake --build .
     ```
-
