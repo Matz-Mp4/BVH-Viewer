@@ -1,6 +1,7 @@
 #include "../include/Gui.hpp"
+#include "glfw3.h"
+/* #include <GLFW/glfw3.h> */
 
-#include <GLFW/glfw3.h>
 
 void Gui::init(GLFWwindow* window, MCBVH& bvh, GeometricObjectGLSL& object) {
     IMGUI_CHECKVERSION();

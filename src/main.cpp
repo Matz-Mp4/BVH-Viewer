@@ -1,6 +1,8 @@
 #include <iostream>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+/* #include <GL/glew.h> */
+#include "glew.h"
+/* #include <GLFW/glfw3.h> */
+#include "glfw3.h"
 
 #include "../include/GLSL/utils/ShaderGLSL.hpp"
 #include "../include/GLSL/export-data/export-camera/ExportVP.hpp"

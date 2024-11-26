@@ -1,6 +1,7 @@
 #include "../GLSL/export-data/ExportCamera.hpp"
 #include "Camera.hpp"
-#include <GLFW/glfw3.h>
+/* #include <GLFW/glfw3.h> */
+#include "glfw3.h"
 #pragma once 
 
 class CameraGLSL {

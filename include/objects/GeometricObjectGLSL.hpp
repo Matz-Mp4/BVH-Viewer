@@ -5,7 +5,9 @@
 #include "../GLSL/utils/VAO.hpp"
 #include "GeometricObject.hpp"
 #include "IShape.hpp"
-#include <GLFW/glfw3.h>
+#include "glfw3.h"
+
+/* #include <GLFW/glfw3.h> */
 
 class GeometricObjectGLSL{
     public:

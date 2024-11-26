@@ -24,6 +24,8 @@ set(INCLUDE_DIRS
     ${PROJECT_SOURCE_DIR}/include/GLSL/export-data/export-light
     ${PROJECT_SOURCE_DIR}/third-party/happly
     ${PROJECT_SOURCE_DIR}/third-party/imgui
+    ${PROJECT_SOURCE_DIR}/third-party/glfw/include
+    ${PROJECT_SOURCE_DIR}/third-party/glew/include
 )
 include_directories(${INCLUDE_DIRS})
 
@@ -55,19 +57,26 @@ collect_sources(SOURCES ${PROJECT_SOURCE_DIR}/third-party/imgui)
 # Add header-only files to SOURCES
 list(APPEND SOURCES ${PROJECT_SOURCE_DIR}/third-party/happly/happly.h)
 
+# Link to the glfw library manually
+set(GLFW_BIN
+    ${PROJECT_SOURCE_DIR}/third-party/glfw/64/libglfw3.so
+)
+
+set(GLEW_BIN
+    ${PROJECT_SOURCE_DIR}/third-party/glew/64/libGLEW.so
+)
+
 # Find required packages
 find_package(OpenGL REQUIRED)
-find_package(glfw3 REQUIRED)
-find_package(GLEW REQUIRED)
-
+#[[ find_package(GLEW REQUIRED) ]]
 # Add executable and link sources
 add_executable(BVH-VIEWER ${SOURCES})
 
 # Link libraries
 target_link_libraries(BVH-VIEWER
     OpenGL::GL
-    glfw
-    GLEW::GLEW
+    ${GLEW_BIN}
+    ${GLFW_BIN}
 )
 
 
